@@ -1,0 +1,33 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_IMAGE_MOMENTS_U16_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "images": [
+      [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ]
+    ]
+  },
+  "expected_output_u32": [
+    10,
+    0,
+    6,
+    0,
+    7,
+    0,
+    6,
+    0,
+    4,
+    0,
+    7,
+    0
+  ]
+}
