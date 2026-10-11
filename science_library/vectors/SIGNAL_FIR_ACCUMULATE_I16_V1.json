@@ -1,0 +1,24 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SIGNAL_FIR_ACCUMULATE_I16_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "samples": [
+      1,
+      -2,
+      3
+    ],
+    "coefficients": [
+      2,
+      -1
+    ]
+  },
+  "expected_output_u32": [
+    2,
+    0,
+    4294967291,
+    4294967295,
+    8,
+    0
+  ]
+}

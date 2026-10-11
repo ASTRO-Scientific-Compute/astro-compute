@@ -1,0 +1,48 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_CATALOG_CHORD_MATCH_I32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "queries": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        10,
+        0,
+        0
+      ]
+    ],
+    "catalog": [
+      [
+        -1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "coordinate_unit": "one explicitly supplied coordinate tick",
+    "squared_radius": 1
+  },
+  "expected_output_u32": [
+    3,
+    2,
+    0,
+    0,
+    0,
+    4294967295,
+    4294967295,
+    4294967295
+  ]
+}

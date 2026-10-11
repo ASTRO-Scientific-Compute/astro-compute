@@ -1,0 +1,55 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_RTS_SMOOTHER_STEP_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "transition": [
+      [
+        "3f800000"
+      ]
+    ],
+    "process_covariance": [
+      [
+        "00000000"
+      ]
+    ],
+    "states": [
+      [
+        "00000000"
+      ]
+    ],
+    "covariances": [
+      [
+        [
+          "3f800000"
+        ]
+      ]
+    ],
+    "controls": [
+      [
+        "00000000"
+      ]
+    ],
+    "next_states": [
+      [
+        "3f800000"
+      ]
+    ],
+    "next_covariances": [
+      [
+        [
+          "3f000000"
+        ]
+      ]
+    ]
+  },
+  "expected_output_u32": [
+    0,
+    0,
+    1065353216,
+    1065353216,
+    1056964608,
+    1065353216
+  ]
+}

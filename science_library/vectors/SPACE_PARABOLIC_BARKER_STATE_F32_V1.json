@@ -1,0 +1,30 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_PARABOLIC_BARKER_STATE_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "model": "PARABOLIC_E1",
+    "anomaly_unit": "barker-dimensionless",
+    "frame": "PERIFOCAL",
+    "distance_unit": "length",
+    "time_unit": "time",
+    "elements": [
+      [
+        "40000000",
+        "00000000"
+      ]
+    ],
+    "mu": "3f800000"
+  },
+  "expected_output_u32": [
+    0,
+    1073741824,
+    1073741824,
+    0,
+    0,
+    0,
+    1065353216,
+    0
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_HYPERBOLIC_KEPLER_STATE_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "anomaly_unit": "hyperbolic-radian",
+    "a_semantics": "POSITIVE_HYPERBOLIC_MAGNITUDE",
+    "frame": "PERIFOCAL",
+    "distance_unit": "length",
+    "time_unit": "time",
+    "elements": [
+      [
+        "3f800000",
+        "3fa00000",
+        "00000000"
+      ]
+    ],
+    "mu": "3f800000"
+  },
+  "expected_output_u32": [
+    0,
+    1048576000,
+    1048576000,
+    0,
+    0,
+    0,
+    1077936128,
+    0
+  ]
+}

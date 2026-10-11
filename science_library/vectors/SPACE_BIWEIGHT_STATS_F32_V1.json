@@ -1,0 +1,58 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_BIWEIGHT_STATS_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "samples": [
+      [
+        "bf800000",
+        "bf800000",
+        "3f800000",
+        "3f800000"
+      ],
+      [
+        "41100000",
+        "41100000",
+        "41300000",
+        "41300000"
+      ]
+    ],
+    "valid": [
+      [
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "c_location": "40000000",
+    "c_variance": "40000000"
+  },
+  "expected_output_u32": [
+    0,
+    4,
+    0,
+    1065353216,
+    0,
+    1091567616,
+    1077936128,
+    4,
+    4,
+    0,
+    4,
+    1092616192,
+    1065353216,
+    1092616192,
+    1091567616,
+    1077936128,
+    4,
+    4
+  ]
+}

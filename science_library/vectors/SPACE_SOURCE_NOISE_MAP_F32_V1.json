@@ -1,0 +1,63 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_SOURCE_NOISE_MAP_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "signal": [
+      "41400000",
+      "bf800000",
+      "41800000",
+      "42c60000",
+      "00000000"
+    ],
+    "background_variance": [
+      "3f800000",
+      "40800000",
+      "41100000",
+      "40800000",
+      "00000000"
+    ],
+    "gain": [
+      "40800000",
+      "40000000",
+      "00000000",
+      "3f800000",
+      "3f800000"
+    ],
+    "valid": [
+      1,
+      1,
+      1,
+      0,
+      1
+    ]
+  },
+  "expected_output_u32": [
+    0,
+    1077936128,
+    1082130432,
+    1073741824,
+    1048576000,
+    0,
+    0,
+    1082130432,
+    1073741824,
+    1048576000,
+    0,
+    0,
+    1091567616,
+    1077936128,
+    1038323257,
+    1,
+    0,
+    0,
+    0,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0
+  ]
+}

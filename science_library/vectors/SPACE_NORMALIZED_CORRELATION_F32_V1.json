@@ -1,0 +1,24 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_NORMALIZED_CORRELATION_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "x": [
+      "3f800000",
+      "00000000"
+    ],
+    "y": [
+      "3f800000",
+      "00000000"
+    ]
+  },
+  "expected_output_u32": [
+    1,
+    0,
+    0,
+    1065353216,
+    1,
+    0
+  ]
+}

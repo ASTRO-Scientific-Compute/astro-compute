@@ -1,0 +1,36 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SIGNAL_LINEAR_RESAMPLE_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "xp": [
+      "00000000",
+      "3f800000",
+      "40000000"
+    ],
+    "fp": [
+      "3f800000",
+      "40400000",
+      "3f800000"
+    ],
+    "queries": [
+      "bf800000",
+      "00000000",
+      "3f000000",
+      "3f800000",
+      "3fc00000",
+      "40000000",
+      "40400000"
+    ]
+  },
+  "expected_output_u32": [
+    1065353216,
+    1065353216,
+    1073741824,
+    1077936128,
+    1073741824,
+    1065353216,
+    1065353216
+  ]
+}

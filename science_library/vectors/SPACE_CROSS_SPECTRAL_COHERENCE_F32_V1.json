@@ -1,0 +1,38 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_CROSS_SPECTRAL_COHERENCE_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "cross_convention": "CONJ_X_TIMES_Y",
+    "replicate_contract": "MATCHED_ORDERED_SEGMENTS",
+    "power_normalization": "MEAN_SUPPLIED_BIN_PRODUCTS",
+    "spectrum_unit_x": "amplitude_x",
+    "spectrum_unit_y": "amplitude_y",
+    "frequency_grid_id": "declared-matched-grid",
+    "bins": [
+      [
+        [
+          "3f800000",
+          "00000000",
+          "40000000",
+          "00000000"
+        ],
+        [
+          "3f800000",
+          "00000000",
+          "40000000",
+          "00000000"
+        ]
+      ]
+    ]
+  },
+  "expected_output_u32": [
+    0,
+    1065353216,
+    1082130432,
+    1073741824,
+    0,
+    1065353216
+  ]
+}

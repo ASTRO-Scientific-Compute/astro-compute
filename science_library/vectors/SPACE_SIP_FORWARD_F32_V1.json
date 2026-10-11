@@ -1,0 +1,36 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_SIP_FORWARD_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "offset_unit": "pixel",
+    "offset_origin": "REFERENCE_PIXEL",
+    "term_order": "DEGREE_ASCENDING_P_ASCENDING",
+    "model_id": "supplied-bounded-sip-model",
+    "a_order": 2,
+    "b_order": 2,
+    "a_coefficients": [
+      "00000000",
+      "00000000",
+      "39800000"
+    ],
+    "b_coefficients": [
+      "00000000",
+      "b9000000",
+      "00000000"
+    ],
+    "offsets": [
+      [
+        "41800000",
+        "41000000"
+      ]
+    ]
+  },
+  "expected_output_u32": [
+    1098940416,
+    1090486272,
+    1031798784,
+    3162505216
+  ]
+}

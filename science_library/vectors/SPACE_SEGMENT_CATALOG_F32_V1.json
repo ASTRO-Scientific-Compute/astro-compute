@@ -1,0 +1,95 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_SEGMENT_CATALOG_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "image": [
+      [
+        "40400000",
+        "40400000"
+      ],
+      [
+        "3f800000",
+        "bf800000"
+      ]
+    ],
+    "background": [
+      [
+        "3f800000",
+        "3f800000"
+      ],
+      [
+        "3f800000",
+        "3f800000"
+      ]
+    ],
+    "variance": [
+      [
+        "3f800000",
+        "3f800000"
+      ],
+      [
+        "3f800000",
+        "3f800000"
+      ]
+    ],
+    "labels": [
+      [
+        5,
+        5
+      ],
+      [
+        5,
+        9
+      ]
+    ],
+    "valid": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "source_ids": [
+      5,
+      9,
+      8
+    ]
+  },
+  "expected_output_u32": [
+    0,
+    3,
+    1082130432,
+    1077936128,
+    1082130432,
+    1056964608,
+    0,
+    1048576000,
+    0,
+    0,
+    2,
+    1,
+    3221225472,
+    1065353216,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

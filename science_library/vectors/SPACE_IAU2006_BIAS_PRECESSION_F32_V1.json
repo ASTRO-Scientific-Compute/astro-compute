@@ -1,0 +1,39 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_IAU2006_BIAS_PRECESSION_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "time_scale": "TT",
+    "input_frame": "GCRS",
+    "output_frame": "MEAN_EQUATOR_EQUINOX_OF_DATE_IAU2006",
+    "tt_centuries": [
+      "00000000"
+    ],
+    "vectors": [
+      [
+        "3f800000",
+        "00000000",
+        "00000000"
+      ]
+    ]
+  },
+  "expected_output_u32": [
+    3028927267,
+    856554814,
+    3025762118,
+    1053914262,
+    1065353216,
+    3013083584,
+    866976130,
+    865599936,
+    1065353216,
+    856554812,
+    3014459778,
+    3004038458,
+    1065353216,
+    1065353216,
+    865599936,
+    3014459778
+  ]
+}

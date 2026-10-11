@@ -1,0 +1,60 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_IMAGE_SEGMENTATION_U32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "images": [
+      [
+        [
+          "40000000",
+          "40000000",
+          "00000000"
+        ],
+        [
+          "00000000",
+          "00000000",
+          "40000000"
+        ],
+        [
+          "40000000",
+          "00000000",
+          "40000000"
+        ]
+      ]
+    ],
+    "valid": [
+      [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    ],
+    "threshold": "3f800000",
+    "npixels": 2,
+    "connectivity": 4
+  },
+  "expected_output_u32": [
+    1,
+    1,
+    0,
+    0,
+    0,
+    6,
+    0,
+    0,
+    6
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_CORRELATED_TEMPLATE_FIT_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "flux": [
+      [
+        "40000000",
+        "40400000",
+        "40800000"
+      ],
+      [
+        "40800000",
+        "40c00000",
+        "41000000"
+      ]
+    ],
+    "template": [
+      [
+        "3f800000",
+        "3f800000",
+        "3f800000"
+      ],
+      [
+        "3f800000",
+        "3f800000",
+        "3f800000"
+      ]
+    ],
+    "diagonal_variance": [
+      [
+        "3f800000",
+        "3f800000",
+        "3f800000"
+      ],
+      [
+        "3f800000",
+        "3f800000",
+        "3f800000"
+      ]
+    ],
+    "factors": [
+      [
+        [
+          "3f800000",
+          "3f800000",
+          "3f800000"
+        ]
+      ],
+      [
+        [
+          "3f800000",
+          "3f800000",
+          "3f800000"
+        ]
+      ]
+    ]
+  },
+  "expected_output_u32": [
+    0,
+    1077936128,
+    1068149419,
+    1073741824,
+    1061158912,
+    1,
+    0,
+    1086324736,
+    1068149419,
+    1090519040,
+    1061158912,
+    1
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_BLS_BINNED_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "times": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "flux": [
+      "00000000",
+      "00000000",
+      "3f800000",
+      "3f800000"
+    ],
+    "periods": [
+      4
+    ],
+    "bins": 4,
+    "min_width": 1,
+    "max_width": 2
+  },
+  "expected_output_u32": [
+    0,
+    0,
+    2,
+    1065353216,
+    1065353216,
+    1065353216
+  ]
+}

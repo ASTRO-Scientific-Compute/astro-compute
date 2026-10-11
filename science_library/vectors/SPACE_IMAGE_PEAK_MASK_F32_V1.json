@@ -1,0 +1,29 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_IMAGE_PEAK_MASK_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "image": [
+      [
+        "3f800000",
+        "40400000",
+        "40000000"
+      ]
+    ],
+    "valid": [
+      [
+        1,
+        1,
+        1
+      ]
+    ],
+    "threshold": "3f800000",
+    "radius": 1
+  },
+  "expected_output_u32": [
+    0,
+    1,
+    0
+  ]
+}

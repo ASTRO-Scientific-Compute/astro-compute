@@ -1,0 +1,26 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_EXOPLANET_EARTHSIZE_FILTER_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "packed_rows": [
+      0,
+      1,
+      1800,
+      1801,
+      2882338817,
+      1,
+      4294967295
+    ]
+  },
+  "expected_output_u32": [
+    4,
+    1,
+    1800,
+    2882338817,
+    1,
+    0,
+    0,
+    0
+  ]
+}

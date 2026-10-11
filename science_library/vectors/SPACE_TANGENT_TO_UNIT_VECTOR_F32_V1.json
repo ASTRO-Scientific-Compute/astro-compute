@@ -1,0 +1,28 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_TANGENT_TO_UNIT_VECTOR_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "angle_unit": "turn",
+    "projection": "GNOMONIC_TAN",
+    "axes": "EAST_NORTH",
+    "frame": "declared-common-celestial-frame",
+    "tangent_point": [
+      "00000000",
+      "00000000"
+    ],
+    "plane_coordinates": [
+      [
+        "00000000",
+        "00000000"
+      ]
+    ]
+  },
+  "expected_output_u32": [
+    1065353216,
+    0,
+    0,
+    1065353216
+  ]
+}

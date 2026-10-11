@@ -1,0 +1,16 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_GWOSC_CONVOLUTION_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "strain": [
+      "41c80000",
+      "00000000"
+    ]
+  },
+  "expected_output_u32": [
+    1097859072,
+    1092616192
+  ]
+}

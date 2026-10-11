@@ -1,0 +1,28 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "BIO_KMER_COUNTS_U32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "sequences": [
+      "AAAAA",
+      "ACGTACGT",
+      ""
+    ],
+    "kmers": [
+      "AA",
+      "AC",
+      "CG"
+    ]
+  },
+  "expected_output_u32": [
+    4,
+    0,
+    0,
+    0,
+    2,
+    2,
+    0,
+    0,
+    0
+  ]
+}

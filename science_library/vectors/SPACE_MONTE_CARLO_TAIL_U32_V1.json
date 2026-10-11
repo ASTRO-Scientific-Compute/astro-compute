@@ -1,0 +1,35 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_MONTE_CARLO_TAIL_U32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "observed": [
+      "00000000",
+      "40000000",
+      "40800000"
+    ],
+    "null_statistics": [
+      "3f800000",
+      "40000000",
+      "40000000",
+      "40400000"
+    ],
+    "null_model_id": "CONTROLLED_TEST_NULL_NOT_LIVE_SCIENCE",
+    "search_grid_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "expected_output_u32": [
+    4,
+    4,
+    5,
+    5,
+    3,
+    4,
+    4,
+    5,
+    0,
+    4,
+    1,
+    5
+  ]
+}

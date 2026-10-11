@@ -1,0 +1,73 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_MULTIHARMONIC_PERIODOGRAM_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "samples": [
+      [
+        "00000000",
+        "40000000",
+        "3f800000"
+      ],
+      [
+        "3f800000",
+        "3f800000",
+        "3f800000"
+      ],
+      [
+        "40000000",
+        "00000000",
+        "3f800000"
+      ],
+      [
+        "40400000",
+        "3f800000",
+        "3f800000"
+      ],
+      [
+        "40800000",
+        "40000000",
+        "3f800000"
+      ],
+      [
+        "40a00000",
+        "3f800000",
+        "3f800000"
+      ],
+      [
+        "40c00000",
+        "00000000",
+        "3f800000"
+      ],
+      [
+        "40e00000",
+        "3f800000",
+        "3f800000"
+      ]
+    ],
+    "frequencies": [
+      "3e000000",
+      "3e800000"
+    ],
+    "harmonics": 2
+  },
+  "expected_output_u32": [
+    0,
+    1065353216,
+    0,
+    1065353216,
+    0,
+    0,
+    1065353216,
+    0,
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
+}

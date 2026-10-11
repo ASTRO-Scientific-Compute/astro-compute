@@ -1,0 +1,35 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "ENGINEERING_CSR_MATVEC_I32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "rowptr": [
+      0,
+      2,
+      2,
+      3
+    ],
+    "col": [
+      0,
+      1,
+      1
+    ],
+    "values": [
+      2,
+      -1,
+      3
+    ],
+    "vector": [
+      4,
+      5
+    ]
+  },
+  "expected_output_u32": [
+    3,
+    0,
+    0,
+    0,
+    15,
+    0
+  ]
+}

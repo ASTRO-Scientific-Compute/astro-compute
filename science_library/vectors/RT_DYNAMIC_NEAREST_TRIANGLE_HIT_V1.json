@@ -1,0 +1,69 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "RT_DYNAMIC_NEAREST_TRIANGLE_HIT_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "triangles": [
+      [
+        [
+          "00000000",
+          "00000000",
+          "40000000"
+        ],
+        [
+          "40000000",
+          "00000000",
+          "40000000"
+        ],
+        [
+          "00000000",
+          "40000000",
+          "40000000"
+        ]
+      ]
+    ],
+    "rays": [
+      {
+        "origin": [
+          "3f000000",
+          "3f000000",
+          "00000000"
+        ],
+        "direction": [
+          "00000000",
+          "00000000",
+          "3f800000"
+        ]
+      },
+      {
+        "origin": [
+          "40400000",
+          "40400000",
+          "00000000"
+        ],
+        "direction": [
+          "00000000",
+          "00000000",
+          "3f800000"
+        ]
+      }
+    ],
+    "frames": [
+      0,
+      256,
+      768,
+      0
+    ]
+  },
+  "expected_output_u32": [
+    1073741824,
+    1900671690,
+    1073752310,
+    1900671690,
+    1073720852,
+    1900671690,
+    1073741824,
+    1900671690
+  ]
+}

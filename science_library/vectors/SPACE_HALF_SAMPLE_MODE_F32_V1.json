@@ -1,0 +1,64 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_HALF_SAMPLE_MODE_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "samples": [
+      [
+        "42c80000",
+        "40400000",
+        "40000000",
+        "3f800000",
+        "00000000",
+        "42ca0000"
+      ],
+      [
+        "c1200000",
+        "41000000",
+        "41100000",
+        "41200000",
+        "41300000",
+        "41400000"
+      ]
+    ],
+    "valid": [
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ]
+  },
+  "expected_output_u32": [
+    0,
+    6,
+    1065353216,
+    0,
+    1073741824,
+    1073741824,
+    3,
+    1,
+    0,
+    0,
+    6,
+    1091567616,
+    1090519040,
+    1092616192,
+    1073741824,
+    3,
+    1,
+    1
+  ]
+}

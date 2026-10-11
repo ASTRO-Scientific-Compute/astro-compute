@@ -1,0 +1,69 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_PSF_WEIGHTED_SCAN_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "image": [
+      [
+        "40a00000",
+        "3f800000"
+      ],
+      [
+        "40400000",
+        "bf800000"
+      ]
+    ],
+    "background": [
+      [
+        "3f800000",
+        "3f800000"
+      ],
+      [
+        "3f800000",
+        "3f800000"
+      ]
+    ],
+    "weights": [
+      [
+        "3f800000",
+        "3f800000"
+      ],
+      [
+        "3f800000",
+        "3f800000"
+      ]
+    ],
+    "psf": [
+      [
+        "3f800000"
+      ]
+    ]
+  },
+  "expected_output_u32": [
+    0,
+    1082130432,
+    1065353216,
+    1082130432,
+    0,
+    1,
+    0,
+    0,
+    1065353216,
+    0,
+    0,
+    1,
+    0,
+    1073741824,
+    1065353216,
+    1073741824,
+    0,
+    1,
+    0,
+    3221225472,
+    1065353216,
+    3221225472,
+    0,
+    1
+  ]
+}

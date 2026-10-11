@@ -1,0 +1,35 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_BOOTSTRAP_MEAN_VARIANCE_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "values": [
+      "3f800000",
+      "40400000",
+      "40a00000"
+    ],
+    "indices": [
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        0,
+        2
+      ]
+    ]
+  },
+  "expected_output_u32": [
+    1073741824,
+    1073741824,
+    1084227584,
+    0,
+    1077936128,
+    1090519040
+  ]
+}

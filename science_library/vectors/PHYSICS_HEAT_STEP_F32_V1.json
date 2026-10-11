@@ -1,0 +1,37 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "PHYSICS_HEAT_STEP_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "field": [
+      [
+        "40800000",
+        "40800000",
+        "40800000"
+      ],
+      [
+        "40800000",
+        "40800000",
+        "40800000"
+      ],
+      [
+        "40800000",
+        "40800000",
+        "40800000"
+      ]
+    ],
+    "lambda": "3e800000"
+  },
+  "expected_output_u32": [
+    1082130432,
+    1082130432,
+    1082130432,
+    1082130432,
+    1082130432,
+    1082130432,
+    1082130432,
+    1082130432,
+    1082130432
+  ]
+}

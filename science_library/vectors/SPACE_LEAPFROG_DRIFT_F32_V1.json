@@ -1,0 +1,30 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_LEAPFROG_DRIFT_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "states": [
+      [
+        "3f800000",
+        "40000000",
+        "40400000",
+        "40800000",
+        "40a00000",
+        "40c00000",
+        "40000000",
+        "c0000000",
+        "00000000"
+      ]
+    ],
+    "dt": "3f000000"
+  },
+  "expected_output_u32": [
+    1080033280,
+    1082130432,
+    1086324736,
+    1084227584,
+    1082130432,
+    1086324736
+  ]
+}

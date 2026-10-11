@@ -1,0 +1,45 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_COMPONENT_GRAPH_MERGE_U32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "uint32",
+    "component_ids": [
+      10,
+      2,
+      7,
+      30
+    ],
+    "pixel_counts": [
+      2,
+      3,
+      1,
+      1
+    ],
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "npixels": 3
+  },
+  "expected_output_u32": [
+    2,
+    6,
+    2,
+    2,
+    6,
+    2,
+    2,
+    6,
+    2,
+    30,
+    1,
+    0
+  ]
+}

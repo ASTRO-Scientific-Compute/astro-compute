@@ -1,0 +1,51 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "CHEM_PAIR_DISTANCE_SQUARED_I64_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "queries": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        10,
+        0,
+        0
+      ]
+    ],
+    "catalog": [
+      [
+        -1,
+        0,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    "coordinate_unit": "one explicitly supplied coordinate tick"
+  },
+  "expected_output_u32": [
+    1,
+    0,
+    1,
+    0,
+    0,
+    0,
+    121,
+    0,
+    81,
+    0,
+    100,
+    0
+  ]
+}

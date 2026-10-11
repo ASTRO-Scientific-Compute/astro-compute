@@ -1,0 +1,31 @@
+{
+  "schema": "ASTRO_ANALYTIC_TEST_VECTOR_V1",
+  "workload_id": "SPACE_BOOTSTRAP_PERCENTILE_CI_F32_V1",
+  "provenance": "Small analytic examples, derived independently of GPU code; not a research dataset.",
+  "payload": {
+    "encoding": "binary32-hex",
+    "replicates": [
+      [
+        "41000000",
+        "00000000",
+        "40c00000",
+        "40000000",
+        "40800000"
+      ],
+      [
+        "c0800000",
+        "c0000000",
+        "00000000",
+        "40000000",
+        "40800000"
+      ]
+    ],
+    "confidence": "3f000000"
+  },
+  "expected_output_u32": [
+    1073741824,
+    1086324736,
+    3221225472,
+    1073741824
+  ]
+}
