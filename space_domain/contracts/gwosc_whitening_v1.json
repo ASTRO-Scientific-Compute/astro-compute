@@ -1,0 +1,59 @@
+{
+  "schema": "ASTRO_SPACE_SCIENCE_CONTRACT_V1",
+  "id": "SPACE_GWOSC_WHITENING_V1",
+  "science": "SPACE",
+  "provider": "GWOSC_API_V2",
+  "dataset": "GW150914-v2 H1 4 kHz 32 s public strain",
+  "dependencies": [
+    "SPACE_GWOSC_WELCH_PSD_V1"
+  ],
+  "input": {
+    "strain": "float32(strain * 1e21), 131072 samples at 4096 Hz",
+    "psd": "positive float32 one-sided PSD bins k=0..128 on the matching 16 Hz FFT256 grid, using SPACE_GWOSC_WELCH_PSD_V1 normalization"
+  },
+  "operation": {
+    "name": "Welch-segment frequency-domain spectral whitening",
+    "segment_length": 256,
+    "overlap_samples": 128,
+    "hop_samples": 128,
+    "segment_count_for_canonical_dataset": 1023,
+    "window": "periodic Hann: w[n] = 0.5 - 0.5*cos(2*pi*n/N), n=0..N-1",
+    "window_power_sum": 96.0,
+    "fft": "unnormalized forward DFT of each windowed real segment",
+    "whitening": "Z_s[k] = X_s[k] * sqrt(q_k / (fs * sum(w^2) * S[k]))",
+    "one_sided_factor": "q_k=2 for interior bins 1..127; q_k=1 for DC k=0 and Nyquist k=128",
+    "psd_requirement": "S[k] must be finite and strictly positive for all 129 bins"
+  },
+  "output": {
+    "segment_count": 1023,
+    "bin_count_per_segment": 129,
+    "complex_output_count": 131967,
+    "frequency_bin_hz": 16.0,
+    "frequency_range_hz": [0.0, 2048.0],
+    "representation": "interleaved float32 complex frequency-domain coefficients Z_s[k] for every segment and one-sided frequency bin",
+    "unit": "dimensionless"
+  },
+  "identity": {
+    "description": "For a PSD equal to the arithmetic mean Welch periodogram over the same segment population, mean_s(|Z_s[k]|^2) = 1 for every bin k, up to finite-precision effects.",
+    "formula": "mean_s(|Z_s[k]|^2) = mean_s(P_s[k]) / S[k] = 1"
+  },
+  "reference": "independent CPU double periodic-Hann + radix-2 FFT256, using the exact float32 PSD input supplied to the executor",
+  "validation": "all 1023 x 129 complex output coefficients vs CPU double reference plus per-bin unit-mean-power invariant",
+  "precision_contract": {
+    "gpu_arithmetic": "IEEE-754 float32 shader arithmetic",
+    "relative_tolerance_complex": 0.01,
+    "absolute_floor_complex": 0.0002,
+    "complex_error_formula": "abs(Z_gpu-Z_reference) <= absolute_floor_complex + relative_tolerance_complex*abs(Z_reference)",
+    "unit_mean_power_tolerance": 0.02,
+    "all_outputs_checked": true
+  },
+  "science_unit": "one FULL-validated 256-sample Welch segment producing all 129 complex whitened bins",
+  "performance_metric": "whitened_segments/s",
+  "hardware_specific_parameters_in_mathspec": false,
+  "notes": [
+    "This V1 is frequency-domain segment whitening; it intentionally does not perform inverse FFT or full-stream PSD interpolation.",
+    "N=256, 50% overlap and periodic Hann are scientific parameters inherited from the matching V1 Welch PSD contract, not device tuning results.",
+    "Executor local size, fusion, batching, subgroup strategy and multi-segment mapping are device-local implementation/profile choices and must not be encoded as global hardware winners.",
+    "A later full-stream whitening MathSpec may add PSD interpolation and inverse FFT without changing this V1 contract."
+  ]
+}

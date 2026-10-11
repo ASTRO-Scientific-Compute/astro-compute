@@ -1,0 +1,44 @@
+{
+  "schema": "ASTRO_SPACE_SCIENCE_CONTRACT_V1",
+  "id": "SPACE_GWOSC_WELCH_PSD_V1",
+  "science": "SPACE",
+  "provider": "GWOSC_API_V2",
+  "dataset": "GW150914-v2 H1 4 kHz 32 s public strain",
+  "input": "float32(strain * 1e21), 131072 samples at 4096 Hz",
+  "operation": {
+    "name": "Welch one-sided power spectral density",
+    "segment_length": 256,
+    "overlap_samples": 128,
+    "hop_samples": 128,
+    "segment_count_for_canonical_dataset": 1023,
+    "window": "periodic Hann: w[n] = 0.5 - 0.5*cos(2*pi*n/N), n=0..N-1",
+    "window_power_sum": 96.0,
+    "fft": "unnormalized forward DFT of each windowed real segment",
+    "density_scaling": "|X[k]|^2 / (fs * sum(w^2)); interior one-sided bins multiplied by 2; DC and Nyquist not doubled",
+    "averaging": "arithmetic mean of periodograms over all 50%-overlapped segments"
+  },
+  "output": {
+    "bin_count": 129,
+    "frequency_bin_hz": 16.0,
+    "frequency_range_hz": [0.0, 2048.0],
+    "representation": "float32 one-sided PSD bins k=0..128",
+    "scaled_unit": "(strain*1e21)^2/Hz",
+    "physical_conversion": "multiply output by 1e-42 to obtain strain^2/Hz"
+  },
+  "reference": "independent CPU double periodic-Hann + radix-2 FFT256 + double accumulation",
+  "validation": "all 129 output bins vs CPU double reference",
+  "precision_contract": {
+    "gpu_arithmetic": "IEEE-754 float32 shader arithmetic",
+    "relative_tolerance": 0.01,
+    "absolute_floor": 1e-7,
+    "formula": "abs(gpu-reference) <= absolute_floor + relative_tolerance*abs(reference)",
+    "all_outputs_checked": true
+  },
+  "science_unit": "one FULL-validated Welch segment contributing to the final PSD",
+  "performance_metric": "welch_segments/s",
+  "hardware_specific_parameters_in_mathspec": false,
+  "notes": [
+    "N=256 and 50% overlap are scientific parameters of this V1 contract, not a device tuning result.",
+    "Executor local size, fusion, batching and reduction geometry are implementation/profile choices and must not be encoded as global hardware winners."
+  ]
+}

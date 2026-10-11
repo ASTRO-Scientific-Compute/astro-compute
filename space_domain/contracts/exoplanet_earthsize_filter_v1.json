@@ -1,0 +1,12 @@
+{
+  "schema": "ASTRO_SPACE_SCIENCE_CONTRACT_V1",
+  "id": "SPACE_EXOPLANET_EARTHSIZE_FILTER_V1",
+  "science": "SPACE",
+  "provider": "NASA_EXOPLANET_ARCHIVE_TAP",
+  "table": "pscomppars",
+  "input_encoding": "packed uint32 = (period_bin << 16) | radius_milli_earth; radius_milli=round(pl_rade*1000)",
+  "operation": "compact rows with 1 <= radius_milli <= 1800",
+  "output": "unordered packed selected rows + exact selected count",
+  "validation": "full exact multiset comparison after sorting",
+  "science_unit": "one catalog row predicate-evaluated"
+}

@@ -1,0 +1,14 @@
+{
+  "schema":"ASTRO_SPACE_SCIENCE_CONTRACT_V1",
+  "id_family":"SPACE_GWOSC_H1_L1_NXCORR_LAG129_V1",
+  "science":"SPACE",
+  "provider":"GWOSC_API_V2",
+  "dataset":"GW150914-v2 H1 + L1 4 kHz public strain",
+  "input":"two time-aligned float32(strain * 1e21) detector streams",
+  "operation":"normalized lagged cross-correlation: sum(x*y)/sqrt(sum(x^2)*sum(y^2)) for integer lags -64..+64 samples",
+  "lag_window":{"min_samples":-64,"max_samples":64,"sample_rate_hz":4096,"max_abs_ms":15.625},
+  "variants":[{"id":"SPACE_GWOSC_H1_L1_NXCORR_LAG129_FULL32S_V1","window_s":32},{"id":"SPACE_GWOSC_H1_L1_NXCORR_LAG129_CENTER4S_V1","window_s":4}],
+  "output":"129 normalized correlation coefficients derived from GPU float32 reduction triplets",
+  "validation":"all 129 normalized outputs vs independent CPU double reference with conservative binary32 reduction error budget",
+  "science_unit":"one FULL-validated normalized detector-pair lag correlation"
+}

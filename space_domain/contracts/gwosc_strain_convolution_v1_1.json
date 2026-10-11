@@ -1,0 +1,21 @@
+{
+  "dataset": "GW150914-v2 H1 4 kHz 32 s public strain",
+  "id": "SPACE_GWOSC_STRAIN_CONV9_V1_1",
+  "input": "float32(strain * 1e21)",
+  "operation": "9-tap symmetric FIR [1,2,3,4,5,4,3,2,1]/25, edge clamp",
+  "output": "one float32 value per input sample",
+  "precision_contract": {
+    "abs_floor": 2e-07,
+    "all_outputs_checked": true,
+    "cpu_reference": "double precision evaluation of the nominal real-valued FIR",
+    "error_budget": "abs_floor + 3*gamma20*max(1, local_weighted_L1)",
+    "gamma20": "20u/(1-20u)",
+    "gpu_arithmetic": "IEEE-754 float32 shader arithmetic; implementation may contract multiply-adds",
+    "unit_roundoff": "2^-24"
+  },
+  "provider": "GWOSC_API_V2",
+  "schema": "ASTRO_SPACE_SCIENCE_CONTRACT_V1",
+  "science": "SPACE",
+  "science_unit": "one FULL-validated convolved strain sample",
+  "validation": "all outputs vs independent CPU double reference with IEEE-754 binary32 forward-error budget"
+}
