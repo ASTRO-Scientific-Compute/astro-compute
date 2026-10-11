@@ -2,6 +2,10 @@
 
 **No public performance leaderboard is shipped in this preview.** Preserved local profiles and historical reports are useful development references, but without a self-contained reproduction package they are not promoted to published benchmark results. Raw benchmark evidence and hash inventories are not retained under the current storage policy.
 
+## Public demo reference run
+
+[BC-250 Reference Demo Results](REFERENCE_DEMO_RESULTS.md) publishes one maintainer-operated run of the exact `v0.1.0-demo` public workload, with all four tasks/eight families, natural units, correctness and GPU evidence. It is **QUICK_DIAGNOSTIC_ONLY**, not sustained, independently externally reproduced or a leaderboard. Historical internal winner profiles are not substituted for these public-demo results.
+
 ## Primary metric
 
 Maximize **correctly completed real mathematical work per second**. Define the natural work unit from the MathSpec: cell update, sample, distance evaluation, pair, lag, segment, ray or another precise unit. Report end-to-end time and throughput alongside the kernel measurement. Legacy Mscience/s is secondary compatibility information.

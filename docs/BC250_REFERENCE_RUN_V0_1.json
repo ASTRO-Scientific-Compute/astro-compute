@@ -1,0 +1,636 @@
+{
+  "census_fusion_search": "NOT_INCLUDED",
+  "completed_mathspecs": 4,
+  "device": {
+    "api_version": 4211042,
+    "device_id": 5118,
+    "device_type": 1,
+    "driver_version": 109060100,
+    "name": "AMD BC-250 (RADV GFX1013)",
+    "vendor_id": 4098
+  },
+  "limit": 4,
+  "production_ready": false,
+  "promotion_allowed": false,
+  "retention": "COMPACT_PROFILE_ONLY; transient binaries, inputs, outputs and hashes removed",
+  "schema": "ASTRO_GPU_DEMO_V1",
+  "search_policy": "FIXED_TWO_FAMILY_EVALUATION",
+  "status": "DEMO_COMPLETE",
+  "sustained_performance": "NOT_TESTED",
+  "trials": [
+    {
+      "CORRECTNESS": "PASS",
+      "PERFORMANCE_VALIDITY": "QUICK_DIAGNOSTIC_ONLY",
+      "PPT_W": 73.01964583333333,
+      "SCLK_MHz": 2000.0,
+      "SUSTAINED_PERFORMANCE": "NOT_TESTED",
+      "accepted_sustained_performance": false,
+      "algorithmic_operations": {
+        "FMA_convention": "FMA=2 mathematical ops; RN32 oracle uses separately rounded mul/add, no fused FMA claim",
+        "MACs_per_job": null,
+        "canonical_primitive_counts": {
+          "add": 12288,
+          "mul": 16384,
+          "sub": 12288
+        },
+        "exclusions": "Address/control/compare/bitcast/packing ops omitted. sqrt and sign requests shown separately for FP32; no instruction estimate.",
+        "hardware_executed_instructions": "UNAVAILABLE",
+        "provenance": "legacy_reference.py/vector_f32.py radix-2 FFT: 1024 butterflies/window, 4 mul + 6 add/sub",
+        "scope": "Canonical algorithm primitive arithmetic, input-dependent; same frozen count for every executor. No sum across datatypes.",
+        "status": "AVAILABLE_TYPED_ARITHMETIC_SUBSET",
+        "unsupported_types": "UNAVAILABLE, not zero",
+        "useful_ops_per_job_by_type": {
+          "FP32": 40960
+        }
+      },
+      "compiler_binding": "CHECKED_IN_MEMORY_AND_DISCARDED",
+      "config": {
+        "family": "DIRECT",
+        "local_size": 64,
+        "pack": 1
+      },
+      "diagnostic_ops_per_s_by_type": {
+        "FP32": 16587004.987860112
+      },
+      "diagnostic_work_units_per_s": 1619.824705845714,
+      "dispatch_count": 408,
+      "end_to_end_scope": "One validated job / prepare, compile, warmup, repeated execution, readback and validation time",
+      "execution_kind": "PHYSICAL_GPU",
+      "full_output_validation": "warmup and final output; repeated resident input, not unique research work",
+      "gpu_ms": 983.574,
+      "gpu_wall_ratio": 0.9762361919286104,
+      "hardware_device": true,
+      "inter_dispatch_gaps": {
+        "count": 50,
+        "intra_batch_status": "UNAVAILABLE",
+        "max_ms": 0.98108,
+        "scope": "between-batches-GPU-timestamps",
+        "sum_ms": 21.90752
+      },
+      "legacy_science_per_s": 1619.82470585,
+      "measurement_wall_ms": 1007.516427,
+      "one_job_end_to_end_units_per_s": 1.2099154482655494,
+      "power_scope": "PPT driver samples; not an isolated SoC rail or validated joules/record",
+      "queue_submissions": 51,
+      "resources": "UNAVAILABLE",
+      "telemetry_coverage": 0.9895496021525414,
+      "telemetry_samples": 96,
+      "telemetry_status": "VULKAN_PCI_BUS_ID",
+      "unit": "FFT256_window/s",
+      "work": {
+        "count_per_job": 4,
+        "formula": "canonical output record count",
+        "records_per_job": 4,
+        "repeated_input": true,
+        "scope": "Repeated completion of the same canonical task; not unique research credit",
+        "unit": "FFT256_window"
+      },
+      "workload_id": "SPACE_GWOSC_FFT256_V1"
+    },
+    {
+      "CORRECTNESS": "PASS",
+      "PERFORMANCE_VALIDITY": "QUICK_DIAGNOSTIC_ONLY",
+      "PPT_W": 73.27783333333333,
+      "SCLK_MHz": 2000.0,
+      "SUSTAINED_PERFORMANCE": "NOT_TESTED",
+      "accepted_sustained_performance": false,
+      "algorithmic_operations": {
+        "FMA_convention": "FMA=2 mathematical ops; RN32 oracle uses separately rounded mul/add, no fused FMA claim",
+        "MACs_per_job": null,
+        "canonical_primitive_counts": {
+          "add": 12288,
+          "mul": 16384,
+          "sub": 12288
+        },
+        "exclusions": "Address/control/compare/bitcast/packing ops omitted. sqrt and sign requests shown separately for FP32; no instruction estimate.",
+        "hardware_executed_instructions": "UNAVAILABLE",
+        "provenance": "legacy_reference.py/vector_f32.py radix-2 FFT: 1024 butterflies/window, 4 mul + 6 add/sub",
+        "scope": "Canonical algorithm primitive arithmetic, input-dependent; same frozen count for every executor. No sum across datatypes.",
+        "status": "AVAILABLE_TYPED_ARITHMETIC_SUBSET",
+        "unsupported_types": "UNAVAILABLE, not zero",
+        "useful_ops_per_job_by_type": {
+          "FP32": 40960
+        }
+      },
+      "compiler_binding": "CHECKED_IN_MEMORY_AND_DISCARDED",
+      "config": {
+        "family": "TILED",
+        "local_size": 64,
+        "pack": 1
+      },
+      "diagnostic_ops_per_s_by_type": {
+        "FP32": 613806490.8435259
+      },
+      "diagnostic_work_units_per_s": 59942.04012143808,
+      "dispatch_count": 14992,
+      "end_to_end_scope": "One validated job / prepare, compile, warmup, repeated execution, readback and validation time",
+      "execution_kind": "PHYSICAL_GPU",
+      "full_output_validation": "warmup and final output; repeated resident input, not unique research work",
+      "gpu_ms": 845.661,
+      "gpu_wall_ratio": 0.8452949171413996,
+      "hardware_device": true,
+      "inter_dispatch_gaps": {
+        "count": 1873,
+        "intra_batch_status": "UNAVAILABLE",
+        "max_ms": 0.37728,
+        "scope": "between-batches-GPU-timestamps",
+        "sum_ms": 152.84092
+      },
+      "legacy_science_per_s": 59942.0401214,
+      "measurement_wall_ms": 1000.433083,
+      "one_job_end_to_end_units_per_s": 1.20583511401624,
+      "power_scope": "PPT driver samples; not an isolated SoC rail or validated joules/record",
+      "queue_submissions": 1874,
+      "resources": "UNAVAILABLE",
+      "telemetry_coverage": 0.9944402593291689,
+      "telemetry_samples": 96,
+      "telemetry_status": "VULKAN_PCI_BUS_ID",
+      "unit": "FFT256_window/s",
+      "work": {
+        "count_per_job": 4,
+        "formula": "canonical output record count",
+        "records_per_job": 4,
+        "repeated_input": true,
+        "scope": "Repeated completion of the same canonical task; not unique research credit",
+        "unit": "FFT256_window"
+      },
+      "workload_id": "SPACE_GWOSC_FFT256_V1"
+    },
+    {
+      "CORRECTNESS": "PASS",
+      "PERFORMANCE_VALIDITY": "QUICK_DIAGNOSTIC_ONLY",
+      "PPT_W": 74.7424105263158,
+      "SCLK_MHz": 1967.5452348601625,
+      "SUSTAINED_PERFORMANCE": "NOT_TESTED",
+      "accepted_sustained_performance": false,
+      "algorithmic_operations": {
+        "FMA_convention": "FMA=2 mathematical ops; RN32 oracle uses separately rounded mul/add, no fused FMA claim",
+        "MACs_per_job": 9216,
+        "canonical_primitive_counts": {
+          "add": 9216,
+          "mul": 9216
+        },
+        "exclusions": "Address/control/compare/bitcast/packing ops omitted. sqrt and sign requests shown separately for FP32; no instruction estimate.",
+        "hardware_executed_instructions": "UNAVAILABLE",
+        "provenance": "legacy_reference.py op31: nine clamped taps per input sample, sum starts at zero",
+        "scope": "Canonical algorithm primitive arithmetic, input-dependent; same frozen count for every executor. No sum across datatypes.",
+        "status": "AVAILABLE_TYPED_ARITHMETIC_SUBSET",
+        "unsupported_types": "UNAVAILABLE, not zero",
+        "useful_ops_per_job_by_type": {
+          "FP32": 18432
+        }
+      },
+      "compiler_binding": "CHECKED_IN_MEMORY_AND_DISCARDED",
+      "config": {
+        "family": "DIRECT",
+        "local_size": 64,
+        "pack": 1
+      },
+      "diagnostic_ops_per_s_by_type": {
+        "FP32": 1236836209.8283465
+      },
+      "diagnostic_work_units_per_s": 68713122.76824148,
+      "dispatch_count": 67104,
+      "end_to_end_scope": "One validated job / prepare, compile, warmup, repeated execution, readback and validation time",
+      "execution_kind": "PHYSICAL_GPU",
+      "full_output_validation": "warmup and final output; repeated resident input, not unique research work",
+      "gpu_ms": 577.88464,
+      "gpu_wall_ratio": 0.5778730912062722,
+      "hardware_device": true,
+      "inter_dispatch_gaps": {
+        "count": 8387,
+        "intra_batch_status": "UNAVAILABLE",
+        "max_ms": 0.57196,
+        "scope": "between-batches-GPU-timestamps",
+        "sum_ms": 420.20472
+      },
+      "legacy_science_per_s": 68713122.7682,
+      "measurement_wall_ms": 1000.019985,
+      "one_job_end_to_end_units_per_s": 313.0929516904288,
+      "power_scope": "PPT driver samples; not an isolated SoC rail or validated joules/record",
+      "queue_submissions": 8388,
+      "resources": "UNAVAILABLE",
+      "telemetry_coverage": 0.9855490353025295,
+      "telemetry_samples": 95,
+      "telemetry_status": "VULKAN_PCI_BUS_ID",
+      "unit": "convolution_sample/s",
+      "work": {
+        "count_per_job": 1024,
+        "formula": "canonical output record count",
+        "records_per_job": 1024,
+        "repeated_input": true,
+        "scope": "Repeated completion of the same canonical task; not unique research credit",
+        "unit": "convolution_sample"
+      },
+      "workload_id": "SPACE_GWOSC_CONVOLUTION_V1"
+    },
+    {
+      "CORRECTNESS": "PASS",
+      "PERFORMANCE_VALIDITY": "QUICK_DIAGNOSTIC_ONLY",
+      "PPT_W": 73.07807291666667,
+      "SCLK_MHz": 1920.0,
+      "SUSTAINED_PERFORMANCE": "NOT_TESTED",
+      "accepted_sustained_performance": false,
+      "algorithmic_operations": {
+        "FMA_convention": "FMA=2 mathematical ops; RN32 oracle uses separately rounded mul/add, no fused FMA claim",
+        "MACs_per_job": 9216,
+        "canonical_primitive_counts": {
+          "add": 9216,
+          "mul": 9216
+        },
+        "exclusions": "Address/control/compare/bitcast/packing ops omitted. sqrt and sign requests shown separately for FP32; no instruction estimate.",
+        "hardware_executed_instructions": "UNAVAILABLE",
+        "provenance": "legacy_reference.py op31: nine clamped taps per input sample, sum starts at zero",
+        "scope": "Canonical algorithm primitive arithmetic, input-dependent; same frozen count for every executor. No sum across datatypes.",
+        "status": "AVAILABLE_TYPED_ARITHMETIC_SUBSET",
+        "unsupported_types": "UNAVAILABLE, not zero",
+        "useful_ops_per_job_by_type": {
+          "FP32": 18432
+        }
+      },
+      "compiler_binding": "CHECKED_IN_MEMORY_AND_DISCARDED",
+      "config": {
+        "family": "TILED",
+        "local_size": 64,
+        "pack": 1
+      },
+      "diagnostic_ops_per_s_by_type": {
+        "FP32": 1245495581.7319686
+      },
+      "diagnostic_work_units_per_s": 69194198.98510937,
+      "dispatch_count": 67576,
+      "end_to_end_scope": "One validated job / prepare, compile, warmup, repeated execution, readback and validation time",
+      "execution_kind": "PHYSICAL_GPU",
+      "full_output_validation": "warmup and final output; repeated resident input, not unique research work",
+      "gpu_ms": 584.97308,
+      "gpu_wall_ratio": 0.5849424354507492,
+      "hardware_device": true,
+      "inter_dispatch_gaps": {
+        "count": 8446,
+        "intra_batch_status": "UNAVAILABLE",
+        "max_ms": 0.87536,
+        "scope": "between-batches-GPU-timestamps",
+        "sum_ms": 413.14744
+      },
+      "legacy_science_per_s": 69194198.9851,
+      "measurement_wall_ms": 1000.052389,
+      "one_job_end_to_end_units_per_s": 312.7382859006317,
+      "power_scope": "PPT driver samples; not an isolated SoC rail or validated joules/record",
+      "queue_submissions": 8447,
+      "resources": "UNAVAILABLE",
+      "telemetry_coverage": 0.986603130848578,
+      "telemetry_samples": 96,
+      "telemetry_status": "VULKAN_PCI_BUS_ID",
+      "unit": "convolution_sample/s",
+      "work": {
+        "count_per_job": 1024,
+        "formula": "canonical output record count",
+        "records_per_job": 1024,
+        "repeated_input": true,
+        "scope": "Repeated completion of the same canonical task; not unique research credit",
+        "unit": "convolution_sample"
+      },
+      "workload_id": "SPACE_GWOSC_CONVOLUTION_V1"
+    },
+    {
+      "CORRECTNESS": "PASS",
+      "PERFORMANCE_VALIDITY": "QUICK_DIAGNOSTIC_ONLY",
+      "PPT_W": 73.65775257731958,
+      "SCLK_MHz": 2000.0,
+      "SUSTAINED_PERFORMANCE": "NOT_TESTED",
+      "accepted_sustained_performance": false,
+      "algorithmic_operations": {
+        "FMA_convention": "FMA=2 mathematical ops; RN32 oracle uses separately rounded mul/add, no fused FMA claim",
+        "MACs_per_job": 62017,
+        "canonical_primitive_counts": {
+          "add": 61888,
+          "mul": 62017
+        },
+        "exclusions": "Address/control/compare/bitcast/packing ops omitted. sqrt and sign requests shown separately for FP32; no instruction estimate.",
+        "hardware_executed_instructions": "UNAVAILABLE",
+        "provenance": "legacy_reference.py op32/vector_f32.total: sum(N-abs(lag)), lag=-64..64; cumsum has length-1 additions per nonempty lag",
+        "scope": "Canonical algorithm primitive arithmetic, input-dependent; same frozen count for every executor. No sum across datatypes.",
+        "status": "AVAILABLE_TYPED_ARITHMETIC_SUBSET",
+        "unsupported_types": "UNAVAILABLE, not zero",
+        "useful_ops_per_job_by_type": {
+          "FP32": 123905
+        }
+      },
+      "compiler_binding": "CHECKED_IN_MEMORY_AND_DISCARDED",
+      "config": {
+        "family": "DIRECT",
+        "local_size": 64,
+        "pack": 1
+      },
+      "diagnostic_ops_per_s_by_type": {
+        "FP32": 331669366.8757883
+      },
+      "diagnostic_work_units_per_s": 345307.6819093393,
+      "dispatch_count": 2680,
+      "end_to_end_scope": "One validated job / prepare, compile, warmup, repeated execution, readback and validation time",
+      "execution_kind": "PHYSICAL_GPU",
+      "full_output_validation": "warmup and final output; repeated resident input, not unique research work",
+      "gpu_ms": 947.58676,
+      "gpu_wall_ratio": 0.946456633991616,
+      "hardware_device": true,
+      "inter_dispatch_gaps": {
+        "count": 334,
+        "intra_batch_status": "UNAVAILABLE",
+        "max_ms": 0.72208,
+        "scope": "between-batches-GPU-timestamps",
+        "sum_ms": 51.62328
+      },
+      "legacy_science_per_s": 345307.681909,
+      "measurement_wall_ms": 1001.19406,
+      "one_job_end_to_end_units_per_s": 40.11792892226645,
+      "power_scope": "PPT driver samples; not an isolated SoC rail or validated joules/record",
+      "queue_submissions": 335,
+      "resources": "UNAVAILABLE",
+      "telemetry_coverage": 0.994229384960594,
+      "telemetry_samples": 97,
+      "telemetry_status": "VULKAN_PCI_BUS_ID",
+      "unit": "cross_correlation_lag/s",
+      "work": {
+        "count_per_job": 129,
+        "formula": "canonical output record count",
+        "records_per_job": 129,
+        "repeated_input": true,
+        "scope": "Repeated completion of the same canonical task; not unique research credit",
+        "unit": "cross_correlation_lag"
+      },
+      "workload_id": "SPACE_GWOSC_XCORR_V1"
+    },
+    {
+      "CORRECTNESS": "PASS",
+      "PERFORMANCE_VALIDITY": "QUICK_DIAGNOSTIC_ONLY",
+      "PPT_W": 80.24722105263157,
+      "SCLK_MHz": 2000.0,
+      "SUSTAINED_PERFORMANCE": "NOT_TESTED",
+      "accepted_sustained_performance": false,
+      "algorithmic_operations": {
+        "FMA_convention": "FMA=2 mathematical ops; RN32 oracle uses separately rounded mul/add, no fused FMA claim",
+        "MACs_per_job": 62017,
+        "canonical_primitive_counts": {
+          "add": 61888,
+          "mul": 62017
+        },
+        "exclusions": "Address/control/compare/bitcast/packing ops omitted. sqrt and sign requests shown separately for FP32; no instruction estimate.",
+        "hardware_executed_instructions": "UNAVAILABLE",
+        "provenance": "legacy_reference.py op32/vector_f32.total: sum(N-abs(lag)), lag=-64..64; cumsum has length-1 additions per nonempty lag",
+        "scope": "Canonical algorithm primitive arithmetic, input-dependent; same frozen count for every executor. No sum across datatypes.",
+        "status": "AVAILABLE_TYPED_ARITHMETIC_SUBSET",
+        "unsupported_types": "UNAVAILABLE, not zero",
+        "useful_ops_per_job_by_type": {
+          "FP32": 123905
+        }
+      },
+      "compiler_binding": "CHECKED_IN_MEMORY_AND_DISCARDED",
+      "config": {
+        "family": "TILED",
+        "local_size": 64,
+        "pack": 1
+      },
+      "diagnostic_ops_per_s_by_type": {
+        "FP32": 660052128.8594486
+      },
+      "diagnostic_work_units_per_s": 687193.6130331211,
+      "dispatch_count": 5328,
+      "end_to_end_scope": "One validated job / prepare, compile, warmup, repeated execution, readback and validation time",
+      "execution_kind": "PHYSICAL_GPU",
+      "full_output_validation": "warmup and final output; repeated resident input, not unique research work",
+      "gpu_ms": 929.76404,
+      "gpu_wall_ratio": 0.9296038915599776,
+      "hardware_device": true,
+      "inter_dispatch_gaps": {
+        "count": 665,
+        "intra_batch_status": "UNAVAILABLE",
+        "max_ms": 0.56608,
+        "scope": "between-batches-GPU-timestamps",
+        "sum_ms": 68.4284
+      },
+      "legacy_science_per_s": 687193.613033,
+      "measurement_wall_ms": 1000.172276,
+      "one_job_end_to_end_units_per_s": 40.17916301161721,
+      "power_scope": "PPT driver samples; not an isolated SoC rail or validated joules/record",
+      "queue_submissions": 666,
+      "resources": "UNAVAILABLE",
+      "telemetry_coverage": 0.9895326777684048,
+      "telemetry_samples": 95,
+      "telemetry_status": "VULKAN_PCI_BUS_ID",
+      "unit": "cross_correlation_lag/s",
+      "work": {
+        "count_per_job": 129,
+        "formula": "canonical output record count",
+        "records_per_job": 129,
+        "repeated_input": true,
+        "scope": "Repeated completion of the same canonical task; not unique research credit",
+        "unit": "cross_correlation_lag"
+      },
+      "workload_id": "SPACE_GWOSC_XCORR_V1"
+    },
+    {
+      "CORRECTNESS": "PASS",
+      "PERFORMANCE_VALIDITY": "QUICK_DIAGNOSTIC_ONLY",
+      "PPT_W": 74.95675257731959,
+      "SCLK_MHz": 1969.2713982896398,
+      "SUSTAINED_PERFORMANCE": "NOT_TESTED",
+      "accepted_sustained_performance": false,
+      "algorithmic_operations": {
+        "FMA_convention": "FMA=2 mathematical ops; RN32 oracle uses separately rounded mul/add, no fused FMA claim",
+        "MACs_per_job": 8843,
+        "canonical_primitive_counts": {
+          "INT16xINT16_to_INT32_mul": 8843,
+          "INT64_add": 8843
+        },
+        "exclusions": "Address/control/compare/bitcast/packing ops omitted. sqrt and sign requests shown separately for FP32; no instruction estimate.",
+        "hardware_executed_instructions": "UNAVAILABLE",
+        "provenance": "reference.py: actual nonzero-padding taps/CSR entries, signed16 product fits32 and widens into64 accumulator",
+        "scope": "Canonical algorithm primitive arithmetic, input-dependent; same frozen count for every executor. No sum across datatypes.",
+        "status": "AVAILABLE_TYPED_ARITHMETIC_SUBSET",
+        "unsupported_types": "UNAVAILABLE, not zero",
+        "useful_ops_per_job_by_type": {
+          "INT32": 8843,
+          "INT64": 8843
+        }
+      },
+      "compiler_binding": "CHECKED_IN_MEMORY_AND_DISCARDED",
+      "config": {
+        "family": "DIRECT",
+        "local_size": 64,
+        "pack": 1
+      },
+      "diagnostic_ops_per_s_by_type": {
+        "INT32": 776953802.7720613,
+        "INT64": 776953802.7720613
+      },
+      "diagnostic_work_units_per_s": 22580247.34958948,
+      "dispatch_count": 87864,
+      "end_to_end_scope": "One validated job / prepare, compile, warmup, repeated execution, readback and validation time",
+      "execution_kind": "PHYSICAL_GPU",
+      "full_output_validation": "warmup and final output; repeated resident input, not unique research work",
+      "gpu_ms": 478.21112,
+      "gpu_wall_ratio": 0.4781941641913261,
+      "hardware_device": true,
+      "inter_dispatch_gaps": {
+        "count": 10982,
+        "intra_batch_status": "UNAVAILABLE",
+        "max_ms": 0.60284,
+        "scope": "between-batches-GPU-timestamps",
+        "sum_ms": 519.88408
+      },
+      "legacy_science_per_s": 22580247.3496,
+      "measurement_wall_ms": 1000.035458,
+      "one_job_end_to_end_units_per_s": 78.30538818261482,
+      "power_scope": "PPT driver samples; not an isolated SoC rail or validated joules/record",
+      "queue_submissions": 10983,
+      "resources": "UNAVAILABLE",
+      "telemetry_coverage": 0.9904873687988771,
+      "telemetry_samples": 97,
+      "telemetry_status": "VULKAN_PCI_BUS_ID",
+      "unit": "filtered_sample/s",
+      "work": {
+        "count_per_job": 257,
+        "formula": "canonical output record count",
+        "records_per_job": 257,
+        "repeated_input": true,
+        "scope": "Repeated completion of the same canonical task; not unique research credit",
+        "unit": "filtered_sample"
+      },
+      "workload_id": "SIGNAL_FIR_ACCUMULATE_I16_V1"
+    },
+    {
+      "CORRECTNESS": "PASS",
+      "PERFORMANCE_VALIDITY": "QUICK_DIAGNOSTIC_ONLY",
+      "PPT_W": 73.66059793814433,
+      "SCLK_MHz": 1920.0,
+      "SUSTAINED_PERFORMANCE": "NOT_TESTED",
+      "accepted_sustained_performance": false,
+      "algorithmic_operations": {
+        "FMA_convention": "FMA=2 mathematical ops; RN32 oracle uses separately rounded mul/add, no fused FMA claim",
+        "MACs_per_job": 8843,
+        "canonical_primitive_counts": {
+          "INT16xINT16_to_INT32_mul": 8843,
+          "INT64_add": 8843
+        },
+        "exclusions": "Address/control/compare/bitcast/packing ops omitted. sqrt and sign requests shown separately for FP32; no instruction estimate.",
+        "hardware_executed_instructions": "UNAVAILABLE",
+        "provenance": "reference.py: actual nonzero-padding taps/CSR entries, signed16 product fits32 and widens into64 accumulator",
+        "scope": "Canonical algorithm primitive arithmetic, input-dependent; same frozen count for every executor. No sum across datatypes.",
+        "status": "AVAILABLE_TYPED_ARITHMETIC_SUBSET",
+        "unsupported_types": "UNAVAILABLE, not zero",
+        "useful_ops_per_job_by_type": {
+          "INT32": 8843,
+          "INT64": 8843
+        }
+      },
+      "compiler_binding": "CHECKED_IN_MEMORY_AND_DISCARDED",
+      "config": {
+        "family": "TILED",
+        "local_size": 64,
+        "pack": 1
+      },
+      "diagnostic_ops_per_s_by_type": {
+        "INT32": 861781638.534029,
+        "INT64": 861781638.534029
+      },
+      "diagnostic_work_units_per_s": 25045559.324125912,
+      "dispatch_count": 97456,
+      "end_to_end_scope": "One validated job / prepare, compile, warmup, repeated execution, readback and validation time",
+      "execution_kind": "PHYSICAL_GPU",
+      "full_output_validation": "warmup and final output; repeated resident input, not unique research work",
+      "gpu_ms": 451.4306,
+      "gpu_wall_ratio": 0.4514191966996722,
+      "hardware_device": true,
+      "inter_dispatch_gaps": {
+        "count": 12181,
+        "intra_batch_status": "UNAVAILABLE",
+        "max_ms": 0.64136,
+        "scope": "between-batches-GPU-timestamps",
+        "sum_ms": 546.66492
+      },
+      "legacy_science_per_s": 25045559.3241,
+      "measurement_wall_ms": 1000.025261,
+      "one_job_end_to_end_units_per_s": 78.57514858487097,
+      "power_scope": "PPT driver samples; not an isolated SoC rail or validated joules/record",
+      "queue_submissions": 12182,
+      "resources": "UNAVAILABLE",
+      "telemetry_coverage": 0.9896565292864137,
+      "telemetry_samples": 97,
+      "telemetry_status": "VULKAN_PCI_BUS_ID",
+      "unit": "filtered_sample/s",
+      "work": {
+        "count_per_job": 257,
+        "formula": "canonical output record count",
+        "records_per_job": 257,
+        "repeated_input": true,
+        "scope": "Repeated completion of the same canonical task; not unique research credit",
+        "unit": "filtered_sample"
+      },
+      "workload_id": "SIGNAL_FIR_ACCUMULATE_I16_V1"
+    }
+  ],
+  "reference_run": {
+    "title": "BC-250 Reference Demo Results",
+    "operator": "Project maintainer",
+    "release_tag": "v0.1.0-demo",
+    "source_commit": "48a9ddc5ff00cd174b8f7cb58f9933af22f1df72",
+    "source_verification": "All 377 release files checked before and after execution; runtime comparison only, no per-file hash inventory retained in this profile",
+    "started_utc": "2026-10-11T18:59:59.804734+00:00",
+    "finished_utc": "2026-10-11T19:00:30.708638+00:00",
+    "whole_demo_wall_seconds": 30.724129068003094,
+    "result_class": "QUICK_DIAGNOSTIC_ONLY",
+    "sustained": false,
+    "independent_external_reproduction": false,
+    "physical_runs": 1,
+    "repetitions_per_family_configuration": 1,
+    "order": "FFT256, Convolution, XCORR, Integer FIR; DIRECT then TILED",
+    "hardware": {
+      "active_cus": 24,
+      "active_cu_evidence": {
+        "simd_count": 48,
+        "simd_per_cu": 2,
+        "source": "Runtime KFD topology"
+      },
+      "gpu_clock_target_mhz": 2000,
+      "clock_target_scope": "Operator target; runtime KFD max_engine_clk_fcompute=2000. Not a locked or guaranteed measured clock.",
+      "backend": "Vulkan / Mesa RADV / GFX1013",
+      "vendor_id": 4098,
+      "device_id": 5118
+    },
+    "software": {
+      "os": "Linux Mint 22.3",
+      "kernel": "7.0.0-38-generic",
+      "architecture": "x86_64",
+      "mesa": "26.2.4 - kisak-mesa PPA",
+      "vulkan_device_api": "1.4.354",
+      "vulkan_instance": "1.3.275",
+      "python": "3.12.3",
+      "numpy": "1.26.4",
+      "compiler": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0"
+    },
+    "fixture": {
+      "seed": 271828,
+      "scale": 1,
+      "source": "science_library.vectors.fixture",
+      "kind": "deterministic synthetic input; repeated resident input"
+    },
+    "protocol": {
+      "warmup_ms_per_trial": 2000,
+      "measurement_target_ms_per_trial": 1000,
+      "dispatches_per_submission": 8,
+      "local_size": 64,
+      "pack": 1,
+      "pre_recorded_commands": false
+    },
+    "concurrency": "Development Fast Search stopped before run; no competing ASTRO campaign observed. Normal desktop remained active; exclusive use by every OS/graphics client was not established.",
+    "cleanup": "No astro-demo-* temporary workspace remained after normal completion",
+    "unavailable": [
+      "CU occupancy/utilization",
+      "hardware queue/compute duty counters",
+      "final register allocation/scratch/spill",
+      "intra-batch per-dispatch gaps",
+      "independent external reproduction",
+      "sustained confirmation"
+    ]
+  }
+}

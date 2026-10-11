@@ -30,6 +30,8 @@ bash run_gpu_demo.sh
 
 [Install the dependencies and run the demo](docs/GPU_DEMO.md). Four fixed MathSpecs run through DIRECT and TILED kernels, compare their complete warmup/final outputs with the canonical CPU oracle, then stop. Results are **QUICK_DIAGNOSTIC_ONLY**. The included demo does not run unrestricted Census/Fusion search or a full MinerNode.
 
+[BC-250 Reference Demo Results](docs/REFERENCE_DEMO_RESULTS.md): all eight DIRECT/TILED observations from the public release on 24 active CUs, with a 2000 MHz target and separately reported measured clocks. **QUICK_DIAGNOSTIC_ONLY**, not sustained or independently externally reproduced.
+
 For the CPU references and software selftests (Python 3.10–3.12):
 
 ```bash
