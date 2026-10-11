@@ -1,0 +1,56 @@
+{
+  "workload_id": "SPACE_CATALOG_CHORD_MATCH_I32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Fixed-point catalog radius match and bounded nearest source",
+  "common_name": "Fixed-point catalog radius match and bounded nearest source",
+  "scientific_use": "Cross-match two catalogs represented as integer Cartesian coordinates; unit-sphere chord queries require an explicitly pre-encoded sphere catalog.",
+  "scientific_purpose": "Cross-match two catalogs represented as integer Cartesian coordinates; unit-sphere chord queries require an explicitly pre-encoded sphere catalog.",
+  "opcode": 5,
+  "source_references": [
+    {
+      "title": "Astropy catalog matching and angular separation",
+      "url": "https://docs.astropy.org/en/stable/coordinates/matchsep.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "d2(q,p)=sum((q_k-p_k)^2); count=sum(d2<=R2); nearest=argmin(d2,index) within cutoff",
+  "input_contract": "queries[N,3], catalog[M,3], |coordinate|<=1000000000; squared_radius integer0..12000000000000000000; declared coordinate_unit; no RA/Dec conversion inside this primitive",
+  "output_contract": "N x [u32 count,u32 nearest_index,u64 squared_distance]; no match => [0,0xffffffff,0xffffffffffffffff]",
+  "result_contract": "N x [u32 count,u32 nearest_index,u64 squared_distance]; no match => [0,0xffffffff,0xffffffffffffffff]",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Entire output byte stream vs independent Python arbitrary-precision CPU reference; edge vectors before search; each timing candidate checked before/after; held-out winner confirmation.",
+  "reference_implementation": "science_library/reference.py",
+  "CPU_reference": "science_library/reference.py",
+  "reference_test_vectors": "science_library/vectors/SPACE_CATALOG_CHORD_MATCH_I32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "AABB broadphase + exact64 integer narrowphase",
+  "RT_applicability": "Bounded radius broadphase; expanded float boxes are conservative only; all accepted results use integer arithmetic.",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "query rows; catalog shards merge counts and min(distance,global index)",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_CATALOG_CHORD_MATCH_I32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "reference_sources": [
+    {
+      "title": "Astropy catalog matching and angular separation",
+      "url": "https://docs.astropy.org/en/stable/coordinates/matchsep.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

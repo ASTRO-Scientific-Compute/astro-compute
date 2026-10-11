@@ -1,0 +1,71 @@
+{
+  "workload_id": "SPACE_GWOSC_XCORR_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "GWOSC129-lag correlation, zero-bit amendment",
+  "common_name": "GWOSC129-lag correlation, zero-bit amendment",
+  "scientific_use": "Time-aligned detector-pair lag correlation retaining historical sign convention.",
+  "scientific_purpose": "Time-aligned detector-pair lag correlation retaining historical sign convention.",
+  "opcode": 32,
+  "source_references": [
+    {
+      "title": "SciPy correlation; ASTRO historical H1[i]*L1[i+lag] convention",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.correlate.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "R[lag]=sum_i H1[i]*L1[i+lag], valid overlaps only, lag=-64..64; increasing i, separately RN32 product/add",
+  "input_contract": "encoding=binary32-hex; h1,l1 equal lengths65..131072; full32s=131072, center4s=16384,4096Hz; input already scaled",
+  "output_contract": "129 binary32 values, ascending lag; note generic SPACE_CROSS_CORRELATION uses opposite y-index convention",
+  "result_contract": "129 binary32 values, ascending lag; note generic SPACE_CROSS_CORRELATION uses opposite y-index convention",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full raw GPU bytes against independent CPU binary32 reference; CPU operations cross-checked with exact Fraction oracle; historical double/scientific invariants reported separately, never substituted for zero-bit gate.",
+  "reference_implementation": "science_library/legacy_reference.py + vector_f32.py (CPU hardware binary32, probed against Fraction oracle)",
+  "CPU_reference": "science_library/legacy_reference.py + vector_f32.py (CPU hardware binary32, probed against Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_GWOSC_XCORR_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause; reference only"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "lag outputs sharing complete streams",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_GWOSC_XCORR_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/BINARY32_CONTRACT.md",
+  "contract_revision": "ZERO_BIT_AMENDMENT_V2",
+  "historical_contract": "space_domain/contracts/gwosc_h1_l1_xcorr_v1.json",
+  "historical_contract_sha256": "a2c78063040b4139946ce23ba9a5d767a0273d10b098a9cb65f09b3ef8f41743",
+  "legacy_compatibility": "Scientific operator and input representation retained; deterministic rounding/serialization strengthened. Not a claim of identical bytes to historical tolerant executors.",
+  "partition_limits": "encoding=binary32-hex; h1,l1 equal lengths65..131072; full32s=131072, center4s=16384,4096Hz; input already scaled",
+  "reference_sources": [
+    {
+      "title": "SciPy correlation; ASTRO historical H1[i]*L1[i+lag] convention",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.correlate.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause; reference only"
+  }
+}

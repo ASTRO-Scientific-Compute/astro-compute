@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_PSF_WEIGHTED_SCAN_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Weighted spatial PSF amplitude scan",
+  "common_name": "Weighted spatial PSF amplitude scan",
+  "scientific_use": "Estimate supplied-PSF amplitude, known-noise variance and fit residuals at integer image centers.",
+  "scientific_purpose": "Estimate supplied-PSF amplitude, known-noise variance and fit residuals at integer image centers.",
+  "opcode": 59,
+  "source_references": [
+    {
+      "title": "Photutils PSF photometry and simultaneous source fitting",
+      "url": "https://photutils.readthedocs.io/en/stable/api/photutils.psf.PSFPhotometry.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "A=sum(w*P*(image-background))/sum(w*P*P); var=1/sum(w*P*P); snr=A/sqrt(var); chi2=sum(w*(image-background-A*P)^2), ordered RN32.",
+  "input_contract": "encoding=binary32-hex; image,background,weights[H,W], H,W1..64; weights>=0; nonnegative PSF odd shape1..9, positive sum; all finite intermediates; full support only.",
+  "output_contract": "H*W x [u32 status,f32 amplitude,variance,snr,chi2,u32 positive_weight_pixels]; status1 zero information,2 partial support; remaining fields0 on failure; no PSF normalization or significance inference.",
+  "result_contract": "H*W x [u32 status,f32 amplitude,variance,snr,chi2,u32 positive_weight_pixels]; status1 zero information,2 partial support; remaining fields0 on failure; no PSF normalization or significance inference.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_psf_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_psf_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_PSF_WEIGHTED_SCAN_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; independent implementation"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Weighted image gathers and dense template solves have no conservative ray/BVH pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "output centers retaining the entire input image and PSF; halo required for image tiles",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_PSF_WEIGHTED_SCAN_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_PSF_MIXTURE_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; image,background,weights[H,W], H,W1..64; weights>=0; nonnegative PSF odd shape1..9, positive sum; all finite intermediates; full support only.",
+  "reference_sources": [
+    {
+      "title": "Photutils PSF photometry and simultaneous source fitting",
+      "url": "https://photutils.readthedocs.io/en/stable/api/photutils.psf.PSFPhotometry.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; independent implementation"
+  }
+}

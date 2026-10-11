@@ -1,0 +1,56 @@
+{
+  "workload_id": "BIO_KMER_COUNTS_U32_V1",
+  "domain": "BIO",
+  "scientific_domain": "BIO",
+  "scientific_name": "Overlapping oriented DNA k-mer counts",
+  "common_name": "Overlapping oriented DNA k-mer counts",
+  "scientific_use": "Count a supplied DNA word panel in independent sequence windows.",
+  "scientific_purpose": "Count a supplied DNA word panel in independent sequence windows.",
+  "opcode": 25,
+  "source_references": [
+    {
+      "title": "Jellyfish DNA k-mer counting and strand conventions",
+      "url": "https://github.com/gmarcais/Jellyfish/blob/master/doc/Readme.md",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "C[s,q]=sum_{j=0..len(s)-k} [s[j:j+k]==query[q]]; overlapping occurrences count; orientation retained",
+  "input_contract": "sequences[B] ACGT length0..4096,B1..256; kmers[Q] ACGT all same length1..15,Q1..256; B*Q*maxlen<=4194304",
+  "output_contract": "B*Q u32 counts sequence-major/query-minor; no reverse-complement merging or full vocabulary allocation",
+  "result_contract": "B*Q u32 counts sequence-major/query-minor; no reverse-complement merging or full vocabulary allocation",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Entire output byte stream vs independent Python arbitrary-precision CPU reference; edge vectors before search; each timing candidate checked before/after; held-out winner confirmation.",
+  "reference_implementation": "science_library/domain_reference.py + f32.py (integer/Fraction oracle)",
+  "CPU_reference": "science_library/domain_reference.py + f32.py (integer/Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/BIO_KMER_COUNTS_U32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause/GPL-3.0 by component; documentation only"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "sequence/query tiles; sequence shards need k-1 halo and unique start ownership",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/BIO_KMER_COUNTS_U32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "reference_sources": [
+    {
+      "title": "Jellyfish DNA k-mer counting and strand conventions",
+      "url": "https://github.com/gmarcais/Jellyfish/blob/master/doc/Readme.md",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause/GPL-3.0 by component; documentation only"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

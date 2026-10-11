@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_BOOTSTRAP_MEAN_VARIANCE_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Case-bootstrap replicate mean and sample variance",
+  "common_name": "Case-bootstrap replicate mean and sample variance",
+  "scientific_use": "Resampling statistics for uncertainty estimation on astronomical measurements.",
+  "scientific_purpose": "Resampling statistics for uncertainty estimation on astronomical measurements.",
+  "opcode": 45,
+  "source_references": [
+    {
+      "title": "Astropy case bootstrap and statistics of resampled data",
+      "url": "https://docs.astropy.org/en/stable/api/astropy.stats.bootstrap.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "For each supplied index row I: mu=ordered_sum(x[I[j]])/K; s2=ordered_sum((x[I[j]]-mu)^2)/(K-1); each operation RN32.",
+  "input_contract": "encoding=binary32-hex; values[N],N1..4096; indices[B,K] uint indices0..N-1; B1..1024,K2..512,B*K<=262144; all RN32 intermediates finite.",
+  "output_contract": "B x [binary32 mean,binary32 sample variance]; indices supplied with replacement; no internal RNG, confidence interval or independence claim.",
+  "result_contract": "B x [binary32 mean,binary32 sample variance]; indices supplied with replacement; no internal RNG, confidence interval or independence claim.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_statistics_reference.py + f32.py (Fraction oracle; independent flood fill for labels)",
+  "CPU_reference": "science_library/space_statistics_reference.py + f32.py (Fraction oracle; independent flood fill for labels)",
+  "reference_test_vectors": "science_library/vectors/SPACE_BOOTSTRAP_MEAN_VARIANCE_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; independent implementation, no source copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Ordered statistical reductions and local pixel adjacency do not use ray/BVH candidate pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "whole replicate rows, retaining ordered indices and shared original measurements",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_BOOTSTRAP_MEAN_VARIANCE_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_STATISTICS_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; values[N],N1..4096; indices[B,K] uint indices0..N-1; B1..1024,K2..512,B*K<=262144; all RN32 intermediates finite.",
+  "reference_sources": [
+    {
+      "title": "Astropy case bootstrap and statistics of resampled data",
+      "url": "https://docs.astropy.org/en/stable/api/astropy.stats.bootstrap.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; independent implementation, no source copied"
+  }
+}

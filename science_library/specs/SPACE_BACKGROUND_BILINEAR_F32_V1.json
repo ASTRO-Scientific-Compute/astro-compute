@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_BACKGROUND_BILINEAR_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Bilinear background mesh evaluation",
+  "common_name": "Bilinear background mesh evaluation",
+  "scientific_use": "Interpolate a supplied astronomical background mesh at image positions expressed in mesh-index coordinates.",
+  "scientific_purpose": "Interpolate a supplied astronomical background mesh at image positions expressed in mesh-index coordinates.",
+  "opcode": 51,
+  "source_references": [
+    {
+      "title": "SciPy regular-grid linear interpolation",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.RegularGridInterpolator.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "Clamp x,y to mesh domain; j=floor(x),k=floor(y); tx=RN32(x-j),ty=RN32(y-k); lerp(a,b,t)=RN32(RN32((1-t)*a)+RN32(t*b)), exact t=0 returns canonical a; x interpolation then y.",
+  "input_contract": "encoding=binary32-hex; mesh[H,W],H/W2..64; points[Q,2],Q1..65536; all finite; explicit grid-coordinate queries, nearest-edge extension.",
+  "output_contract": "Q x binary32 background; no mesh estimation, missing-cell filling or implicit world-coordinate conversion.",
+  "result_contract": "Q x binary32 background; no mesh estimation, missing-cell filling or implicit world-coordinate conversion.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_imaging_reference.py + f32.py (Fraction oracle; BFS graph closure)",
+  "CPU_reference": "science_library/space_imaging_reference.py + f32.py (Fraction oracle; BFS graph closure)",
+  "reference_test_vectors": "science_library/vectors/SPACE_BACKGROUND_BILINEAR_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; equations only, original implementation"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Mesh gathers, graph equivalences and ordered pixel reductions have no conservative ray/BVH pruning.",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "query positions sharing the complete mesh; retain global mesh coordinates",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_BACKGROUND_BILINEAR_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_IMAGING_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; mesh[H,W],H/W2..64; points[Q,2],Q1..65536; all finite; explicit grid-coordinate queries, nearest-edge extension.",
+  "reference_sources": [
+    {
+      "title": "SciPy regular-grid linear interpolation",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.RegularGridInterpolator.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; equations only, original implementation"
+  }
+}

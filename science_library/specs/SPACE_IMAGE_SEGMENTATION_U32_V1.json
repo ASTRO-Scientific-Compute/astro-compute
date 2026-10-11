@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_IMAGE_SEGMENTATION_U32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Thresholded connected source segmentation",
+  "common_name": "Thresholded connected source segmentation",
+  "scientific_use": "Label astronomical source islands before photometry; remove components below a supplied pixel count.",
+  "scientific_purpose": "Label astronomical source islands before photometry; remove components below a supplied pixel count.",
+  "opcode": 47,
+  "source_references": [
+    {
+      "title": "Photutils detect_sources, threshold and 4/8-connected components",
+      "url": "https://photutils.readthedocs.io/en/2.3.0/api/photutils.segmentation.detect_sources.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "Foreground=valid and value>threshold; 4/8-connected components inside each complete image; label=1+minimum row-major pixel index in component if size>=npixels, otherwise0.",
+  "input_contract": "encoding=binary32-hex; images[B,H,W],valid[B,H,W] uint0/1; B1..128,H/W1..32; B*H*W<=65536; scalar finite threshold; connectivity4 or8; npixels1..H*W.",
+  "output_contract": "B x (H*W) uint32 labels;0 background; labels canonical but not necessarily consecutive; no deblending or cross-image component merging.",
+  "result_contract": "B x (H*W) uint32 labels;0 background; labels canonical but not necessarily consecutive; no deblending or cross-image component merging.",
+  "precision_requirements": "Preserved finite binary32 comparisons; exact uint32 component labels. No arithmetic quantization or numeric label tolerance.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_statistics_reference.py + f32.py (Fraction oracle; independent flood fill for labels)",
+  "CPU_reference": "science_library/space_statistics_reference.py + f32.py (Fraction oracle; independent flood fill for labels)",
+  "reference_test_vectors": "science_library/vectors/SPACE_IMAGE_SEGMENTATION_U32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; independent implementation, no source copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Ordered statistical reductions and local pixel adjacency do not use ray/BVH candidate pruning.",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "whole independent images/cutouts only; arbitrarily tiling a larger image changes connectivity",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_IMAGE_SEGMENTATION_U32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_STATISTICS_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; images[B,H,W],valid[B,H,W] uint0/1; B1..128,H/W1..32; B*H*W<=65536; scalar finite threshold; connectivity4 or8; npixels1..H*W.",
+  "reference_sources": [
+    {
+      "title": "Photutils detect_sources, threshold and 4/8-connected components",
+      "url": "https://photutils.readthedocs.io/en/2.3.0/api/photutils.segmentation.detect_sources.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; independent implementation, no source copied"
+  }
+}

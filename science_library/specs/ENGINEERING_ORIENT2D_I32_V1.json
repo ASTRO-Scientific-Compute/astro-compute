@@ -1,0 +1,56 @@
+{
+  "workload_id": "ENGINEERING_ORIENT2D_I32_V1",
+  "domain": "ENGINEERING",
+  "scientific_domain": "ENGINEERING",
+  "scientific_name": "Exact two-dimensional triangle orientation",
+  "common_name": "Exact two-dimensional triangle orientation",
+  "scientific_use": "Robust sidedness predicate for mesh/CAD triangulation on bounded integer coordinates.",
+  "scientific_purpose": "Robust sidedness predicate for mesh/CAD triangulation on bounded integer coordinates.",
+  "opcode": 13,
+  "source_references": [
+    {
+      "title": "Shewchuk robust geometric predicates",
+      "url": "https://www.cs.cmu.edu/~quake/robust.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "det=(bx-ax)*(cy-ay)-(by-ay)*(cx-ax); orientation=sign(det)",
+  "input_contract": "triangles[N,3,2] integer coordinates in +/-10000",
+  "output_contract": "N x [i32 determinant,i32 sign]; collinear => [0,0]",
+  "result_contract": "N x [i32 determinant,i32 sign]; collinear => [0,0]",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Entire output byte stream vs independent Python arbitrary-precision CPU reference; edge vectors before search; each timing candidate checked before/after; held-out winner confirmation.",
+  "reference_implementation": "science_library/reference.py",
+  "CPU_reference": "science_library/reference.py",
+  "reference_test_vectors": "science_library/vectors/ENGINEERING_ORIENT2D_I32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "public-domain reference implementation; no code copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "independent triangles",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/ENGINEERING_ORIENT2D_I32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "reference_sources": [
+    {
+      "title": "Shewchuk robust geometric predicates",
+      "url": "https://www.cs.cmu.edu/~quake/robust.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "public-domain reference implementation; no code copied"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

@@ -1,0 +1,56 @@
+{
+  "workload_id": "BIO_CONTACT_COUNTS_I32_V1",
+  "domain": "BIO",
+  "scientific_domain": "BIO",
+  "scientific_name": "Cross-group molecular contact counts",
+  "common_name": "Cross-group molecular contact counts",
+  "scientific_use": "Count contacts between two atom groups using a hard distance cutoff; no periodic boundary wrapping.",
+  "scientific_purpose": "Count contacts between two atom groups using a hard distance cutoff; no periodic boundary wrapping.",
+  "opcode": 7,
+  "source_references": [
+    {
+      "title": "MDAnalysis native contacts / radius cutoff",
+      "url": "https://docs.mdanalysis.org/stable/documentation_pages/analysis/contacts.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "C(q)=sum_p [sum_k(q_k-p_k)^2<=R2]",
+  "input_contract": "queries[N,3], catalog[M,3] integer coordinate ticks in +/-1000000000, squared_radius0..12000000000000000000, explicit coordinate_unit; cross-group coincidences included",
+  "output_contract": "N x u32 counts; full input precision is retained",
+  "result_contract": "N x u32 counts; full input precision is retained",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Entire output byte stream vs independent Python arbitrary-precision CPU reference; edge vectors before search; each timing candidate checked before/after; held-out winner confirmation.",
+  "reference_implementation": "science_library/reference.py",
+  "CPU_reference": "science_library/reference.py",
+  "reference_test_vectors": "science_library/vectors/BIO_CONTACT_COUNTS_I32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "LGPL-2.1-or-later/GPL-2.0-or-later by version; reference only"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "AABB broadphase + exact64 integer narrowphase",
+  "RT_applicability": "Bounded radius broadphase; expanded float boxes are conservative only; all accepted results use integer arithmetic.",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "query atoms; add counts across disjoint catalog shards",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/BIO_CONTACT_COUNTS_I32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "reference_sources": [
+    {
+      "title": "MDAnalysis native contacts / radius cutoff",
+      "url": "https://docs.mdanalysis.org/stable/documentation_pages/analysis/contacts.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "LGPL-2.1-or-later/GPL-2.0-or-later by version; reference only"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

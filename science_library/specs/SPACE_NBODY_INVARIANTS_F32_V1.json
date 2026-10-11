@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_NBODY_INVARIANTS_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Softened N-body system invariants",
+  "common_name": "Softened N-body system invariants",
+  "scientific_use": "Compute total mass, energy, linear/angular momentum, center of mass and minimum squared separation.",
+  "scientific_purpose": "Compute total mass, energy, linear/angular momentum, center of mass and minimum squared separation.",
+  "opcode": 70,
+  "source_references": [
+    {
+      "title": "REBOUND gravitational constant and softened force model",
+      "url": "https://pyodide.hanno-rein.de/simulation/variables/",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "M=sum m;T=sum(m*v^2/2);U=-sum_i<j G*m_i*m_j/sqrt(r_ij^2+eps2);E=T+U;P=sum m*v;L=sum m*r cross v;COM=sum m*r/M;ordered RN32.",
+  "input_contract": "binary32 states[B,N,6],masses[B,N],G>=0,eps2>=0,masses>=0;B1..64,N1..64;B*N*N<=65536;finite executed intermediates.",
+  "output_contract": "B x [u32 status;f32 total_mass,kinetic,potential,energy,Px,Py,Pz,Lx,Ly,Lz,COMx,COMy,COMz,min_distance_squared];status1 singular weighted pair,2 zero total mass; failure has only status.",
+  "result_contract": "B x [u32 status;f32 total_mass,kinetic,potential,energy,Px,Py,Pz,Lx,Ly,Lz,COMx,COMy,COMz,min_distance_squared];status1 singular weighted pair,2 zero total mass; failure has only status.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_nbody_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_nbody_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_NBODY_INVARIANTS_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Public model description; original ASTRO implementation"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "All gravitational pairs contribute; no conservative ray-pruning route is claimed.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "whole independent systems; pair reductions and centers remain within records",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_NBODY_INVARIANTS_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_NBODY_CONTRACTS.md",
+  "partition_limits": "binary32 states[B,N,6],masses[B,N],G>=0,eps2>=0,masses>=0;B1..64,N1..64;B*N*N<=65536;finite executed intermediates.",
+  "reference_sources": [
+    {
+      "title": "REBOUND gravitational constant and softened force model",
+      "url": "https://pyodide.hanno-rein.de/simulation/variables/",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Public model description; original ASTRO implementation"
+  }
+}

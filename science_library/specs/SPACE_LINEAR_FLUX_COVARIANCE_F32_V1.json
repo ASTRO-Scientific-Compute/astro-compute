@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_LINEAR_FLUX_COVARIANCE_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Covariance-aware fixed linear flux and uncertainty",
+  "common_name": "Covariance-aware fixed linear flux and uncertainty",
+  "scientific_use": "Propagate independent pixel variance and supplied low-rank correlated noise into a signed linear flux estimator.",
+  "scientific_purpose": "Propagate independent pixel variance and supplied low-rank correlated noise into a signed linear flux estimator.",
+  "opcode": 66,
+  "source_references": [
+    {
+      "title": "NIST law of uncertainty propagation including covariance",
+      "url": "https://physics.nist.gov/cuu/Uncertainty/combination.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "C=diag(D)+U^TU;F=sum(w*f);Vd=sum(w^2*D);Vc=sum_k(sum_i(w_i*U_ki))^2;V=Vd+Vc;error=sqrt(V);standardized_flux=F/error. Ordered per-operation RN32.",
+  "input_contract": "binary32-hex flux,weights,diagonal_variance[B,N],factors[B,K,N];B1..128,N1..256,K0..16;B*N*(K+1)<=262144;D>=0;finite inputs/executed intermediates;zero weights omitted.",
+  "output_contract": "B x [u32 status,active_count,f32 flux,diagonal_variance,correlated_variance,total_variance,error,standardized_flux];status1 no active coefficients all other0;status2 zero variance retains flux/count,others0.",
+  "result_contract": "B x [u32 status,active_count,f32 flux,diagonal_variance,correlated_variance,total_variance,error,standardized_flux];status1 no active coefficients all other0;status2 zero variance retains flux/count,others0.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_uncertainty_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_uncertainty_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_LINEAR_FLUX_COVARIANCE_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "NIST reference equations; original ASTRO factorized implementation"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Pointwise noise and ordered covariance projection have no ray/BVH path.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "whole independent linear observation rows, never split ordered covariance reductions",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_LINEAR_FLUX_COVARIANCE_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_UNCERTAINTY_CONTRACTS.md",
+  "partition_limits": "binary32-hex flux,weights,diagonal_variance[B,N],factors[B,K,N];B1..128,N1..256,K0..16;B*N*(K+1)<=262144;D>=0;finite inputs/executed intermediates;zero weights omitted.",
+  "reference_sources": [
+    {
+      "title": "NIST law of uncertainty propagation including covariance",
+      "url": "https://physics.nist.gov/cuu/Uncertainty/combination.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "NIST reference equations; original ASTRO factorized implementation"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_SEGMENT_CATALOG_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Segmented-source flux, centroid and central moments",
+  "common_name": "Segmented-source flux, centroid and central moments",
+  "scientific_use": "Produce a photometric/morphological source table from a background map and globally labeled image.",
+  "scientific_purpose": "Produce a photometric/morphological source table from a background map and globally labeled image.",
+  "opcode": 53,
+  "source_references": [
+    {
+      "title": "Photutils SourceCatalog photometry and morphology",
+      "url": "https://photutils.readthedocs.io/en/stable/api/photutils.segmentation.SourceCatalog.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "d=RN32(image-background); ordered flux=sum(d),variance=sum(input_variance); morphology weights=max(d,0); centroid=sum(w*x,y)/sum(w); second pass central moments=sum(w*dx^2,w*dx*dy,w*dy^2)/sum(w).",
+  "input_contract": "encoding=binary32-hex; image/background/variance[H,W],H/W1..128; nonnegative variance; labels[H,W] uint32; valid[H,W]0/1; unique nonzero source_ids[Q],Q1..256; H*W*Q<=1048576; all inputs and RN32 intermediates finite.",
+  "output_contract": "Q x [u32 status,u32 count,f32 signed_flux,f32 variance_sum,f32 positive_flux,f32 cx,cy,mu20,mu11,mu02]; status0 normal,1 no valid pixels,2 zero positive flux; absent centroid/moments zero. Coordinates are zero-based pixel centers. Independent pixel errors assumed; no PSF or deblending model.",
+  "result_contract": "Q x [u32 status,u32 count,f32 signed_flux,f32 variance_sum,f32 positive_flux,f32 cx,cy,mu20,mu11,mu02]; status0 normal,1 no valid pixels,2 zero positive flux; absent centroid/moments zero. Coordinates are zero-based pixel centers. Independent pixel errors assumed; no PSF or deblending model.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_imaging_reference.py + f32.py (Fraction oracle; BFS graph closure)",
+  "CPU_reference": "science_library/space_imaging_reference.py + f32.py (Fraction oracle; BFS graph closure)",
+  "reference_test_vectors": "science_library/vectors/SPACE_SEGMENT_CATALOG_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; method only, no source copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Mesh gathers, graph equivalences and ordered pixel reductions have no conservative ray/BVH pruning.",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "source IDs with complete shared image in row-major order; do not independently round and sum pixel shards",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_SEGMENT_CATALOG_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_IMAGING_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; image/background/variance[H,W],H/W1..128; nonnegative variance; labels[H,W] uint32; valid[H,W]0/1; unique nonzero source_ids[Q],Q1..256; H*W*Q<=1048576; all inputs and RN32 intermediates finite.",
+  "reference_sources": [
+    {
+      "title": "Photutils SourceCatalog photometry and morphology",
+      "url": "https://photutils.readthedocs.io/en/stable/api/photutils.segmentation.SourceCatalog.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; method only, no source copied"
+  }
+}

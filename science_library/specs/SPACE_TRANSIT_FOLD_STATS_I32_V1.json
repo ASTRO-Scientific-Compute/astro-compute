@@ -1,0 +1,56 @@
+{
+  "workload_id": "SPACE_TRANSIT_FOLD_STATS_I32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Trial-period phase-bin sufficient statistics",
+  "common_name": "Trial-period phase-bin sufficient statistics",
+  "scientific_use": "Preprocessing for binned transit/variability searches; not the complete BLS optimizer.",
+  "scientific_purpose": "Preprocessing for binned transit/variability searches; not the complete BLS optimizer.",
+  "opcode": 3,
+  "source_references": [
+    {
+      "title": "Astropy Box Least Squares: phase-folded light curves",
+      "url": "https://docs.astropy.org/en/stable/timeseries/bls.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "bin(t,P)=floor((t mod P)*K/P); outputs per (P,bin): count,sum(y),sum(y^2)",
+  "input_contract": "times[N] integer ticks 0..10000000, flux[N] -1000..1000, N<=8192; periods[T] 1..1000000; bins K 1..256",
+  "output_contract": "T*K x [u32 count,i64 flux sum,u64 square sum]; empty bins exactly zero",
+  "result_contract": "T*K x [u32 count,i64 flux sum,u64 square sum]; empty bins exactly zero",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Entire output byte stream vs independent Python arbitrary-precision CPU reference; edge vectors before search; each timing candidate checked before/after; held-out winner confirmation.",
+  "reference_implementation": "science_library/reference.py",
+  "CPU_reference": "science_library/reference.py",
+  "reference_test_vectors": "science_library/vectors/SPACE_TRANSIT_FOLD_STATS_I32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "trial periods and bins; all observations shared",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_TRANSIT_FOLD_STATS_I32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "reference_sources": [
+    {
+      "title": "Astropy Box Least Squares: phase-folded light curves",
+      "url": "https://docs.astropy.org/en/stable/timeseries/bls.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_MONTE_CARLO_TAIL_U32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Exact inclusive Monte Carlo upper-tail counts",
+  "common_name": "Exact inclusive Monte Carlo upper-tail counts",
+  "scientific_use": "Evaluate simulated-null significance of observed search statistics; suitable for periodogram maxima when simulations use the same observing/search setup.",
+  "scientific_purpose": "Evaluate simulated-null significance of observed search statistics; suitable for periodogram maxima when simulations use the same observing/search setup.",
+  "opcode": 49,
+  "source_references": [
+    {
+      "title": "SciPy randomized permutation p-value, inclusive upper tail and plus-one correction",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.permutation_test.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "b=sum(null[j]>=observed[i]); output[b,N,b+1,N+1]; conservative randomized upper-tail estimate=(b+1)/(N+1).",
+  "input_contract": "encoding=binary32-hex; observed[M]1..4096,null_statistics[N]1..65535; M*N<=4194304; null_model_id nonempty text<=256; search_grid_sha25664 lowercase hex chars; inputs finite.",
+  "output_contract": "M x[u32 extreme_count,u32 simulations,u32 probability_numerator,u32 probability_denominator]; exact numeric comparisons, ties included; no RNG, null-model validation or posterior probability claim.",
+  "result_contract": "M x[u32 extreme_count,u32 simulations,u32 probability_numerator,u32 probability_denominator]; exact numeric comparisons, ties included; no RNG, null-model validation or posterior probability claim.",
+  "precision_requirements": "Exact finite binary32 comparisons and uint32 counts/rational probability; no float division or tolerance window.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_inference_reference.py + f32.py (Fraction oracle)",
+  "CPU_reference": "science_library/space_inference_reference.py + f32.py (Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_MONTE_CARLO_TAIL_U32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; no code copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Quantiles, statistical tails and dense band reductions have no ray/BVH candidate pruning.",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "observed thresholds with complete null distribution; to merge null shards sum b and N then apply plus-one exactly once",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_MONTE_CARLO_TAIL_U32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_INFERENCE_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; observed[M]1..4096,null_statistics[N]1..65535; M*N<=4194304; null_model_id nonempty text<=256; search_grid_sha25664 lowercase hex chars; inputs finite.",
+  "reference_sources": [
+    {
+      "title": "SciPy randomized permutation p-value, inclusive upper tail and plus-one correction",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.permutation_test.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; no code copied"
+  }
+}

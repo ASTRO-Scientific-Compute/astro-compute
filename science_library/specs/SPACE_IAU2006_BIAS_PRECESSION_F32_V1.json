@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_IAU2006_BIAS_PRECESSION_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "IAU2006 bias/precession of GCRS Cartesian vectors",
+  "common_name": "IAU2006 bias/precession of GCRS Cartesian vectors",
+  "scientific_use": "Generate the epoch-dependent bias/precession matrix and rotate GCRS vectors to mean equator/equinox of date.",
+  "scientific_purpose": "Generate the epoch-dependent bias/precession matrix and rotate GCRS vectors to mean equator/equinox of date.",
+  "opcode": 74,
+  "source_references": [
+    {
+      "title": "IERS Conventions2010 chapter5: TT epoch, Fukushima–Williams rotation and IAU2006 coefficients",
+      "url": "https://iers-conventions.obspm.fr/content/chapter5/icc5.pdf",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "T=(JD_TT-2451545)/36525;IERS(5.40) Fukushima–Williams polynomials;R=X(-epsilon)*Z(-psi)*X(phi)*Z(gamma), evaluated as stable conjugation M*X(phi-epsilon)*Z(gamma);output R*v;ordered RN32.",
+  "input_contract": "N1..4096;binary32-hex tt_centuries in[-1,1],vectors[N,3];explicit TT/GCRS/MEAN_EQUATOR_EQUINOX_OF_DATE_IAU2006 tags;finite executed intermediates.",
+  "output_contract": "N x16 binary32[gamma,phi-epsilon,psi,epsilon,R row-major9,transformed_xyz];mean-of-date only,no nutation/apparent-place corrections or microarcsecond accuracy guarantee.",
+  "result_contract": "N x16 binary32[gamma,phi-epsilon,psi,epsilon,R row-major9,transformed_xyz];mean-of-date only,no nutation/apparent-place corrections or microarcsecond accuracy guarantee.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_precession_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_precession_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_IAU2006_BIAS_PRECESSION_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Published mathematical coefficients/equations only; original ASTRO stable binary32 realization, not SOFA/ERFA code"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Epoch polynomials and fixed-size rotations have no ray/BVH pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "complete independent epoch/vector records",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_IAU2006_BIAS_PRECESSION_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_PRECESSION_CONTRACT.md",
+  "reference_sources": [
+    {
+      "title": "IERS Conventions2010 chapter5: TT epoch, Fukushima–Williams rotation and IAU2006 coefficients",
+      "url": "https://iers-conventions.obspm.fr/content/chapter5/icc5.pdf",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Published mathematical coefficients/equations only; original ASTRO stable binary32 realization, not SOFA/ERFA code"
+  },
+  "partition_limits": "N1..4096;binary32-hex tt_centuries in[-1,1],vectors[N,3];explicit TT/GCRS/MEAN_EQUATOR_EQUINOX_OF_DATE_IAU2006 tags;finite executed intermediates."
+}

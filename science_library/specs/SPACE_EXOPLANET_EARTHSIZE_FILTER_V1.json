@@ -1,0 +1,60 @@
+{
+  "workload_id": "SPACE_EXOPLANET_EARTHSIZE_FILTER_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Stable Earth-size catalog compaction",
+  "common_name": "Stable Earth-size catalog compaction",
+  "scientific_use": "Select the same packed rows as the original unordered multiset contract, preserving duplicates.",
+  "scientific_purpose": "Select the same packed rows as the original unordered multiset contract, preserving duplicates.",
+  "opcode": 34,
+  "source_references": [
+    {
+      "title": "NASA Exoplanet Archive planetary systems composite parameters",
+      "url": "https://exoplanetarchive.ipac.caltech.edu/docs/API_PS_columns.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "keep=(1<=row&65535<=1800); selected subsequence in original input order; count exact",
+  "input_contract": "packed_rows[0..131072] uint32; existing radius_milli_earth encoding is retained, no fresh rounding of catalog radii",
+  "output_contract": "N+1 uint32 words: selected_count, selected packed rows in input order, then zero padding; authoritative logical length=count+1",
+  "result_contract": "N+1 uint32 words: selected_count, selected packed rows in input order, then zero padding; authoritative logical length=count+1",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full raw GPU bytes against independent CPU binary32 reference; CPU operations cross-checked with exact Fraction oracle; historical double/scientific invariants reported separately, never substituted for zero-bit gate.",
+  "reference_implementation": "science_library/legacy_reference.py + vector_f32.py (CPU hardware binary32, probed against Fraction oracle)",
+  "CPU_reference": "science_library/legacy_reference.py + vector_f32.py (CPU hardware binary32, probed against Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_EXOPLANET_EARTHSIZE_FILTER_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Public archive documentation; no external code copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "output slots; GPU count prepass sees complete input; no CPU-computed offsets",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_EXOPLANET_EARTHSIZE_FILTER_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "contract_revision": "ZERO_BIT_AMENDMENT_V2",
+  "historical_contract": "space_domain/contracts/exoplanet_earthsize_filter_v1.json",
+  "historical_contract_sha256": "e991fc1fdcb75da128d0a6a26659b1d739b3a119b1fe4e94c910f43c62f83f57",
+  "legacy_compatibility": "Scientific operator and input representation retained; deterministic rounding/serialization strengthened. Not a claim of identical bytes to historical tolerant executors.",
+  "partition_limits": "packed_rows[0..131072] uint32; existing radius_milli_earth encoding is retained, no fresh rounding of catalog radii",
+  "reference_sources": [
+    {
+      "title": "NASA Exoplanet Archive planetary systems composite parameters",
+      "url": "https://exoplanetarchive.ipac.caltech.edu/docs/API_PS_columns.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Public archive documentation; no external code copied"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_SED_TEMPLATE_CHI2_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Nonnegative amplitude spectral-template chi-square",
+  "common_name": "Nonnegative amplitude spectral-template chi-square",
+  "scientific_use": "Score supplied photometric SED/redshift templates against observed multiband fluxes.",
+  "scientific_purpose": "Score supplied photometric SED/redshift templates against observed multiband fluxes.",
+  "opcode": 42,
+  "source_references": [
+    {
+      "title": "Brammer et al. EAZY: template normalization and chi-square fitting",
+      "url": "https://github.com/gbrammer/eazy-photoz/blob/master/doc/eazy_manual.tex",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "num=sum(w*T*y);den=sum(w*T*T);amp=max(0,num/den);chi2=sum(w*(y-amp*T)^2); increasing band index, separate RN32 operations",
+  "input_contract": "encoding=binary32-hex; flux[objects,bands],weights[same],templates[models,bands]; objects/models1..128,bands1..64; weights>=0; objects*models*bands<=1048576",
+  "output_contract": "object-major/model-minor [status,amplitude,chi2]; status1 zero template norm then two zeros; caller supplies redshift grid, bandpass-integrated templates, labels and physical units; no posterior/prior or template mixture fit",
+  "result_contract": "object-major/model-minor [status,amplitude,chi2]; status1 zero template norm then two zeros; caller supplies redshift grid, bandpass-integrated templates, labels and physical units; no posterior/prior or template mixture fit",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_search_reference.py + f32.py (Fraction oracle)",
+  "CPU_reference": "science_library/space_search_reference.py + f32.py (Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_SED_TEMPLATE_CHI2_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Published equations only; no EAZY source copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "object/template pairs retaining full ordered band reduction",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_SED_TEMPLATE_CHI2_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_SEARCH_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; flux[objects,bands],weights[same],templates[models,bands]; objects/models1..128,bands1..64; weights>=0; objects*models*bands<=1048576",
+  "reference_sources": [
+    {
+      "title": "Brammer et al. EAZY: template normalization and chi-square fitting",
+      "url": "https://github.com/gbrammer/eazy-photoz/blob/master/doc/eazy_manual.tex",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Published equations only; no EAZY source copied"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_HYPERBOLIC_KEPLER_STATE_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Bounded hyperbolic Kepler state",
+  "common_name": "Bounded hyperbolic Kepler state",
+  "scientific_use": "Solve the nonperiodic hyperbolic Kepler equation and return positive-energy unperturbed perifocal position and velocity.",
+  "scientific_purpose": "Solve the nonperiodic hyperbolic Kepler equation and return positive-energy unperturbed perifocal position and velocity.",
+  "opcode": 76,
+  "source_references": [
+    {
+      "title": "NASA/JPL hyperbolic Kepler time-of-flight equation",
+      "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/FORTRAN/spicelib/hyptof.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "e*sinh(H)-H=M;32 sign-symmetric RN32 bisections;d=e*cosh(H)-1;r=a*d;position=(a*(e-cosh(H)),a*sqrt(e^2-1)*sinh(H),0);velocity=sqrt(mu/a)/d*(-sinh(H),sqrt(e^2-1)*cosh(H),0). a is the positive magnitude of the conventional negative semimajor axis.",
+  "input_contract": "N1..1024 elements(a,e,M);a,shared mu in[2^-32,2^32],e in[5/4,4],M in[-16,16] hyperbolic radians;explicit binary32-hex,positive-magnitude a,PERIFOCAL and distance/time unit tags.",
+  "output_contract": "N x8 binary32[H,r,x,y,z,vx,vy,vz];sinh degree21/cosh degree22 Horner RN32 and fixed root graph;complete zero-bit output validation;unperturbed bounded escape states.",
+  "result_contract": "N x8 binary32[H,r,x,y,z,vx,vy,vz];sinh degree21/cosh degree22 Horner RN32 and fixed root graph;complete zero-bit output validation;unperturbed bounded escape states.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_hyperbolic_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_hyperbolic_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_HYPERBOLIC_KEPLER_STATE_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Published equations only; original bounded RN32 root/state implementation, no external code copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Hyperbolic implicit root and direct state conversion have no ray/BVH pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "complete independent hyperbolic element records",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_HYPERBOLIC_KEPLER_STATE_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_HYPERBOLIC_CONTRACT.md",
+  "reference_sources": [
+    {
+      "title": "NASA/JPL hyperbolic Kepler time-of-flight equation",
+      "url": "https://naif.jpl.nasa.gov/pub/naif/toolkit_docs/FORTRAN/spicelib/hyptof.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Published equations only; original bounded RN32 root/state implementation, no external code copied"
+  },
+  "partition_limits": "N1..1024 elements(a,e,M);a,shared mu in[2^-32,2^32],e in[5/4,4],M in[-16,16] hyperbolic radians;explicit binary32-hex,positive-magnitude a,PERIFOCAL and distance/time unit tags."
+}

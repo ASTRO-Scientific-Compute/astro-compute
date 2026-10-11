@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_IMAGE_PEAK_MASK_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Thresholded local maximum image mask",
+  "common_name": "Thresholded local maximum image mask",
+  "scientific_use": "Source detection candidate stage for astronomical images.",
+  "scientific_purpose": "Source detection candidate stage for astronomical images.",
+  "opcode": 41,
+  "source_references": [
+    {
+      "title": "Photutils find_peaks: thresholded local maximum with constant zero boundary",
+      "url": "https://photutils.readthedocs.io/en/stable/api/photutils.detection.find_peaks.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "mask[p]=valid[p] and image[p]>threshold and image[p]>=every unmasked neighbor in odd square window; outside image value0; tied plateaus retain all qualifying pixels",
+  "input_contract": "encoding=binary32-hex; image[H,W],1..256 each; valid[H,W]integer0/1; threshold binary32; radius1..4 (box=2*radius+1)",
+  "output_contract": "H*W uint32 peak flags row-major; no centroid/deblending/connected segmentation, no automatic noise estimation",
+  "result_contract": "H*W uint32 peak flags row-major; no centroid/deblending/connected segmentation, no automatic noise estimation",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_search_reference.py + f32.py (Fraction oracle)",
+  "CPU_reference": "science_library/space_search_reference.py + f32.py (Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_IMAGE_PEAK_MASK_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; no code copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "output pixels with complete input neighborhood",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_IMAGE_PEAK_MASK_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_SEARCH_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; image[H,W],1..256 each; valid[H,W]integer0/1; threshold binary32; radius1..4 (box=2*radius+1)",
+  "reference_sources": [
+    {
+      "title": "Photutils find_peaks: thresholded local maximum with constant zero boundary",
+      "url": "https://photutils.readthedocs.io/en/stable/api/photutils.detection.find_peaks.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; no code copied"
+  }
+}

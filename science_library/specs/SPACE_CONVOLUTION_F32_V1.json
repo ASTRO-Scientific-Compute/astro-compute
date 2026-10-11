@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_CONVOLUTION_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Full linear convolution",
+  "common_name": "Full linear convolution",
+  "scientific_use": "Finite impulse response and time-series processing.",
+  "scientific_purpose": "Finite impulse response and time-series processing.",
+  "opcode": 14,
+  "source_references": [
+    {
+      "title": "SciPy linear convolution",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.convolve.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "y[i]=sum_j x[j]*h[i-j], out-of-range h=0; increasing j, RN32 product then RN32 addition",
+  "input_contract": "encoding=binary32-hex; x[1..4096], kernel[1..1024]; N*M<=1048576",
+  "output_contract": "N+M-1 binary32 samples, zero padding; no normalization",
+  "result_contract": "N+M-1 binary32 samples, zero padding; no normalization",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/float_reference.py + f32.py (Fraction oracle)",
+  "CPU_reference": "science_library/float_reference.py + f32.py (Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_CONVOLUTION_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause; reference only"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "output intervals sharing input and halo",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_CONVOLUTION_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/BINARY32_CONTRACT.md",
+  "reference_sources": [
+    {
+      "title": "SciPy linear convolution",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.convolve.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause; reference only"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

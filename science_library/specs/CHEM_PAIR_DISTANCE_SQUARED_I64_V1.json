@@ -1,0 +1,56 @@
+{
+  "workload_id": "CHEM_PAIR_DISTANCE_SQUARED_I64_V1",
+  "domain": "CHEM",
+  "scientific_domain": "CHEM",
+  "scientific_name": "Molecular pair squared-distance matrix",
+  "common_name": "Molecular pair squared-distance matrix",
+  "scientific_use": "Geometric primitive for distance restraints and molecular structural analysis.",
+  "scientific_purpose": "Geometric primitive for distance restraints and molecular structural analysis.",
+  "opcode": 8,
+  "source_references": [
+    {
+      "title": "MDAnalysis distance arrays",
+      "url": "https://docs.mdanalysis.org/stable/documentation_pages/lib/distances.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "D[i,j]=sum_k(A[i,k]-B[j,k])^2",
+  "input_contract": "queries[N,3], catalog[M,3], integer coordinate ticks in +/-1000000000, explicit coordinate_unit",
+  "output_contract": "N*M x u64 exact squared distances; no sqrt or periodic wrapping",
+  "result_contract": "N*M x u64 exact squared distances; no sqrt or periodic wrapping",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Entire output byte stream vs independent Python arbitrary-precision CPU reference; edge vectors before search; each timing candidate checked before/after; held-out winner confirmation.",
+  "reference_implementation": "science_library/reference.py",
+  "CPU_reference": "science_library/reference.py",
+  "reference_test_vectors": "science_library/vectors/CHEM_PAIR_DISTANCE_SQUARED_I64_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "reference only; no source copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "pair tiles",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/CHEM_PAIR_DISTANCE_SQUARED_I64_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "reference_sources": [
+    {
+      "title": "MDAnalysis distance arrays",
+      "url": "https://docs.mdanalysis.org/stable/documentation_pages/lib/distances.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "reference only; no source copied"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

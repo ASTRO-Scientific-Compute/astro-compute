@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_GNOMONIC_PROJECT_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Bounded celestial gnomonic tangent-plane projection",
+  "common_name": "Bounded celestial gnomonic tangent-plane projection",
+  "scientific_use": "Project sky directions onto an east/north tangent plane for astronomical image/catalog geometry; not a complete pixel WCS.",
+  "scientific_purpose": "Project sky directions onto an east/north tangent plane for astronomical image/catalog geometry; not a complete pixel WCS.",
+  "opcode": 79,
+  "source_references": [
+    {
+      "title": "ERFA celestial tangent-plane projection conventions and equations",
+      "url": "https://raw.githubusercontent.com/liberfa/erfa/master/src/tpxes.c",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "d=sin(dec)*sin(dec0)+cos(dec)*cos(dec0)*cos(ra-ra0);xi=cos(dec)*sin(ra-ra0)/d;eta=(sin(dec)*cos(dec0)-cos(dec)*sin(dec0)*cos(ra-ra0))/d;ordered RN32, fixed turn trig;invalid status and zero xy when rounded d<1/16.",
+  "input_contract": "N1..4096 direction(ra,dec) rows and one shared tangent point;finite binary32-hex;ra[0,1),dec[-1/4,1/4] turns;explicit GNOMONIC_TAN/EAST_NORTH/frame tags;exact payload fields.",
+  "output_contract": "N x4 uint32 [status,bits(xi),bits(eta),bits(d)];status0 accepted,status1 outside guarded projection;invalid xi/eta+0,denominator retained;dimensionless plane coordinates,complete zero-bit gate.",
+  "result_contract": "N x4 uint32 [status,bits(xi),bits(eta),bits(d)];status0 accepted,status1 outside guarded projection;invalid xi/eta+0,denominator retained;dimensionless plane coordinates,complete zero-bit gate.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_gnomonic_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_gnomonic_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_GNOMONIC_PROJECT_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "ERFA BSD reference only; original bounded RN32 graph of published equations, no external implementation copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense spherical projection and perspective division have no conservative ray/BVH pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "complete independent direction rows with shared tangent point",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_GNOMONIC_PROJECT_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_GNOMONIC_CONTRACT.md",
+  "reference_sources": [
+    {
+      "title": "ERFA celestial tangent-plane projection conventions and equations",
+      "url": "https://raw.githubusercontent.com/liberfa/erfa/master/src/tpxes.c",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "ERFA BSD reference only; original bounded RN32 graph of published equations, no external implementation copied"
+  },
+  "partition_limits": "N1..4096 direction(ra,dec) rows and one shared tangent point;finite binary32-hex;ra[0,1),dec[-1/4,1/4] turns;explicit GNOMONIC_TAN/EAST_NORTH/frame tags;exact payload fields."
+}

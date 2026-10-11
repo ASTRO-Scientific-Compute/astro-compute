@@ -1,0 +1,56 @@
+{
+  "workload_id": "SPACE_WEIGHTED_LINEAR_STATS_I32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Weighted linear-fit normal-equation statistics",
+  "common_name": "Weighted linear-fit normal-equation statistics",
+  "scientific_use": "Exact sufficient statistics for weighted intercept/slope fitting; solve and covariance are downstream.",
+  "scientific_purpose": "Exact sufficient statistics for weighted intercept/slope fitting; solve and covariance are downstream.",
+  "opcode": 4,
+  "source_references": [
+    {
+      "title": "GSL weighted linear least squares",
+      "url": "https://www.gnu.org/software/gsl/doc/html/lls.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "[sum(w),sum(w*x),sum(w*y),sum(w*x*x),sum(w*x*y),sum(w*y*y)]",
+  "input_contract": "samples[B,N,3]=(x,y,w), N<=1024, |x|,|y|<=1000, w integer 0..100",
+  "output_contract": "B x 6 signed64 statistics; singular and zero-weight inputs yield statistics, not an invented fitted solution",
+  "result_contract": "B x 6 signed64 statistics; singular and zero-weight inputs yield statistics, not an invented fitted solution",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Entire output byte stream vs independent Python arbitrary-precision CPU reference; edge vectors before search; each timing candidate checked before/after; held-out winner confirmation.",
+  "reference_implementation": "science_library/reference.py",
+  "CPU_reference": "science_library/reference.py",
+  "reference_test_vectors": "science_library/vectors/SPACE_WEIGHTED_LINEAR_STATS_I32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "GPL-3.0-or-later; documentation/reference only, no copied implementation"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "independent fits; sample shards may be summed with checked64 accumulators",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_WEIGHTED_LINEAR_STATS_I32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "reference_sources": [
+    {
+      "title": "GSL weighted linear least squares",
+      "url": "https://www.gnu.org/software/gsl/doc/html/lls.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "GPL-3.0-or-later; documentation/reference only, no copied implementation"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

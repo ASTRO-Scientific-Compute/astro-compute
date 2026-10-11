@@ -1,0 +1,56 @@
+{
+  "workload_id": "BIO_SMITH_WATERMAN_I32_V1",
+  "domain": "BIO",
+  "scientific_domain": "BIO",
+  "scientific_name": "Smith-Waterman local alignment score",
+  "common_name": "Smith-Waterman local alignment score",
+  "scientific_use": "Exact DNA local similarity score for independent sequence pairs.",
+  "scientific_purpose": "Exact DNA local similarity score for independent sequence pairs.",
+  "opcode": 6,
+  "source_references": [
+    {
+      "title": "Biopython pairwise local alignment",
+      "url": "https://biopython.org/docs/latest/Tutorial/chapter_pairwise.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "H[i,j]=max(0,H[i-1,j-1]+(2 if A[i-1]==B[j-1] else -1),H[i-1,j]-2,H[i,j-1]-2); score=max(H)",
+  "input_contract": "pairs[B]=[DNA_A,DNA_B], A/C/G/T only, lengths0..128; match2,mismatch-1,linear gap-2",
+  "output_contract": "B x signed32 optimal local score; no traceback or affine-gap claim",
+  "result_contract": "B x signed32 optimal local score; no traceback or affine-gap claim",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Entire output byte stream vs independent Python arbitrary-precision CPU reference; edge vectors before search; each timing candidate checked before/after; held-out winner confirmation.",
+  "reference_implementation": "science_library/reference.py",
+  "CPU_reference": "science_library/reference.py",
+  "reference_test_vectors": "science_library/vectors/BIO_SMITH_WATERMAN_I32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Biopython License/BSD-3-Clause; independent recurrence implementation"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "independent sequence pairs",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/BIO_SMITH_WATERMAN_I32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "reference_sources": [
+    {
+      "title": "Biopython pairwise local alignment",
+      "url": "https://biopython.org/docs/latest/Tutorial/chapter_pairwise.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Biopython License/BSD-3-Clause; independent recurrence implementation"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

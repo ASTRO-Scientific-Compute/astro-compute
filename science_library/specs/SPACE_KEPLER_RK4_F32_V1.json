@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_KEPLER_RK4_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Fixed-step RK4 point-mass trajectories",
+  "common_name": "Fixed-step RK4 point-mass trajectories",
+  "scientific_use": "Propagate independent test particles in a fixed central Newtonian gravity field.",
+  "scientific_purpose": "Propagate independent test particles in a fixed central Newtonian gravity field.",
+  "opcode": 44,
+  "source_references": [
+    {
+      "title": "GSL classical fourth-order Runge–Kutta; point-mass orbital dynamics",
+      "url": "https://www.gnu.org/software/gsl/doc/html/ode-initval.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "state=(r,v); derivative=(v,-mu*r/(dot(r,r)*sqrt(dot(r,r)))); k1=F(y),k2=F(y+dt/2*k1),k3=F(y+dt/2*k2),k4=F(y+dt*k3); next=y+(dt/6)*(((k1+2*k2)+2*k3)+k4)",
+  "input_contract": "encoding=binary32-hex; states[B,6],B1..64; mu>=0,dt>0; steps1..64; positive finite radius at every RK stage when mu>0; finite RN32 intermediates; caller-consistent units",
+  "output_contract": "B records each containing6*(steps+1)binary32 words: initial state then every propagated state; no adaptive error control, perturbations, collisions or interacting N-body dynamics",
+  "result_contract": "B records each containing6*(steps+1)binary32 words: initial state then every propagated state; no adaptive error control, perturbations, collisions or interacting N-body dynamics",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_search_reference.py + f32.py (Fraction oracle)",
+  "CPU_reference": "science_library/space_search_reference.py + f32.py (Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_KEPLER_RK4_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "GPL-3.0 documentation; equations only, no source copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "whole independent trajectories; time steps cannot be reordered",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_KEPLER_RK4_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_SEARCH_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; states[B,6],B1..64; mu>=0,dt>0; steps1..64; positive finite radius at every RK stage when mu>0; finite RN32 intermediates; caller-consistent units",
+  "reference_sources": [
+    {
+      "title": "GSL classical fourth-order Runge–Kutta; point-mass orbital dynamics",
+      "url": "https://www.gnu.org/software/gsl/doc/html/ode-initval.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "GPL-3.0 documentation; equations only, no source copied"
+  }
+}

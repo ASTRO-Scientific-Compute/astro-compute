@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_TANGENT_TO_UNIT_VECTOR_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Tangent plane to normalized celestial unit vector",
+  "common_name": "Tangent plane to normalized celestial unit vector",
+  "scientific_use": "Reconstruct celestial Cartesian sky directions from bounded east/north gnomonic plane coordinates and an explicit tangent point.",
+  "scientific_purpose": "Reconstruct celestial Cartesian sky directions from bounded east/north gnomonic plane coordinates and an explicit tangent point.",
+  "opcode": 80,
+  "source_references": [
+    {
+      "title": "ERFA inverse celestial tangent-plane equations and conventions",
+      "url": "https://github.com/liberfa/erfa/blob/master/src/tpsts.c",
+      "accessed": "2026-10-04"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "center=(cosd*cosa,cosd*sina,sind);east=(-sina,cosa,0);north=(-sind*cosa,-sind*sina,cosd);u=center+xi*east+eta*north;r=sqrt(dot(u,u));v=u/r;ordered RN32 graph and frozen turn trig.",
+  "input_contract": "N1..4096 plane coordinates(xi,eta) in[-16,16],one tangent point ra[0,1),dec[-1/4,1/4] turns;finite binary32-hex,explicit GNOMONIC_TAN/EAST_NORTH/common frame;exact payload fields.",
+  "output_contract": "N x4 binary32[vx,vy,vz,r];r is canonical unnormalized-vector norm;dimensionless sky direction and norm,complete zero-bit validation;no output RA/Dec or pixel WCS.",
+  "result_contract": "N x4 binary32[vx,vy,vz,r];r is canonical unnormalized-vector norm;dimensionless sky direction and norm,complete zero-bit validation;no output RA/Dec or pixel WCS.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_tangent_vector_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_tangent_vector_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_TANGENT_TO_UNIT_VECTOR_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "ERFA BSD mathematical reference only; original bounded ordered RN32 basis/normalization, no external code copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense tangent-basis reconstruction and normalization have no conservative ray/BVH pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "complete independent plane-coordinate rows with shared tangent point",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_TANGENT_TO_UNIT_VECTOR_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_TANGENT_VECTOR_CONTRACT.md",
+  "reference_sources": [
+    {
+      "title": "ERFA inverse celestial tangent-plane equations and conventions",
+      "url": "https://github.com/liberfa/erfa/blob/master/src/tpsts.c",
+      "accessed": "2026-10-04"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "ERFA BSD mathematical reference only; original bounded ordered RN32 basis/normalization, no external code copied"
+  },
+  "partition_limits": "N1..4096 plane coordinates(xi,eta) in[-16,16],one tangent point ra[0,1),dec[-1/4,1/4] turns;finite binary32-hex,explicit GNOMONIC_TAN/EAST_NORTH/common frame;exact payload fields."
+}

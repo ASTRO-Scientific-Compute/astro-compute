@@ -1,0 +1,56 @@
+{
+  "workload_id": "SIGNAL_FIR_ACCUMULATE_I16_V1",
+  "domain": "SIGNAL",
+  "scientific_domain": "SIGNAL",
+  "scientific_name": "Full-precision fixed-point FIR accumulation",
+  "common_name": "Full-precision fixed-point FIR accumulation",
+  "scientific_use": "Digital filtering of integer/Q15 samples with no discarded accumulator bits.",
+  "scientific_purpose": "Digital filtering of integer/Q15 samples with no discarded accumulator bits.",
+  "opcode": 11,
+  "source_references": [
+    {
+      "title": "Arm CMSIS-DSP FIR definition and fixed-point accumulator",
+      "url": "https://arm-software.github.io/CMSIS-DSP/latest/group__FIR.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "a[n]=sum_{k=0}^{K-1} h[k]*x[n-k], x[j<0]=0",
+  "input_contract": "samples[N],coefficients[K] signed16;1<=K<=1024; coefficients in forward delay order; for Q15 input output unit=2^-30",
+  "output_contract": "N x signed64 accumulator; no rescaling, saturation or hidden rounding",
+  "result_contract": "N x signed64 accumulator; no rescaling, saturation or hidden rounding",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Entire output byte stream vs independent Python arbitrary-precision CPU reference; edge vectors before search; each timing candidate checked before/after; held-out winner confirmation.",
+  "reference_implementation": "science_library/reference.py",
+  "CPU_reference": "science_library/reference.py",
+  "reference_test_vectors": "science_library/vectors/SIGNAL_FIR_ACCUMULATE_I16_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Apache-2.0; independent implementation"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "output intervals with K-1 input halo; zero padding only at global origin",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SIGNAL_FIR_ACCUMULATE_I16_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "reference_sources": [
+    {
+      "title": "Arm CMSIS-DSP FIR definition and fixed-point accumulator",
+      "url": "https://arm-software.github.io/CMSIS-DSP/latest/group__FIR.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Apache-2.0; independent implementation"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

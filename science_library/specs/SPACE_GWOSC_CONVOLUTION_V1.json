@@ -1,0 +1,71 @@
+{
+  "workload_id": "SPACE_GWOSC_CONVOLUTION_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "GWOSC edge-clamped FIR9, zero-bit amendment",
+  "common_name": "GWOSC edge-clamped FIR9, zero-bit amendment",
+  "scientific_use": "Historical symmetric smoothing operator with identical boundary rule.",
+  "scientific_purpose": "Historical symmetric smoothing operator with identical boundary rule.",
+  "opcode": 31,
+  "source_references": [
+    {
+      "title": "SciPy convolution; ASTRO historical edge-clamped9-tap contract",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.convolve.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "out[i]=left-fold RN32 sum of RN32(strain[clamp(i+j-4)]*RN32([1,2,3,4,5,4,3,2,1][j]/25)), j0..8; no FMA",
+  "input_contract": "encoding=binary32-hex, strain[1..131072] already scaled binary32; no implicit conversion",
+  "output_contract": "one binary32 sample per input, same length and edge clamp",
+  "result_contract": "one binary32 sample per input, same length and edge clamp",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full raw GPU bytes against independent CPU binary32 reference; CPU operations cross-checked with exact Fraction oracle; historical double/scientific invariants reported separately, never substituted for zero-bit gate.",
+  "reference_implementation": "science_library/legacy_reference.py + vector_f32.py (CPU hardware binary32, probed against Fraction oracle)",
+  "CPU_reference": "science_library/legacy_reference.py + vector_f32.py (CPU hardware binary32, probed against Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_GWOSC_CONVOLUTION_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause; reference only"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "output intervals with four-sample halo; clamp only at full-stream endpoints",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_GWOSC_CONVOLUTION_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/BINARY32_CONTRACT.md",
+  "contract_revision": "ZERO_BIT_AMENDMENT_V2",
+  "historical_contract": "space_domain/contracts/gwosc_strain_convolution_v1_1.json",
+  "historical_contract_sha256": "f6d9b009a5bbb3ca805c111619abbb3eff5768996158c83bed4cfc1a6ff025f5",
+  "legacy_compatibility": "Scientific operator and input representation retained; deterministic rounding/serialization strengthened. Not a claim of identical bytes to historical tolerant executors.",
+  "partition_limits": "encoding=binary32-hex, strain[1..131072] already scaled binary32; no implicit conversion",
+  "reference_sources": [
+    {
+      "title": "SciPy convolution; ASTRO historical edge-clamped9-tap contract",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.convolve.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause; reference only"
+  }
+}

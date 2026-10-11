@@ -1,0 +1,67 @@
+{
+  "workload_id": "PHYSICS_HEAT_STEP_F32_V1",
+  "domain": "PHYSICS",
+  "scientific_domain": "PHYSICS",
+  "scientific_name": "Explicit two-dimensional heat diffusion step",
+  "common_name": "Explicit two-dimensional heat diffusion step",
+  "scientific_use": "Uniform-grid isotropic diffusion with periodic boundaries.",
+  "scientific_purpose": "Uniform-grid isotropic diffusion with periodic boundaries.",
+  "opcode": 27,
+  "source_references": [
+    {
+      "title": "UC Berkeley CS267: explicit heat equation finite differences",
+      "url": "https://people.eecs.berkeley.edu/~demmel/cs267_Spr16/Lectures/lecture05_sources2_jwd16_4pp.pdf",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "lap=((left+right)+up)+down-4*center; next=center+lambda*lap; lambda=alpha*dt/h^2 in[0,1/4]; each operation RN32",
+  "input_contract": "encoding=binary32-hex; field[H,W],3<=H,W<=256; lambda precomputed in physical units",
+  "output_contract": "H*W binary32 next-step field row-major; periodic one-cell neighbors; no forcing or variable diffusivity",
+  "result_contract": "H*W binary32 next-step field row-major; periodic one-cell neighbors; no forcing or variable diffusivity",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/domain_reference.py + f32.py (integer/Fraction oracle)",
+  "CPU_reference": "science_library/domain_reference.py + f32.py (integer/Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/PHYSICS_HEAT_STEP_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "University teaching reference; no code copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "sites with one-cell periodic halo; output is separate from input",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/PHYSICS_HEAT_STEP_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/BINARY32_CONTRACT.md",
+  "reference_sources": [
+    {
+      "title": "UC Berkeley CS267: explicit heat equation finite differences",
+      "url": "https://people.eecs.berkeley.edu/~demmel/cs267_Spr16/Lectures/lecture05_sources2_jwd16_4pp.pdf",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "University teaching reference; no code copied"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

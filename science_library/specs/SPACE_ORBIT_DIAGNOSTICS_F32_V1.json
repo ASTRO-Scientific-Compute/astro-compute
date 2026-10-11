@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_ORBIT_DIAGNOSTICS_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Specific orbital energy and angular momentum diagnostics",
+  "common_name": "Specific orbital energy and angular momentum diagnostics",
+  "scientific_use": "Measure radius, speed squared, model-specific energy and angular momentum for a central plus J2 trajectory.",
+  "scientific_purpose": "Measure radius, speed squared, model-specific energy and angular momentum for a central plus J2 trajectory.",
+  "opcode": 56,
+  "source_references": [
+    {
+      "title": "UT Austin celestial mechanics conservation laws",
+      "url": "https://farside.ph.utexas.edu/teaching/celestial/Celestial/node25.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "E=v^2/2-mu/r*(1-J2*(R^2/r^2)*(3*z^2/r^2-1)/2);h=rvec cross v; ordered RN32 arithmetic.",
+  "input_contract": "encoding=binary32-hex; states[N,6],N1..4096;mu>=0,reference_radius>=0,finite j2; all RN32 intermediates finite.",
+  "output_contract": "N x [u32 status,f32 radius,speed_squared,energy,hx,hy,hz]; status1 singular gravity gives all zeros; mu=0 permits origin. Energy and hz are invariants of the continuous axisymmetric J2 model; hx/hy generally are not. No orbital-element/WCS conversion.",
+  "result_contract": "N x [u32 status,f32 radius,speed_squared,energy,hx,hy,hz]; status1 singular gravity gives all zeros; mu=0 permits origin. Energy and hz are invariants of the continuous axisymmetric J2 model; hx/hy generally are not. No orbital-element/WCS conversion.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_dynamics_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_dynamics_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_ORBIT_DIAGNOSTICS_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "University equations only; original implementation"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Analytic central/J2 force and trajectory stages have no candidate geometry for BVH pruning.",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "independent states; compare only matching force-model parameters and units",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_ORBIT_DIAGNOSTICS_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_DYNAMICS_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; states[N,6],N1..4096;mu>=0,reference_radius>=0,finite j2; all RN32 intermediates finite.",
+  "reference_sources": [
+    {
+      "title": "UT Austin celestial mechanics conservation laws",
+      "url": "https://farside.ph.utexas.edu/teaching/celestial/Celestial/node25.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "University equations only; original implementation"
+  }
+}

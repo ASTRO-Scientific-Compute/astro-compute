@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_COMPONENT_GRAPH_MERGE_U32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Cross-tile component equivalence closure",
+  "common_name": "Cross-tile component equivalence closure",
+  "scientific_use": "Merge local image components connected at tile boundaries, applying minimum source size only after global merging.",
+  "scientific_purpose": "Merge local image components connected at tile boundaries, applying minimum source size only after global merging.",
+  "opcode": 52,
+  "source_references": [
+    {
+      "title": "SciPy undirected graph connected components",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csgraph.connected_components.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "For each undirected connected component output min(component_id),sum(pixel_count),min(component_id) if total>=npixels else0; output one row per input node.",
+  "input_contract": "encoding=uint32; unique nonzero component_ids[N],pixel_counts[N]>0,N1..512; edges[M,2] node indices,M0..8192; sum counts<=2^32-1; npixels1..2^32-1; caller supplies disjoint pixel sets and complete seam adjacency.",
+  "output_contract": "N x [u32 canonical_id,u32 global_pixel_count,u32 accepted_id]; duplicates/self edges harmless; isolated components retained; does not discover missing edges or deblend.",
+  "result_contract": "N x [u32 canonical_id,u32 global_pixel_count,u32 accepted_id]; duplicates/self edges harmless; isolated components retained; does not discover missing edges or deblend.",
+  "precision_requirements": "Exact uint32 identifiers and checked uint32 component counts; no floating point.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_imaging_reference.py + f32.py (Fraction oracle; BFS graph closure)",
+  "CPU_reference": "science_library/space_imaging_reference.py + f32.py (Fraction oracle; BFS graph closure)",
+  "reference_test_vectors": "science_library/vectors/SPACE_COMPONENT_GRAPH_MERGE_U32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; independent graph algorithms"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Mesh gathers, graph equivalences and ordered pixel reductions have no conservative ray/BVH pruning.",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "whole component graph shared by output-node partitions; graph shards require explicit equivalence reconciliation",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_COMPONENT_GRAPH_MERGE_U32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_IMAGING_CONTRACTS.md",
+  "partition_limits": "encoding=uint32; unique nonzero component_ids[N],pixel_counts[N]>0,N1..512; edges[M,2] node indices,M0..8192; sum counts<=2^32-1; npixels1..2^32-1; caller supplies disjoint pixel sets and complete seam adjacency.",
+  "reference_sources": [
+    {
+      "title": "SciPy undirected graph connected components",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csgraph.connected_components.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; independent graph algorithms"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_SOURCE_NOISE_MAP_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Source Poisson plus background noise map",
+  "common_name": "Source Poisson plus background noise map",
+  "scientific_use": "Construct per-pixel total variance, error and diagonal photometry weights using explicit gain.",
+  "scientific_purpose": "Construct per-pixel total variance, error and diagonal photometry weights using explicit gain.",
+  "opcode": 65,
+  "source_references": [
+    {
+      "title": "Photutils total error: background variance plus source Poisson noise",
+      "url": "https://photutils.readthedocs.io/en/stable/api/photutils.utils.calc_total_error.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "Vs=RN(signal/gain) if both positive else0;V=RN(Vbackground+Vs);error=sqrt(V);weight=1/V. Negative signal and zero gain contribute no source Poisson variance.",
+  "input_contract": "binary32-hex flat signal,background_variance,gain[N],valid[N] uint0/1;N1..65536;nonnegative background variance and gain;all finite with finite executed intermediates.",
+  "output_contract": "N x [u32 status,f32 source_variance,total_variance,error,inverse_variance];status1 masked,status2 zero total variance, zero numerical output in both;status0 positive variance.",
+  "result_contract": "N x [u32 status,f32 source_variance,total_variance,error,inverse_variance];status1 masked,status2 zero total variance, zero numerical output in both;status0 positive variance.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_uncertainty_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_uncertainty_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_SOURCE_NOISE_MAP_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; original ASTRO implementation"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Pointwise noise and ordered covariance projection have no ray/BVH path.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "whole independent image pixels with supplied calibration",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_SOURCE_NOISE_MAP_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_UNCERTAINTY_CONTRACTS.md",
+  "partition_limits": "binary32-hex flat signal,background_variance,gain[N],valid[N] uint0/1;N1..65536;nonnegative background variance and gain;all finite with finite executed intermediates.",
+  "reference_sources": [
+    {
+      "title": "Photutils total error: background variance plus source Poisson noise",
+      "url": "https://photutils.readthedocs.io/en/stable/api/photutils.utils.calc_total_error.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; original ASTRO implementation"
+  }
+}

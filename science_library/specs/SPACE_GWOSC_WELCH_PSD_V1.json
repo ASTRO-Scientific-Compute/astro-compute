@@ -1,0 +1,81 @@
+{
+  "workload_id": "SPACE_GWOSC_WELCH_PSD_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "GWOSC Hann Welch PSD, zero-bit amendment",
+  "common_name": "GWOSC Hann Welch PSD, zero-bit amendment",
+  "scientific_use": "One-sided density retaining256-sample,128-hop,4096Hz,window-power96 contract.",
+  "scientific_purpose": "One-sided density retaining256-sample,128-hop,4096Hz,window-power96 contract.",
+  "opcode": 35,
+  "source_references": [
+    {
+      "title": "Welch one-sided density and averaging",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Hida, Li, Bailey: Library for Double-Double and Quad-Double Arithmetic; Two-Sum methodology adapted to binary32",
+      "url": "https://www.davidhbailey.com/dhbpapers/qd.pdf",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "window=double-single periodic Hann256; X_s=RN32(double-single radix2 FFT256(x*w)); P_s[k]=RN32(q_k*RN32(Re^2+Im^2)/393216); PSD=ascending-segment RN32 sum(P_s)/segment_count; q=1 at0,128 else2",
+  "input_contract": "encoding=binary32-hex; strain length256..131072 and (N-256)%128=0, already scaled; canonical32s has1023segments",
+  "output_contract": "129 binary32 one-sided density bins,16Hz grid; no detrending; physical PSD=output*1e-42",
+  "result_contract": "129 binary32 one-sided density bins,16Hz grid; no detrending; physical PSD=output*1e-42",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders. Hann/windowed FFT use deterministic double-single (two binary32 components), then RN32 complex output; see docs/SPACE_ZERO_BIT_AMENDMENTS.md for the exact operation graph. No native GPU float64 required.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full raw GPU bytes against independent CPU binary32 reference; CPU operations cross-checked with exact Fraction oracle; historical double/scientific invariants reported separately, never substituted for zero-bit gate.",
+  "reference_implementation": "science_library/legacy_reference.py + vector_f32.py (CPU hardware binary32, probed against Fraction oracle) + spectral_precision.py (exact binary64 product residual)",
+  "CPU_reference": "science_library/legacy_reference.py + vector_f32.py (CPU hardware binary32, probed against Fraction oracle) + spectral_precision.py (exact binary64 product residual)",
+  "reference_test_vectors": "science_library/vectors/SPACE_GWOSC_WELCH_PSD_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause; reference only"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "bin outputs; mandatory GPU FFT/power prepass covers every segment",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_GWOSC_WELCH_PSD_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/BINARY32_CONTRACT.md",
+  "contract_revision": "ZERO_BIT_AMENDMENT_V2",
+  "historical_contract": "space_domain/contracts/gwosc_welch_psd_v1.json",
+  "historical_contract_sha256": "e9782c806ec31fb8ec13f5c7cac9cdd140c8cc270db70bfd62b1d9fb38d07b7b",
+  "legacy_compatibility": "Scientific operator and input representation retained; deterministic rounding/serialization strengthened. Not a claim of identical bytes to historical tolerant executors.",
+  "partition_limits": "encoding=binary32-hex; strain length256..131072 and (N-256)%128=0, already scaled; canonical32s has1023segments",
+  "reference_sources": [
+    {
+      "title": "Welch one-sided density and averaging",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Hida, Li, Bailey: Library for Double-Double and Quad-Double Arithmetic; Two-Sum methodology adapted to binary32",
+      "url": "https://www.davidhbailey.com/dhbpapers/qd.pdf",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause; reference only"
+  }
+}

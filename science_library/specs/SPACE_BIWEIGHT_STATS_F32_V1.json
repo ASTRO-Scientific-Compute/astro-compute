@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_BIWEIGHT_STATS_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Robust biweight location, midvariance and scale",
+  "common_name": "Robust biweight location, midvariance and scale",
+  "scientific_use": "Estimate robust center and dispersion of masked astronomical samples or background boxes.",
+  "scientific_purpose": "Estimate robust center and dispersion of masked astronomical samples or background boxes.",
+  "opcode": 63,
+  "source_references": [
+    {
+      "title": "Astropy biweight location and midvariance estimators",
+      "url": "https://docs.astropy.org/en/stable/api/astropy.stats.biweight_midvariance.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "Median M and MAD; u=(x-M)/(c*MAD), abs(u)<1. location=M+sum((x-M)*(1-u^2)^2)/sum((1-u^2)^2); midvariance=n*sum((x-M)^2*(1-u^2)^4)/sum((1-u^2)*(1-5*u^2))^2; scale=sqrt(midvariance), ordered RN32.",
+  "input_contract": "encoding=binary32-hex;samples,valid[B,N],B1..128,N1..256,valid uint0/1;B*N*N<=2097152;c_location,c_variance finite f32 in[1,16];finite RN32 intermediates.",
+  "output_contract": "B x [u32 status,valid_count,f32 median,MAD,location,midvariance,scale,u32 location_inliers,variance_inliers]; status1 empty,2 MAD0,3 degenerate denominator; failed records retain only status/count. n counts all valid observations; no universal variance calibration.",
+  "result_contract": "B x [u32 status,valid_count,f32 median,MAD,location,midvariance,scale,u32 location_inliers,variance_inliers]; status1 empty,2 MAD0,3 degenerate denominator; failed records retain only status/count. n counts all valid observations; no universal variance calibration.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_biweight_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_biweight_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_BIWEIGHT_STATS_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; independently implemented finite operation graph"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Median selection and ordered robust reductions have no ray/BVH path.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "whole independent observation rows/boxes, never split an ordered statistical reduction",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_BIWEIGHT_STATS_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_BIWEIGHT_CONTRACT.md",
+  "partition_limits": "encoding=binary32-hex;samples,valid[B,N],B1..128,N1..256,valid uint0/1;B*N*N<=2097152;c_location,c_variance finite f32 in[1,16];finite RN32 intermediates.",
+  "reference_sources": [
+    {
+      "title": "Astropy biweight location and midvariance estimators",
+      "url": "https://docs.astropy.org/en/stable/api/astropy.stats.biweight_midvariance.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; independently implemented finite operation graph"
+  }
+}

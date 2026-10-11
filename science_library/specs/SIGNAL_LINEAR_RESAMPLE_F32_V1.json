@@ -1,0 +1,67 @@
+{
+  "workload_id": "SIGNAL_LINEAR_RESAMPLE_F32_V1",
+  "domain": "SIGNAL",
+  "scientific_domain": "SIGNAL",
+  "scientific_name": "Piecewise-linear one-dimensional resampling",
+  "common_name": "Piecewise-linear one-dimensional resampling",
+  "scientific_use": "Resample ordered measurements at explicit query coordinates.",
+  "scientific_purpose": "Resample ordered measurements at explicit query coordinates.",
+  "opcode": 28,
+  "source_references": [
+    {
+      "title": "NumPy one-dimensional linear interpolation",
+      "url": "https://numpy.org/doc/stable/reference/generated/numpy.interp.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "for xp[j]<x<xp[j+1]: y=fp[j]+((x-xp[j])/(xp[j+1]-xp[j]))*(fp[j+1]-fp[j]); exact knots and endpoints copy fp with canonical zero",
+  "input_contract": "encoding=binary32-hex; xp,fp equal length1..4096, strictly increasing xp; queries1..4096",
+  "output_contract": "one binary32 value per query; out-of-range queries clamp to first/last sample; no periodic interpolation",
+  "result_contract": "one binary32 value per query; out-of-range queries clamp to first/last sample; no periodic interpolation",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/domain_reference.py + f32.py (integer/Fraction oracle)",
+  "CPU_reference": "science_library/domain_reference.py + f32.py (integer/Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SIGNAL_LINEAR_RESAMPLE_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause; reference only"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "query intervals sharing knot data",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SIGNAL_LINEAR_RESAMPLE_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/BINARY32_CONTRACT.md",
+  "reference_sources": [
+    {
+      "title": "NumPy one-dimensional linear interpolation",
+      "url": "https://numpy.org/doc/stable/reference/generated/numpy.interp.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause; reference only"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

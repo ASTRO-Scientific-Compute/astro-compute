@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_LINEAR_KALMAN_STEP_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Linear Kalman prediction and measurement update",
+  "common_name": "Linear Kalman prediction and measurement update",
+  "scientific_use": "Batched linear state estimation with explicit transition, controls, process covariance and measurement noise.",
+  "scientific_purpose": "Batched linear state estimation with explicit transition, controls, process covariance and measurement noise.",
+  "opcode": 72,
+  "source_references": [
+    {
+      "title": "Chin/JPL 2023: linear Kalman and Joseph covariance equations (1–2),(5–10),(14)",
+      "url": "https://ipnpr.jpl.nasa.gov/progress_report/42-233/42-233A-orig.pdf",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "xp=F*x+u;Pp=F*P*F^T+Q;S=H*Pp*H^T+R;K=Pp*H^T*S^-1;xpost=xp+K*(y-H*xp);Ppost=(I-KH)*Pp*(I-KH)^T+K*R*K^T;guarded Cholesky solves;ordered RN32, mirrored lower triangles.",
+  "input_contract": "binary32-hex B1..64,n1..6,m1..3;shared F,Q,H,diagonal R>0;per-record x,P,u,y;P,Q exactly symmetric PSD;finite executed intermediates;explicit linear/noise model.",
+  "output_contract": "B x [u32 status;xp[n],Pp[n*n],xpost[n],Ppost[n*n],innovation[m],chi2];status1 guarded innovation solve rejects with all numeric words zero;status0 success;no covariance calibration guarantee.",
+  "result_contract": "B x [u32 status;xp[n],Pp[n*n],xpost[n],Ppost[n*n],innovation[m],chi2];status1 guarded innovation solve rejects with all numeric words zero;status0 success;no covariance calibration guarantee.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_kalman_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_kalman_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_LINEAR_KALMAN_STEP_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Published equations only; original ASTRO implementation; no external code copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Small dense prediction and measurement update has no conservative ray/BVH pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "complete independent state/covariance records; sequential updates require verified full output",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_LINEAR_KALMAN_STEP_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_KALMAN_CONTRACT.md",
+  "reference_sources": [
+    {
+      "title": "Chin/JPL 2023: linear Kalman and Joseph covariance equations (1–2),(5–10),(14)",
+      "url": "https://ipnpr.jpl.nasa.gov/progress_report/42-233/42-233A-orig.pdf",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Published equations only; original ASTRO implementation; no external code copied"
+  },
+  "partition_limits": "binary32-hex B1..64,n1..6,m1..3;shared F,Q,H,diagonal R>0;per-record x,P,u,y;P,Q exactly symmetric PSD;finite executed intermediates;explicit linear/noise model."
+}

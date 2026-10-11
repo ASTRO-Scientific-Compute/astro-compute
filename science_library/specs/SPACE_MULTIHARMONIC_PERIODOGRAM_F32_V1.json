@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_MULTIHARMONIC_PERIODOGRAM_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Weighted multiple-harmonic periodogram and fit",
+  "common_name": "Weighted multiple-harmonic periodogram and fit",
+  "scientific_use": "Search irregular light curves with a floating mean plus two to four Fourier harmonics.",
+  "scientific_purpose": "Search irregular light curves with a floating mean plus two to four Fourier harmonics.",
+  "opcode": 57,
+  "source_references": [
+    {
+      "title": "Astropy multi-term Lomb-Scargle model and standard normalization",
+      "url": "https://docs.astropy.org/en/stable/timeseries/lombscargle.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "Model=offset+sum_k(c_k*cos(2*pi*k*f*t)+s_k*sin(2*pi*k*f*t)); ordered RN32 weighted normal equations for centered y, Cholesky solve, P=(chi2_constant-chi2_fit)/chi2_constant. Exact operation graph and conditioning gate specified in contract.",
+  "input_contract": "encoding=binary32-hex;samples[N,3]=(relative_time,value,inverse_variance);harmonics H2..4;N(2H+2)..256;frequencies[F]1..128>0;weights>=0;abs(RN32(RN32(t*f)*k))<=256;N*F*(2H+1)^2<=2097152;finite RN32 intermediates.",
+  "output_contract": "F x [u32 status,f32 power,chi2,offset,c1,s1,...,cH,sH]; status1 zero weight/variance,2 Cholesky pivot<=RN32(weight_sum*2^-16), failed numeric fields0. No analytical false-alarm, multiband or covariance claim; RN32 powers are not clipped.",
+  "result_contract": "F x [u32 status,f32 power,chi2,offset,c1,s1,...,cH,sH]; status1 zero weight/variance,2 Cholesky pivot<=RN32(weight_sum*2^-16), failed numeric fields0. No analytical false-alarm, multiband or covariance claim; RN32 powers are not clipped.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_period_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_period_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_MULTIHARMONIC_PERIODOGRAM_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; original implementation, no copied code"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Fourier design matrices and phase-bin reductions do not admit ray/BVH pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "independent trial frequencies retaining the complete ordered observation set",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_MULTIHARMONIC_PERIODOGRAM_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_PERIOD_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex;samples[N,3]=(relative_time,value,inverse_variance);harmonics H2..4;N(2H+2)..256;frequencies[F]1..128>0;weights>=0;abs(RN32(RN32(t*f)*k))<=256;N*F*(2H+1)^2<=2097152;finite RN32 intermediates.",
+  "reference_sources": [
+    {
+      "title": "Astropy multi-term Lomb-Scargle model and standard normalization",
+      "url": "https://docs.astropy.org/en/stable/timeseries/lombscargle.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; original implementation, no copied code"
+  }
+}

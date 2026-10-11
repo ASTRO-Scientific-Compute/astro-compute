@@ -1,0 +1,81 @@
+{
+  "workload_id": "RT_STATIC_NEAREST_TRIANGLE_HIT_V1",
+  "domain": "RT",
+  "scientific_domain": "RT",
+  "scientific_name": "Static nearest opaque triangle distance",
+  "common_name": "Static nearest opaque triangle distance",
+  "scientific_use": "Independent geometric ray query; local commissioning, no research credit.",
+  "scientific_purpose": "Independent geometric ray query; local commissioning, no research credit.",
+  "opcode": 37,
+  "source_references": [
+    {
+      "title": "Moller and Trumbore: Fast, Minimum Storage Ray/Triangle Intersection (1997)",
+      "url": "https://my.eng.utah.edu/~cs6965/papers/MT97.pdf",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Khronos Vulkan ray traversal and acceleration-structure updates",
+      "url": "https://docs.vulkan.org/spec/latest/chapters/raytraversal.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "Normalize supplied direction with separate RN32 operations; exact rational Moller-Trumbore determinants/barycentrics; abs(det)>=RN32(1e-8); RN32(t)>RN32(1e-4); min RN32 positive t, miss RN32(1e30); two-sided closed triangle edges",
+  "input_contract": "encoding=binary32-hex; triangles[M,3,3], rays[N]={origin[3],direction[3]}; each input component zero or magnitude 2^-16..2^16; nonzero directions; 1<=M,N<=4096 and M*N<=1048576; no hidden quantization",
+  "output_contract": "N binary32 nearest-hit distances, original ray order; miss=0x7149f2ca",
+  "result_contract": "N binary32 nearest-hit distances, original ray order; miss=0x7149f2ca",
+  "precision_requirements": "Exact rational intersection on preserved binary32 inputs; canonical RN32 direction normalization and final distance. Dynamic RN32 frozen sine offset and addition. GPU signed 256-bit integer determinants; no float narrowphase, no quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full CPU/GPU raw-byte equality for every ray and, for dynamic jobs, every mutated vertex at every requested frame, warmup and final; generic, RT update and rebuild independently checked",
+  "reference_implementation": "science_library/triangle_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/triangle_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/RT_STATIC_NEAREST_TRIANGLE_HIT_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Paper reference only; original exact-rational / integer implementation, no source copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "Conservative AABB ray-query broadphase + exact 256-bit determinant narrowphase; dynamic has BLAS and TLAS update and rebuild paths",
+  "RT_applicability": "BVH prunes ray/triangle candidates; hardware-computed triangle distance is never accepted as the answer",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "independent rays sharing full scene",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/RT_STATIC_NEAREST_TRIANGLE_HIT_V1.json",
+  "scientific_scope": "Geometric primitive / local commissioning. No public science credit; original tolerant GPU-vs-GPU tests are not independent proofs.",
+  "arithmetic_contract": "docs/TRIANGLE_ZERO_BIT_CONTRACT.md",
+  "contract_revision": "ZERO_BIT_AMENDMENT_V2",
+  "historical_contract": "commissioning/contracts/rt_static_nearest_triangle_hit_v1.json",
+  "historical_contract_sha256": "a6b03fffce45fcba07c125997caa9ef33f2071709e95f4aad63ebcc72cbaa357",
+  "legacy_compatibility": "Scientific operator and input representation retained; deterministic rounding/serialization strengthened. Not a claim of identical bytes to historical tolerant executors.",
+  "partition_limits": "encoding=binary32-hex; triangles[M,3,3], rays[N]={origin[3],direction[3]}; each input component zero or magnitude 2^-16..2^16; nonzero directions; 1<=M,N<=4096 and M*N<=1048576; no hidden quantization",
+  "reference_sources": [
+    {
+      "title": "Moller and Trumbore: Fast, Minimum Storage Ray/Triangle Intersection (1997)",
+      "url": "https://my.eng.utah.edu/~cs6965/papers/MT97.pdf",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Khronos Vulkan ray traversal and acceleration-structure updates",
+      "url": "https://docs.vulkan.org/spec/latest/chapters/raytraversal.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Paper reference only; original exact-rational / integer implementation, no source copied"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_SED_TWO_TEMPLATE_NNLS_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Two-template nonnegative weighted spectral fit",
+  "common_name": "Two-template nonnegative weighted spectral fit",
+  "scientific_use": "Fit mixtures of two supplied bandpass-integrated SED templates for each source and template pair.",
+  "scientific_purpose": "Fit mixtures of two supplied bandpass-integrated SED templates for each source and template pair.",
+  "opcode": 50,
+  "source_references": [
+    {
+      "title": "EAZY authors manual: analytic nonnegative two-template fits",
+      "url": "https://github.com/gbrammer/eazy-photoz/blob/master/doc/eazy_manual.tex",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "Minimize sum(w*(y-a*t0-b*t1)^2), a,b>=0; ordered RN32 Gram/RHS; enumerate origin, each nonnegative axis optimum and nonnegative interior solution; select lowest RN32 residual chi2, fixed tie order.",
+  "input_contract": "encoding=binary32-hex; flux[O,K],weights[O,K],template_pairs[P,2,K]; O/P1..128,K2..64; O*P*K<=1048576; weights/templates>=0; finite RN32 intermediates.",
+  "output_contract": "O*P x[status,a,b,chi2]; status0 accepted,1 Gram determinant<=RN32(2^-18*g00*g11) then three zeros; no inferred redshift/prior, no general N-template solve.",
+  "result_contract": "O*P x[status,a,b,chi2]; status0 accepted,1 Gram determinant<=RN32(2^-18*g00*g11) then three zeros; no inferred redshift/prior, no general N-template solve.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_inference_reference.py + f32.py (Fraction oracle)",
+  "CPU_reference": "science_library/space_inference_reference.py + f32.py (Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_SED_TWO_TEMPLATE_NNLS_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Published method only; no EAZY source copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Quantiles, statistical tails and dense band reductions have no ray/BVH candidate pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "independent object/template-pair fits retaining the full ordered band set",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_SED_TWO_TEMPLATE_NNLS_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_INFERENCE_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; flux[O,K],weights[O,K],template_pairs[P,2,K]; O/P1..128,K2..64; O*P*K<=1048576; weights/templates>=0; finite RN32 intermediates.",
+  "reference_sources": [
+    {
+      "title": "EAZY authors manual: analytic nonnegative two-template fits",
+      "url": "https://github.com/gbrammer/eazy-photoz/blob/master/doc/eazy_manual.tex",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "Published method only; no EAZY source copied"
+  }
+}

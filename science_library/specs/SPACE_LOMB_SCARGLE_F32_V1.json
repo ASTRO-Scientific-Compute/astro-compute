@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_LOMB_SCARGLE_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Weighted floating-mean Lomb–Scargle periodogram",
+  "common_name": "Weighted floating-mean Lomb–Scargle periodogram",
+  "scientific_use": "Period search on irregular astronomical samples, at caller-supplied positive frequencies.",
+  "scientific_purpose": "Period search on irregular astronomical samples, at caller-supplied positive frequencies.",
+  "opcode": 39,
+  "source_references": [
+    {
+      "title": "Astropy generalized Lomb–Scargle: floating mean and standard chi-square normalization",
+      "url": "https://docs.astropy.org/en/stable/timeseries/lombscargle.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "Fit y=offset+a*cos(2*pi*f*t)+b*sin(2*pi*f*t) by weighted centered 2x2 normal equations; P=(chi2_constant-chi2_model)/chi2_constant; canonical RN32 reductions and frozen polynomial sin/cos, see contract",
+  "input_contract": "encoding=binary32-hex; samples[N,3]=(relative_time,value,inverse_variance), N3..512; frequencies[F]1..256 positive; weights>=0; |RN32(time*frequency)|<=256; N*F<=65536",
+  "output_contract": "F x[status,power,offset,cos_amplitude,sin_amplitude,chi2]; status1 zero weight/variance, status2 degenerate/ill-conditioned basis; failed rows have five positive zeros; no automatic frequency grid or false-alarm probability",
+  "result_contract": "F x[status,power,offset,cos_amplitude,sin_amplitude,chi2]; status1 zero weight/variance, status2 degenerate/ill-conditioned basis; failed rows have five positive zeros; no automatic frequency grid or false-alarm probability",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_search_reference.py + f32.py (Fraction oracle)",
+  "CPU_reference": "science_library/space_search_reference.py + f32.py (Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_LOMB_SCARGLE_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; equations only"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "independent trial frequencies; full ordered sample set retained",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_LOMB_SCARGLE_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_SEARCH_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; samples[N,3]=(relative_time,value,inverse_variance), N3..512; frequencies[F]1..256 positive; weights>=0; |RN32(time*frequency)|<=256; N*F<=65536",
+  "reference_sources": [
+    {
+      "title": "Astropy generalized Lomb–Scargle: floating mean and standard chi-square normalization",
+      "url": "https://docs.astropy.org/en/stable/timeseries/lombscargle.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; equations only"
+  }
+}

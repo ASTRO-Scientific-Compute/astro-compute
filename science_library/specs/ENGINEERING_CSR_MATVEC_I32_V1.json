@@ -1,0 +1,56 @@
+{
+  "workload_id": "ENGINEERING_CSR_MATVEC_I32_V1",
+  "domain": "ENGINEERING",
+  "scientific_domain": "ENGINEERING",
+  "scientific_name": "Exact sparse CSR matrix-vector product",
+  "common_name": "Exact sparse CSR matrix-vector product",
+  "scientific_use": "Sparse integer or explicitly scaled fixed-point systems used in solver/operator stages.",
+  "scientific_purpose": "Sparse integer or explicitly scaled fixed-point systems used in solver/operator stages.",
+  "opcode": 12,
+  "source_references": [
+    {
+      "title": "Netlib Templates: compressed row storage",
+      "url": "https://netlib.org/linalg/html_templates/node91.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "y[r]=sum_{j=rowptr[r]}^{rowptr[r+1]-1} values[j]*x[col[j]]",
+  "input_contract": "CSR rowptr nondecreasing from0 to nnz; col in vector bounds; values,x signed16; <=65536 entries per row",
+  "output_contract": "rows x signed64 exact products summed; duplicate columns supported; empty rows zero; downstream iterative solver not included",
+  "result_contract": "rows x signed64 exact products summed; duplicate columns supported; empty rows zero; downstream iterative solver not included",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Entire output byte stream vs independent Python arbitrary-precision CPU reference; edge vectors before search; each timing candidate checked before/after; held-out winner confirmation.",
+  "reference_implementation": "science_library/reference.py",
+  "CPU_reference": "science_library/reference.py",
+  "reference_test_vectors": "science_library/vectors/ENGINEERING_CSR_MATVEC_I32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "reference only; no source copied"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "STRONG_CANDIDATE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "CSR rows with shared vector",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/ENGINEERING_CSR_MATVEC_I32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "reference_sources": [
+    {
+      "title": "Netlib Templates: compressed row storage",
+      "url": "https://netlib.org/linalg/html_templates/node91.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "reference only; no source copied"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}

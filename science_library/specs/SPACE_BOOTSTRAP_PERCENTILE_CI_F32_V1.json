@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_BOOTSTRAP_PERCENTILE_CI_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Two-sided percentile bootstrap confidence interval",
+  "common_name": "Two-sided percentile bootstrap confidence interval",
+  "scientific_use": "Convert supplied bootstrap-statistic replicates into uncertainty intervals for astronomical estimates.",
+  "scientific_purpose": "Convert supplied bootstrap-statistic replicates into uncertainty intervals for astronomical estimates.",
+  "opcode": 48,
+  "source_references": [
+    {
+      "title": "SciPy bootstrap percentile confidence intervals",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "alpha=RN32((1-confidence)/2); return Q(alpha),Q(1-alpha); Q uses sorted values, h=RN32((N-1)*q),j=floor(h),g=RN32(h-j),RN32(RN32((1-g)*x[j])+RN32(g*x[min(j+1,N-1)])); exact rank returns x[j].",
+  "input_contract": "encoding=binary32-hex; replicates[B,N], B1..128,N2..512; finite confidence in(0,1]; finite RN32 intermediates.",
+  "output_contract": "B x[lower,upper] binary32; type7 linear percentile interval; caller supplies valid bootstrap replicates; no BCa correction or guaranteed finite-sample coverage.",
+  "result_contract": "B x[lower,upper] binary32; type7 linear percentile interval; caller supplies valid bootstrap replicates; no BCa correction or guaranteed finite-sample coverage.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_inference_reference.py + f32.py (Fraction oracle)",
+  "CPU_reference": "science_library/space_inference_reference.py + f32.py (Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_BOOTSTRAP_PERCENTILE_CI_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; equations only, original implementation"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Quantiles, statistical tails and dense band reductions have no ray/BVH candidate pruning.",
+  "AI_relevance": "NONE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "whole replicate-distribution rows; never split a quantile across independent shards",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_BOOTSTRAP_PERCENTILE_CI_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_INFERENCE_CONTRACTS.md",
+  "partition_limits": "encoding=binary32-hex; replicates[B,N], B1..128,N2..512; finite confidence in(0,1]; finite RN32 intermediates.",
+  "reference_sources": [
+    {
+      "title": "SciPy bootstrap percentile confidence intervals",
+      "url": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause documentation; equations only, original implementation"
+  }
+}

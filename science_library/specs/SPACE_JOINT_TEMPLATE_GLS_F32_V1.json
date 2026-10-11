@@ -1,0 +1,67 @@
+{
+  "workload_id": "SPACE_JOINT_TEMPLATE_GLS_F32_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Joint correlated template fit",
+  "common_name": "Joint correlated template fit",
+  "scientific_use": "Fit two to five fixed overlapping templates or supplied background columns jointly with correlated noise.",
+  "scientific_purpose": "Fit two to five fixed overlapping templates or supplied background columns jointly with correlated noise.",
+  "opcode": 68,
+  "source_references": [
+    {
+      "title": "statsmodels GLS model and parameter covariance",
+      "url": "https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.GLS.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "C=diag(D)+U^TU;H=X^T C^-1 X;a=H^-1 X^T C^-1 y;Cov(a)=H^-1;chi2=r^T C^-1 r. Guarded Cholesky and ordered RN32 positive augmented products.",
+  "input_contract": "binary32-hex flux,diagonal_variance[B,N],templates[B,M,N],factors[B,K,N];B1..32,M2..5,N=M..64,K0..4;B*N*(K+M+1)^2<=131072;D>0;finite inputs/intermediates;fixed absolute covariance.",
+  "output_contract": "B x [u32 status,f32 amplitudes[M],covariance[M,M] row-major,chi_squared];status1 rejected model pivot,status2 rejected factor pivot;failure has only status and zero remaining words.",
+  "result_contract": "B x [u32 status,f32 amplitudes[M],covariance[M,M] row-major,chi_squared];status1 rejected model pivot,status2 rejected factor pivot;failure has only status and zero remaining words.",
+  "precision_requirements": "Finite IEEE binary32 values, explicitly supplied as eight hex digits (encoding=binary32-hex). Every +,-,*,/,sqrt rounds to nearest ties-to-even; gradual underflow; canonical positive zero after arithmetic. No FMA or reassociation. Nonfinite inputs, intermediate overflow, division by zero and invalid roots reject the job on CPU before dispatch. Bit identity is to this specified rounded algorithm, not exact real arithmetic or other library reduction orders.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Full byte comparison against independent exact-rational RN32 CPU oracle; analytic, adversarial and held-out vectors; arithmetic tested separately.",
+  "reference_implementation": "science_library/space_joint_gls_reference.py + f32.py (independent Fraction oracle)",
+  "CPU_reference": "science_library/space_joint_gls_reference.py + f32.py (independent Fraction oracle)",
+  "reference_test_vectors": "science_library/vectors/SPACE_JOINT_TEMPLATE_GLS_F32_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; original independent ASTRO implementation"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Guarded joint matrix solves have no ray/BVH path.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "whole independent multi-template fits, no split covariance/reduction records",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_JOINT_TEMPLATE_GLS_F32_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "arithmetic_contract": "docs/SPACE_JOINT_GLS_CONTRACT.md",
+  "partition_limits": "binary32-hex flux,diagonal_variance[B,N],templates[B,M,N],factors[B,K,N];B1..32,M2..5,N=M..64,K0..4;B*N*(K+M+1)^2<=131072;D>0;finite inputs/intermediates;fixed absolute covariance.",
+  "reference_sources": [
+    {
+      "title": "statsmodels GLS model and parameter covariance",
+      "url": "https://www.statsmodels.org/stable/generated/statsmodels.regression.linear_model.GLS.html",
+      "accessed": "2026-10-03"
+    },
+    {
+      "title": "Berkeley SoftFloat: software IEEE arithmetic methodology (no code copied)",
+      "url": "https://www.jhauser.us/arithmetic/SoftFloat.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD documentation; original independent ASTRO implementation"
+  }
+}
