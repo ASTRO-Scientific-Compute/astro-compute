@@ -2,15 +2,35 @@
 
 # ASTRO · Scientific Compute
 
+[![Demo CI](https://github.com/ASTRO-Scientific-Compute/astro-compute/actions/workflows/demo-ci.yml/badge.svg?branch=main)](https://github.com/ASTRO-Scientific-Compute/astro-compute/actions/workflows/demo-ci.yml)
+
 **Discover hardware. Optimize execution. Validate the science.**
 
-ASTRO is building a heterogeneous scientific compute fabric that can discover, optimize, execute and independently validate mathematical workloads across CPUs, GPUs, ray-tracing hardware and AI accelerators.
+ASTRO is building a heterogeneous scientific compute fabric that discovers, optimizes, executes and validates mathematical workloads across CPUs, GPUs, ray-tracing hardware and AI accelerators.
+
+Independent distributed validation is a planned network capability; local execution already uses independent mathematical reference checks within its stated scope.
 
 **EXPERIMENTAL · Active development · Not production-ready**
 
 [Architecture](docs/ARCHITECTURE.md) · [Current status](docs/STATUS.md) · [Mathematical corpus](docs/SCIENCE_MAP.md) · [Search & runtime](docs/SEARCH_AND_RUNTIME.md) · [Roadmap](docs/ROADMAP.md)
 
-> **Run the included GPU demo:** four fixed MathSpecs, then stop. The public package includes native Vulkan build sources, canonical oracles, actual DIRECT/TILED kernels, correctness gates and compact diagnostic profiles. The 81-reference CPU corpus remains available for selftests. This is an evaluation demo, not a complete MinerNode or the unrestricted Census/Fusion search campaign. [GPU setup and exact limits](docs/GPU_DEMO.md).
+### ASTRO in 30 seconds
+
+- **What:** a heterogeneous scientific compute fabric in development.
+- **Why:** use different hardware for the mathematical work it performs well.
+- **How:** discover → optimize → execute → validate.
+- **Today:** an 81-primitive CPU reference corpus, a bounded four-MathSpec Vulkan GPU demo, native build sources and correctness CI.
+- **Future:** distributed MinerNodes, MainNode, Scientist, independent distributed validation and universal mathematical composition.
+
+### Try the GPU demo
+
+```bash
+bash run_gpu_demo.sh
+```
+
+[Install the dependencies and run the demo](docs/GPU_DEMO.md). Four fixed MathSpecs run through DIRECT and TILED kernels, compare their complete warmup/final outputs with the canonical CPU oracle, then stop. Results are **QUICK_DIAGNOSTIC_ONLY**. The included demo does not run unrestricted Census/Fusion search or a full MinerNode.
+
+For the CPU references and software selftests (Python 3.10–3.12):
 
 ```bash
 python3 -m venv .venv
@@ -18,12 +38,6 @@ source .venv/bin/activate
 python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
 python reference_demo.py
-```
-
-Python 3.10–3.12 is supported. For the Linux GPU demo, install the [native dependencies](docs/GPU_DEMO.md), then run:
-
-```bash
-bash run_gpu_demo.sh
 ```
 
 **Source-available demonstration software. Free to evaluate using the included demo. All other use requires explicit permission from the copyright holder.** See [LICENSE](LICENSE), [licensing scope](LICENSING.md) and [completed validation](docs/PUBLICATION.md). This is not an open-source or OSI-approved license.
@@ -85,6 +99,8 @@ Two additional canonical RT commissioning contracts are categorized separately. 
 
 **Correctness before performance.** Exact/COLD ZERO contracts require zero differing bits; bounded-FP contracts retain their own explicit bounds. An optimization cannot silently change the mathematical problem, rounding graph or input representation.
 
+Two separate gates matter: **implementation agreement** checks the entire GPU output against the independent CPU implementation (zero differing bits for exact contracts); **scientific validity** checks the numerical result against the required scientific reference, higher internal precision or original error budget where the MathSpec requires it. Two implementations agreeing bit-for-bit does not prove that both implement the intended science correctly. The documented [Hann FFT / whitening amendment](docs/VALIDATION.md#historical-example-hann-fft-and-whitening) illustrates why.
+
 The public CPU checks are **VERIFIED only within their stated test scope**. Development GPU results need their own oracle comparison, executed-path evidence and performance-validity gates. Independent network validation is **PLANNED**: nodes sharing an ownership or network domain do not automatically count as independent validators. [Validation policy](docs/VALIDATION.md).
 
 ## 11. RT compute
@@ -92,6 +108,8 @@ The public CPU checks are **VERIFIED only within their stated test scope**. Deve
 **EXPERIMENTAL local paths.** Ray query and BLAS/TLAS traversal can serve conservative spatial broadphases. A candidate hit must still satisfy the MathSpec's exact narrowphase. RT is not assumed to accelerate every workload. Ray-query commissioning does not establish general raygen/SBT support or an application-wide speedup.
 
 ## 12. AI / Tensor
+
+ASTRO is scientific compute first. AI/Tensor execution, Scientist AI and orchestration are components within that system, not its primary definition.
 
 **PLANNED execution integration.** Tensor/matrix work, inference, preparation and distributed reasoning support belong behind capability and correctness gates. Cataloging FP4 or BF16 does not mean that a given GPU executes it natively. Legacy GPUs remain useful for suitable classic compute tasks; modern accelerators must prove their own paths. No production inference/training backend is claimed here.
 
@@ -124,7 +142,7 @@ Storage planning guidance: **512 GB SSD minimum recommendation; 1 TB+ recommende
 
 ## 18. Benchmarks
 
-This preview publishes **no GPU performance leaderboard**. Historical local profiles are not self-contained public reproduction packages. Primary metrics must be correctly completed natural work units/s and end-to-end time; legacy science/s is secondary. QUICK, confirmed local, sustained, certified and historical results must remain distinct. [Required methodology](docs/BENCHMARKS.md).
+This preview publishes **no GPU performance leaderboard**. Historical local profiles are not self-contained public reproduction packages. Primary metrics must be correctly completed natural work units/s and end-to-end time; legacy science/s is secondary. QUICK, confirmed local, sustained, certified and historical results must remain distinct. [Required methodology](docs/BENCHMARKS.md) · [External reproduction template](docs/EXTERNAL_REPRODUCTIONS.md).
 
 ## 19. Roadmap
 

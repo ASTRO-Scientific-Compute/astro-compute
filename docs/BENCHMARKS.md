@@ -28,4 +28,8 @@ The profile must distinguish unavailable fields from zero. Invalid correctness n
 
 ## Reproduction without storage growth
 
-Keep the public algorithm, compact configuration, deterministic input-generation recipe and validation procedure. A reproduction is a new validated run; the original transient raw output is intentionally not archived. Do not advertise an exact replay when a historical input recipe or compatible executor is missing. This public source preview has CPU reference checks only; the portable GPU runner is still a publication gate.
+Keep the public algorithm, compact configuration, deterministic input-generation recipe and validation procedure. A reproduction is a new validated run; the original transient raw output is intentionally not archived. Do not advertise an exact replay when a historical input recipe or compatible executor is missing. The current public package includes CPU reference checks and the bounded four-MathSpec Vulkan runner. Its full-output correctness checks and QUICK diagnostics are separate from any future sustained reproduction protocol.
+
+## External reproductions
+
+The [external reproduction template](EXTERNAL_REPRODUCTIONS.md) records the exact release, device/driver, task, kernel family, correctness, natural units and telemetry availability. It is an empty submission format, not a leaderboard. Software Vulkan correctness, physical QUICK diagnostics, sustained evidence, historical internal results and independent reproductions remain separate.
