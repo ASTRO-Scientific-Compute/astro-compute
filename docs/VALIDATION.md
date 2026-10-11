@@ -25,4 +25,4 @@ Digest bindings can protect a live result/receipt exchange. They do not justify 
 
 ## Public checks and limits
 
-Run `python -m unittest discover -s tests -v`. The suite covers all 81 analytic reference cases, unchanged contract metadata, host binary32 probes, a rejected malformed job and a rejected corrupted result. It validates this source export; it does not execute a GPU, establish sustained throughput, resolve the development image-moments GPU defect or provide an independent release review.
+Run `python -m unittest discover -s tests -v`. The suite covers all 81 analytic reference cases, unchanged contract metadata, host binary32 probes, a rejected malformed job and a rejected corrupted result. The software suite does not execute a GPU. The separate bounded demo and CI software-Vulkan run check executed kernels. Neither establishes sustained throughput nor resolves the excluded development image-moments GPU defect. See [publication scope](PUBLICATION.md) for independent agent review and completed checks.

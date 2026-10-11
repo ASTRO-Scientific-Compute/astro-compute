@@ -1,0 +1,49 @@
+name: Demo correctness and native build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: demo-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  reference-and-build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    strategy:
+      matrix:
+        python: ['3.10', '3.12']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ libvulkan-dev glslang-tools spirv-tools mesa-vulkan-drivers
+          python -m pip install -r requirements.txt
+      - name: Canonical CPU and demo admission tests
+        run: python -B -m unittest discover -s tests -v
+      - name: Native build, rejection gates and all eight demo shaders
+        run: bash run_gpu_demo.sh --build-only
+      - name: Software Vulkan correctness, never a physical GPU benchmark
+        if: matrix.python == '3.12'
+        shell: bash
+        run: |
+          icd=$(find /usr/share/vulkan/icd.d -maxdepth 1 -name 'lvp*.json' -print -quit)
+          test -n "$icd"
+          export VK_DRIVER_FILES="$icd"
+          bash run_gpu_demo.sh --allow-software --profile "$RUNNER_TEMP/demo-profile.json"
+          python -c 'import json,os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/demo-profile.json")); assert p["status"]=="DEMO_COMPLETE" and p["completed_mathspecs"]==4; assert len(p["trials"])==8; assert all(r["CORRECTNESS"]=="PASS" and not r["hardware_device"] and not r["accepted_sustained_performance"] for r in p["trials"])'
+      - name: Check transient artifacts were removed
+        run: |
+          python -c 'import pathlib,tempfile; assert not list(pathlib.Path(tempfile.gettempdir()).glob("astro-demo-*"))'

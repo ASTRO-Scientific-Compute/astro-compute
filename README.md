@@ -10,7 +10,7 @@ ASTRO is building a heterogeneous scientific compute fabric that can discover, o
 
 [Architecture](docs/ARCHITECTURE.md) · [Current status](docs/STATUS.md) · [Mathematical corpus](docs/SCIENCE_MAP.md) · [Search & runtime](docs/SEARCH_AND_RUNTIME.md) · [Roadmap](docs/ROADMAP.md)
 
-> **What can I run from this repository today?** This first public preview contains the canonical **CPU reference foundation**, its contracts and small analytic test vectors. It is a deliberately scoped source export from the v1.17.52 development tree, not a complete MinerNode installation. The experimental GPU search/runtime described below exists in the development project; its portable public packaging and independent review remain open. No GPU benchmark or network service starts when you run the checks here.
+> **Run the included GPU demo:** four fixed MathSpecs, then stop. The public package includes native Vulkan build sources, canonical oracles, actual DIRECT/TILED kernels, correctness gates and compact diagnostic profiles. The 81-reference CPU corpus remains available for selftests. This is an evaluation demo, not a complete MinerNode or the unrestricted Census/Fusion search campaign. [GPU setup and exact limits](docs/GPU_DEMO.md).
 
 ```bash
 python3 -m venv .venv
@@ -20,7 +20,13 @@ python -m unittest discover -s tests -v
 python reference_demo.py
 ```
 
-Python 3.10+ is required. See [publication scope and validation](docs/PUBLICATION.md) and the [licensing note](LICENSING.md). No open-source license has been selected yet.
+Python 3.10–3.12 is supported. For the Linux GPU demo, install the [native dependencies](docs/GPU_DEMO.md), then run:
+
+```bash
+bash run_gpu_demo.sh
+```
+
+**Source-available demonstration software. Free to evaluate using the included demo. All other use requires explicit permission from the copyright holder.** See [LICENSE](LICENSE), [licensing scope](LICENSING.md) and [completed validation](docs/PUBLICATION.md). This is not an open-source or OSI-approved license.
 
 ## 1. What is ASTRO?
 
@@ -122,11 +128,11 @@ This preview publishes **no GPU performance leaderboard**. Historical local prof
 
 ## 19. Roadmap
 
-**PLANNED milestones:** portable GPU source packaging and independent review; broader hardware commissioning; resource evidence; reliable runtime composition; a real MainNode ACK and independent validation protocol; Scientist integration; host-runtime generation; heterogeneous network commissioning; engineering/realtime integration. Marketplace, compensation, accounting/token and fiat-denominated research contracts are long-term design topics, not operational products. [Gated roadmap](docs/ROADMAP.md).
+**NEXT milestones:** broader portable GPU search integration and external human review; broader hardware commissioning; resource evidence; reliable runtime composition; a real MainNode ACK and independent validation protocol; Scientist integration; host-runtime generation; heterogeneous network commissioning; engineering/realtime integration. Marketplace, compensation, accounting/token and fiat-denominated research contracts are long-term design topics, not operational products. [Gated roadmap](docs/ROADMAP.md).
 
 ## 20. Contributing
 
-Start with [CONTRIBUTING.md](CONTRIBUTING.md). Small reproducible correctness cases, independent reviews, precise capability gaps and portable packaging improvements are useful. Licensing is pending; contribution licensing must be agreed before incorporating third-party code.
+Start with [CONTRIBUTING.md](CONTRIBUTING.md). Small reproducible correctness cases, independent reviews, precise capability gaps and portable packaging improvements are useful. Code modification and contribution require prior written permission; contribution terms must be agreed before incorporating third-party code.
 
 ## 21. Security
 

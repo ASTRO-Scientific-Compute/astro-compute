@@ -1,4 +1,5 @@
 # Local execution and benchmark state
+demo-profile.json
 state/
 **/state/
 evidence/

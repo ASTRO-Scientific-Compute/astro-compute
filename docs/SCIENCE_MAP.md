@@ -2,7 +2,7 @@
 
 **IMPLEMENTED public reference corpus: 81 primitives, including 66 SPACE.** The development registry contains 94 distinct entries. This inventory preserves all entries without inventing a public executor for the remaining 13.
 
-Natural performance units must be derived from each exact workload/contract. Similar names do not make historical and canonical amended workloads comparable. All public GPU execution is currently UNAVAILABLE in this source preview.
+Natural performance units must be derived from each exact workload/contract. Similar names do not make historical and canonical amended workloads comparable. The [public GPU demo](GPU_DEMO.md) enables only FFT256, Convolution, XCORR and integer FIR; other GPU workloads are outside its permitted execution scope.
 
 | Workload | Domain | Public canonical CPU reference |
 |---|---|---|

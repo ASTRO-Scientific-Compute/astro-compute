@@ -1,6 +1,6 @@
 # Search and Runtime Fusion
 
-**Scope: development-tree implementation, EXPERIMENTAL. This preview does not ship the GPU launcher.**
+**Scope: broader development-tree search, EXPERIMENTAL. The separate [public GPU demo](GPU_DEMO.md) uses a bounded DIRECT/TILED evaluation; the unrestricted Census/Fusion search launcher is not shipped.**
 
 ## Layered Fast Search V2
 
