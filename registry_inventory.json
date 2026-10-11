@@ -1,0 +1,855 @@
+{
+  "schema": "ASTRO_PUBLIC_REGISTRY_INVENTORY_V1",
+  "source_version": "v1.17.52",
+  "registry_entries": 94,
+  "canonical_references": 81,
+  "canonical_space_references": 66,
+  "workloads": [
+    {
+      "workload_id": "SPACE_IMAGE_MOMENTS_U16_V1",
+      "domain": "SPACE",
+      "scientific_name": "Raw image moments through order two",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_IMAGE_MOMENTS_U16_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_APERTURE_SUM_I32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Circular center-mask aperture photometry",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_APERTURE_SUM_I32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_TRANSIT_FOLD_STATS_I32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Trial-period phase-bin sufficient statistics",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_TRANSIT_FOLD_STATS_I32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_WEIGHTED_LINEAR_STATS_I32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Weighted linear-fit normal-equation statistics",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_WEIGHTED_LINEAR_STATS_I32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_CATALOG_CHORD_MATCH_I32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Fixed-point catalog radius match and bounded nearest source",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_CATALOG_CHORD_MATCH_I32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_CONVOLUTION_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Full linear convolution",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_CONVOLUTION_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_CROSS_CORRELATION_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Real linear cross-correlation",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_CROSS_CORRELATION_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_NORMALIZED_CORRELATION_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Overlap-energy normalized real cross-correlation",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_NORMALIZED_CORRELATION_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_FFT_COMPLEX_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Forward complex radix-2 FFT",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_FFT_COMPLEX_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_WEIGHTED_LINEAR_FIT_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Weighted straight-line fit",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_WEIGHTED_LINEAR_FIT_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_CARTESIAN_TRANSFORM_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Cartesian matrix coordinate transform",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_CARTESIAN_TRANSFORM_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_TRAPEZOID_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Composite trapezoidal integration",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_TRAPEZOID_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_NBODY_ACCELERATION_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Softened all-pairs gravitational acceleration",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_NBODY_ACCELERATION_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_LEAPFROG_DRIFT_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Staggered leapfrog kick and drift",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_LEAPFROG_DRIFT_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_CENTROID_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Center-of-mass image centroid",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_CENTROID_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_PERIODOGRAM_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Two-sided rectangular-window periodogram density",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_PERIODOGRAM_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_GWOSC_FFT256_V1",
+      "domain": "SPACE",
+      "scientific_name": "GWOSC real-input FFT256, zero-bit amendment",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_GWOSC_FFT256_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_GWOSC_CONVOLUTION_V1",
+      "domain": "SPACE",
+      "scientific_name": "GWOSC edge-clamped FIR9, zero-bit amendment",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_GWOSC_CONVOLUTION_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_GWOSC_XCORR_V1",
+      "domain": "SPACE",
+      "scientific_name": "GWOSC129-lag correlation, zero-bit amendment",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_GWOSC_XCORR_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_GWOSC_NXCORR_V1",
+      "domain": "SPACE",
+      "scientific_name": "GWOSC129-lag normalized correlation, zero-bit amendment",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_GWOSC_NXCORR_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_EXOPLANET_EARTHSIZE_FILTER_V1",
+      "domain": "SPACE",
+      "scientific_name": "Stable Earth-size catalog compaction",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_EXOPLANET_EARTHSIZE_FILTER_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_GWOSC_WELCH_PSD_V1",
+      "domain": "SPACE",
+      "scientific_name": "GWOSC Hann Welch PSD, zero-bit amendment",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_GWOSC_WELCH_PSD_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_GWOSC_WHITENING_V1",
+      "domain": "SPACE",
+      "scientific_name": "GWOSC spectral whitening, zero-bit amendment",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_GWOSC_WHITENING_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_LOMB_SCARGLE_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Weighted floating-mean Lomb\u2013Scargle periodogram",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_LOMB_SCARGLE_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_BLS_BINNED_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Exhaustive binned box least-squares transit search",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_BLS_BINNED_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_IMAGE_PEAK_MASK_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Thresholded local maximum image mask",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_IMAGE_PEAK_MASK_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_SED_TEMPLATE_CHI2_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Nonnegative amplitude spectral-template chi-square",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_SED_TEMPLATE_CHI2_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_SPHERICAL_CARTESIAN_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Spherical longitude/latitude to Cartesian coordinates",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_SPHERICAL_CARTESIAN_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_KEPLER_RK4_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Fixed-step RK4 point-mass trajectories",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_KEPLER_RK4_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_BOOTSTRAP_MEAN_VARIANCE_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Case-bootstrap replicate mean and sample variance",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_BOOTSTRAP_MEAN_VARIANCE_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_SIGMA_CLIP_STATS_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Iterative mean-centered sigma clipping with complete retained mask",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_SIGMA_CLIP_STATS_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_IMAGE_SEGMENTATION_U32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Thresholded connected source segmentation",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_IMAGE_SEGMENTATION_U32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_BOOTSTRAP_PERCENTILE_CI_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Two-sided percentile bootstrap confidence interval",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_BOOTSTRAP_PERCENTILE_CI_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_MONTE_CARLO_TAIL_U32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Exact inclusive Monte Carlo upper-tail counts",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_MONTE_CARLO_TAIL_U32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_SED_TWO_TEMPLATE_NNLS_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Two-template nonnegative weighted spectral fit",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_SED_TWO_TEMPLATE_NNLS_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_BACKGROUND_BILINEAR_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Bilinear background mesh evaluation",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_BACKGROUND_BILINEAR_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_COMPONENT_GRAPH_MERGE_U32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Cross-tile component equivalence closure",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_COMPONENT_GRAPH_MERGE_U32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_SEGMENT_CATALOG_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Segmented-source flux, centroid and central moments",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_SEGMENT_CATALOG_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_J2_ACCELERATION_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Central plus J2 gravitational acceleration",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_J2_ACCELERATION_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_ADAPTIVE_ORBIT_RK4_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Adaptive RK4 step-doubling trajectories with J2",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_ADAPTIVE_ORBIT_RK4_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_ORBIT_DIAGNOSTICS_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Specific orbital energy and angular momentum diagnostics",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_ORBIT_DIAGNOSTICS_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_MULTIHARMONIC_PERIODOGRAM_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Weighted multiple-harmonic periodogram and fit",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_MULTIHARMONIC_PERIODOGRAM_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_PHASE_DISPERSION_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Fixed-bin phase-dispersion minimization",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_PHASE_DISPERSION_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_PSF_WEIGHTED_SCAN_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Weighted spatial PSF amplitude scan",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_PSF_WEIGHTED_SCAN_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_TEMPLATE_NNLS_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Bounded weighted nonnegative template mixture",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_TEMPLATE_NNLS_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_IDW_INTERPOLATE_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Nearest-neighbor inverse squared-distance interpolation",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_IDW_INTERPOLATE_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_MASKED_MEDIAN_MESH_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Masked truncated-window mesh median",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_MASKED_MEDIAN_MESH_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_BIWEIGHT_STATS_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Robust biweight location, midvariance and scale",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_BIWEIGHT_STATS_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_HALF_SAMPLE_MODE_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Half-sample mode of masked observations",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_HALF_SAMPLE_MODE_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_SOURCE_NOISE_MAP_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Source Poisson plus background noise map",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_SOURCE_NOISE_MAP_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_LINEAR_FLUX_COVARIANCE_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Covariance-aware fixed linear flux and uncertainty",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_LINEAR_FLUX_COVARIANCE_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_CORRELATED_TEMPLATE_FIT_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Correlated single-template amplitude fit",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_CORRELATED_TEMPLATE_FIT_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_JOINT_TEMPLATE_GLS_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Joint correlated template fit",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_JOINT_TEMPLATE_GLS_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_ADAPTIVE_NBODY_RK4_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Adaptive interacting N-body RK4",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_ADAPTIVE_NBODY_RK4_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_NBODY_INVARIANTS_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Softened N-body system invariants",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_NBODY_INVARIANTS_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_SWEPT_SPHERE_ENCOUNTER_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Closest approach and sphere contact along pair chords",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_SWEPT_SPHERE_ENCOUNTER_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_LINEAR_KALMAN_STEP_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Linear Kalman prediction and measurement update",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_LINEAR_KALMAN_STEP_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_RTS_SMOOTHER_STEP_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Stabilized RTS backward smoothing step",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_RTS_SMOOTHER_STEP_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_IAU2006_BIAS_PRECESSION_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "IAU2006 bias/precession of GCRS Cartesian vectors",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_IAU2006_BIAS_PRECESSION_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_ELLIPTIC_KEPLER_STATE_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Direct bounded elliptic Kepler state",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_ELLIPTIC_KEPLER_STATE_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_HYPERBOLIC_KEPLER_STATE_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Bounded hyperbolic Kepler state",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_HYPERBOLIC_KEPLER_STATE_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_PARABOLIC_BARKER_STATE_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Bounded parabolic Barker state",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_PARABOLIC_BARKER_STATE_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_CROSS_SPECTRAL_COHERENCE_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Paired complex cross-spectrum and magnitude-squared coherence",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_CROSS_SPECTRAL_COHERENCE_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_GNOMONIC_PROJECT_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Bounded celestial gnomonic tangent-plane projection",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_GNOMONIC_PROJECT_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_TANGENT_TO_UNIT_VECTOR_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Tangent plane to normalized celestial unit vector",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_TANGENT_TO_UNIT_VECTOR_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SPACE_SIP_FORWARD_F32_V1",
+      "domain": "SPACE",
+      "scientific_name": "Bounded SIP forward pixel distortion",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SPACE_SIP_FORWARD_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "BIO_SMITH_WATERMAN_I32_V1",
+      "domain": "BIO",
+      "scientific_name": "Smith-Waterman local alignment score",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/BIO_SMITH_WATERMAN_I32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "BIO_CONTACT_COUNTS_I32_V1",
+      "domain": "BIO",
+      "scientific_name": "Cross-group molecular contact counts",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/BIO_CONTACT_COUNTS_I32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "BIO_KMER_COUNTS_U32_V1",
+      "domain": "BIO",
+      "scientific_name": "Overlapping oriented DNA k-mer counts",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/BIO_KMER_COUNTS_U32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "CHEM_PAIR_DISTANCE_SQUARED_I64_V1",
+      "domain": "CHEM",
+      "scientific_name": "Molecular pair squared-distance matrix",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/CHEM_PAIR_DISTANCE_SQUARED_I64_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "CHEM_RADIAL_HISTOGRAM_I64_V1",
+      "domain": "CHEM",
+      "scientific_name": "Cross-group radial pair-count histogram",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/CHEM_RADIAL_HISTOGRAM_I64_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "CHEM_LENNARD_JONES_PAIR_F32_V1",
+      "domain": "CHEM",
+      "scientific_name": "Lennard-Jones pair energy and force",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/CHEM_LENNARD_JONES_PAIR_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "PHYSICS_ISING_OBSERVABLES_I32_V1",
+      "domain": "PHYSICS",
+      "scientific_name": "Periodic square-lattice Ising bond energy and magnetization",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/PHYSICS_ISING_OBSERVABLES_I32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "PHYSICS_HEAT_STEP_F32_V1",
+      "domain": "PHYSICS",
+      "scientific_name": "Explicit two-dimensional heat diffusion step",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/PHYSICS_HEAT_STEP_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SIGNAL_FIR_ACCUMULATE_I16_V1",
+      "domain": "SIGNAL",
+      "scientific_name": "Full-precision fixed-point FIR accumulation",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SIGNAL_FIR_ACCUMULATE_I16_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "SIGNAL_LINEAR_RESAMPLE_F32_V1",
+      "domain": "SIGNAL",
+      "scientific_name": "Piecewise-linear one-dimensional resampling",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/SIGNAL_LINEAR_RESAMPLE_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "ENGINEERING_CSR_MATVEC_I32_V1",
+      "domain": "ENGINEERING",
+      "scientific_name": "Exact sparse CSR matrix-vector product",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/ENGINEERING_CSR_MATVEC_I32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "ENGINEERING_ORIENT2D_I32_V1",
+      "domain": "ENGINEERING",
+      "scientific_name": "Exact two-dimensional triangle orientation",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/ENGINEERING_ORIENT2D_I32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "ENGINEERING_DENSE_MATMUL_F32_V1",
+      "domain": "ENGINEERING",
+      "scientific_name": "Dense matrix multiplication",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/ENGINEERING_DENSE_MATMUL_F32_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "RT_STATIC_NEAREST_TRIANGLE_HIT_V1",
+      "domain": "RT",
+      "scientific_name": "Static nearest opaque triangle distance",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/RT_STATIC_NEAREST_TRIANGLE_HIT_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "RT_DYNAMIC_NEAREST_TRIANGLE_HIT_V1",
+      "domain": "RT",
+      "scientific_name": "Mutate geometry and query exact nearest opaque hit",
+      "canonical_cpu_reference_in_this_release": true,
+      "canonical_contract": "science_library/specs/RT_DYNAMIC_NEAREST_TRIANGLE_HIT_V1.json",
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Canonical reference primitive"
+    },
+    {
+      "workload_id": "ASTRO_SPACE_GENERIC",
+      "domain": "SPACE",
+      "scientific_name": "legacy universal SPACE lane",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "ASTRO_SIGNAL_GENERIC",
+      "domain": "SIGNAL",
+      "scientific_name": "legacy universal SIGNAL lane",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "ASTRO_BIO_GENERIC",
+      "domain": "BIO",
+      "scientific_name": "legacy universal BIO lane",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "ASTRO_PHYSICS_GENERIC",
+      "domain": "PHYSICS",
+      "scientific_name": "legacy universal PHYSICS lane",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "ASTRO_CHEM_GENERIC",
+      "domain": "CHEM",
+      "scientific_name": "legacy universal CHEM lane",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "SPACE_GAIA_NEIGHBORS_V1",
+      "domain": "SPACE",
+      "scientific_name": "SPACE_GAIA_NEIGHBORS_V1",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "SPACE_EXOPLANET_PERIOD_HIST_V1",
+      "domain": "SPACE",
+      "scientific_name": "SPACE_EXOPLANET_PERIOD_HIST_V1",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "SPATIAL_NEAREST_TRIANGLE_HIT",
+      "domain": "MULTI",
+      "scientific_name": "SPATIAL_NEAREST_TRIANGLE_HIT",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "SPATIAL_ANY_HIT_OCCLUSION",
+      "domain": "MULTI",
+      "scientific_name": "SPATIAL_ANY_HIT_OCCLUSION",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "SPATIAL_SEGMENT_VISIBILITY",
+      "domain": "MULTI",
+      "scientific_name": "SPATIAL_SEGMENT_VISIBILITY",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "SPATIAL_FIRST_SURFACE_DISTANCE",
+      "domain": "MULTI",
+      "scientific_name": "SPATIAL_FIRST_SURFACE_DISTANCE",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "SPATIAL_RADIUS_WEIGHT_SUM",
+      "domain": "MULTI",
+      "scientific_name": "SPATIAL_RADIUS_WEIGHT_SUM",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    },
+    {
+      "workload_id": "SPATIAL_BOUNDED_NEAREST_POINT",
+      "domain": "MULTI",
+      "scientific_name": "SPATIAL_BOUNDED_NEAREST_POINT",
+      "canonical_cpu_reference_in_this_release": false,
+      "canonical_contract": null,
+      "public_gpu_executor": "UNAVAILABLE_IN_THIS_PREVIEW",
+      "scope": "Historical/runtime registry entry; executor not included in this preview"
+    }
+  ]
+}

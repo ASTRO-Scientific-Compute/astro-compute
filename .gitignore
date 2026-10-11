@@ -1,0 +1,45 @@
+# Local execution and benchmark state
+state/
+**/state/
+evidence/
+**/raw_evidence/
+**/trial_workspace*/
+**/telemetry*/
+**/benchmark_tmp*/
+**/hash_inventory*/
+*.sha256
+*.sha512
+*.hashes
+*.spv
+*.bin
+*.log
+*.sqlite*
+*.db
+*.npy
+*.npz
+# Generated build and environment material
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.cache/
+.venv/
+venv/
+build/
+dist/
+*.o
+*.so
+*.a
+*.zip
+*.tar*
+# Secrets and local configuration
+.env
+.env.*
+*.pem
+*.key
+credentials*
+secrets*
+private/
+private-audit/
+local_config*
+*.local.json
+.DS_Store
