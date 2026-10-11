@@ -1,6 +1,14 @@
-# Public source preview · v1.17.52 reference foundation and GPU demo
+# Public package · CPU references and bounded Vulkan GPU demo
 
 **Release scope: canonical CPU reference export plus bounded four-task Vulkan demo.**
+
+## Current published scope
+
+The repository includes the CPU reference corpus, a maximum-four-MathSpec Vulkan demo, native C++/Vulkan build sources, DIRECT/TILED demo kernels, full-output correctness validation and CI. The workflow runs Python 3.10/3.12 software checks and native/shader builds; the Python 3.12 job also executes Mesa software Vulkan correctness and checks cleanup. Software Vulkan timing is never physical GPU evidence.
+
+The first demo publication passed hosted CI on commit `ab3d236153c25adf14cbac067bdba818561f3fb2`: [completed run](https://github.com/ASTRO-Scientific-Compute/astro-compute/actions/runs/38161000798). The [workflow](https://github.com/ASTRO-Scientific-Compute/astro-compute/actions/workflows/demo-ci.yml) shows the status of subsequent commits. Agent review is complete for that bounded scope; external human review remains PENDING.
+
+## Historical publication context
 
 The first CPU-only preview is preserved below as historical publication context. Current GPU packaging, checks and limitations are in [GPU_DEMO.md](GPU_DEMO.md) and [DEMO_RELEASE.md](DEMO_RELEASE.md). The historical 85-test count below predates the expanded demo tests.
 
@@ -27,7 +35,7 @@ The canonical catalog, integer/Fraction/binary32 CPU oracles, deterministic arit
 
 ## Outside the initial CPU-only preview
 
-State-bound GPU runtime/search installation, private winner profiles and seed dependencies, raw benchmark evidence, trial directories, telemetry dumps, local credentials, researcher data, game profiles and compiled artifacts. The complete GPU distribution needs an independently reviewed portable export with explicit build/runtime dependencies. A repository clone must not be represented as an installed full MinerNode.
+State-bound GPU runtime/search installation, private winner profiles and seed dependencies, raw benchmark evidence, trial directories, telemetry dumps, local credentials, researcher data, game profiles and compiled artifacts. The complete unrestricted development runtime/search distribution remains outside the bounded portable demo. A repository clone must not be represented as an installed full MinerNode.
 
 ## Contract-document context
 
