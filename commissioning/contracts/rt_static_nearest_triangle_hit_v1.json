@@ -1,0 +1,9 @@
+{
+  "schema": "ASTRO_RT_COMMISSIONING_CONTRACT_V1",
+  "id": "RT_STATIC_NEAREST_TRIANGLE_HIT_V1",
+  "operation": "nearest opaque triangle hit distance for static geometry",
+  "executors": ["generic_compute_bruteforce", "vulkan_ray_query"],
+  "validation": "FULL output compare for every emitted ray with abs error <= 1e-4; misses must agree",
+  "search_objective": "fastest validated local executor; wall/GPU throughput only",
+  "promotion": "local commissioning evidence only; no global profile promotion"
+}
