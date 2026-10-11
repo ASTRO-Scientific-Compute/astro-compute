@@ -1,0 +1,9 @@
+{
+  "schema": "ASTRO_RT_COMMISSIONING_CONTRACT_V1",
+  "id": "RT_DYNAMIC_NEAREST_TRIANGLE_HIT_V1",
+  "operation": "mutate triangle geometry then query nearest opaque hit distance",
+  "executors": ["dynamic_compute", "rt_update_refit", "rt_full_rebuild"],
+  "validation": "FULL compute-vs-RT output compare after geometry mutation with abs error <= 1e-4; misses must agree",
+  "search_objective": "fastest validated local executor with 5% hysteresis",
+  "promotion": "local commissioning evidence only; no global profile promotion"
+}
