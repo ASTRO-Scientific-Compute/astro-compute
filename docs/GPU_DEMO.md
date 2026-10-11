@@ -33,6 +33,10 @@ The measured interval repeatedly executes resident input. The full warmup and fi
 
 Software Vulkan is rejected by default. `--allow-software` permits an explicitly labelled correctness run for CI; its timings are not physical GPU performance. Capability checks are runtime-based and contain no hardcoded BC-250 CU count. Other vendors are not marked hardware-verified by successful compilation.
 
+## Reference results
+
+The [BC-250 reference run](REFERENCE_DEMO_RESULTS.md) records all eight DIRECT/TILED results from the exact public release, with hardware/software identity, COLD ZERO checks, measured clock/power and GPU/wall evidence. These are short diagnostics, not sustained production benchmarks or independent external reproduction.
+
 ## Resource lifetime
 
 Builds, shader binaries, inputs, outputs, compiler binding hashes and telemetry samples are transient. Each trial is removed after validation; the temporary build directory is removed on completion, ordinary failure, Ctrl+C or SIGTERM. The demo has a five-minute outer deadline and bounded child-process deadlines. Only one compact profile is saved (the default file is overwritten on subsequent runs).
