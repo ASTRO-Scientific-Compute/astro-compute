@@ -1,0 +1,13 @@
+{
+  "schema": "ASTRO_SPACE_SCIENCE_CONTRACT_V1",
+  "id": "SPACE_GWOSC_STRAIN_FFT256_V1",
+  "science": "SPACE",
+  "provider": "GWOSC_API_V2",
+  "dataset": "GW150914-v2 H1 4 kHz 32 s public strain",
+  "input": "float32(strain * 1e21), sequential non-overlapping 256-sample windows",
+  "operation": "forward complex FFT, real input and zero imaginary component",
+  "output": "256 complex float32 bins per window",
+  "validation": "all output bins vs CPU radix-2 double reference",
+  "tolerance": {"abs_scaled": 0.002, "formula": "err <= 0.002 * max(1, abs(reference))"},
+  "science_unit": "one FULL-validated 256-sample spectrum"
+}
