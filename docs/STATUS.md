@@ -19,7 +19,7 @@ The public preview and the broader development tree are different scopes. This t
 |---|---|---|
 | 81 canonical CPU references / 66 SPACE | IMPLEMENTED; analytic tests in this repo | Existing canonical corpus, not all 94 registry entries |
 | Full 94-entry inventory | IMPLEMENTED, sanitized metadata | Includes 13 historical/runtime-only entries |
-| Layered Fast Search V2 | Documentation; GPU executor unavailable here | IMPLEMENTED / EXPERIMENTAL; bounded adapter support |
+| Layered Fast Search V2 | Documentation; separate fixed four-task GPU demo | IMPLEMENTED / EXPERIMENTAL; bounded adapter support |
 | Census and Search-Path Registry | Design and evidence boundaries documented | IMPLEMENTED catalog; EXPERIMENTAL candidate integration |
 | Runtime Fusion | Documentation | EXPERIMENTAL; native independent-job subset is narrower than corpus |
 | RT scientific compute | Canonical CPU references for commissioning | EXPERIMENTAL, bounded ray-query paths |
@@ -32,8 +32,8 @@ The public preview and the broader development tree are different scopes. This t
 | Host Runtime Generator | PLANNED | No general CPU/host optimizer claimed |
 | Realtime/game integration | PLANNED | Separate local optimizer prototype is EXPERIMENTAL |
 | Benchmark profile-only cleanup | Policy documented | IMPLEMENTED; abnormal termination may leave current transient files |
-| Public standalone GPU distribution | IN DEVELOPMENT | Runtime depends on state-bound inputs that need a separate clean export |
-| Independent release review | UNAVAILABLE as completed evidence | PENDING |
+| Public GPU demo | IMPLEMENTED; four fixed tasks, DIRECT/TILED | Broader search distribution remains state-bound and separate |
+| Independent release review | Separate agent review; see publication scope | No external human certification or production approval |
 
 ## Known correctness issue
 
