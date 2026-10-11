@@ -1,0 +1,56 @@
+{
+  "workload_id": "SPACE_IMAGE_MOMENTS_U16_V1",
+  "domain": "SPACE",
+  "scientific_domain": "SPACE",
+  "scientific_name": "Raw image moments through order two",
+  "common_name": "Raw image moments through order two",
+  "scientific_use": "Centroid and shape sufficient statistics on detector-count image cutouts.",
+  "scientific_purpose": "Centroid and shape sufficient statistics on detector-count image cutouts.",
+  "opcode": 1,
+  "source_references": [
+    {
+      "title": "Photutils center-of-mass centroid",
+      "url": "https://photutils.readthedocs.io/en/stable/api/photutils.centroids.centroid_com.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "canonical_equations": "M_pq=sum(x^p*y^q*I[y,x]); (p,q)=(0,0),(1,0),(0,1),(2,0),(1,1),(0,2)",
+  "input_contract": "images[B,H,W], 1<=H,W<=64; integer detector counts 0..65535",
+  "output_contract": "B x 6 unsigned64 moments, low word then high word; centroid is M10/M00,M01/M00 downstream; empty flux has zero moments",
+  "result_contract": "B x 6 unsigned64 moments, low word then high word; centroid is M10/M00,M01/M00 downstream; empty flux has zero moments",
+  "precision_requirements": "Exact bounded integer arithmetic. 64-bit values are serialized as low/high uint32 words. Float inputs rejected; no implicit quantization.",
+  "tolerances": {
+    "allowed_differing_bits": 0,
+    "absolute": 0,
+    "relative": 0
+  },
+  "validation_method": "Entire output byte stream vs independent Python arbitrary-precision CPU reference; edge vectors before search; each timing candidate checked before/after; held-out winner confirmation.",
+  "reference_implementation": "science_library/reference.py",
+  "CPU_reference": "science_library/reference.py",
+  "reference_test_vectors": "science_library/vectors/SPACE_IMAGE_MOMENTS_U16_V1.json",
+  "licensing_provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause"
+  },
+  "generic_GPU": "runtime/native_science_library + science_library/shaders.py",
+  "RT_backend": "NOT_APPLICABLE_NO_SPATIAL_PRUNING",
+  "RT_applicability": "Dense reductions, recurrences or all-pair output have no useful ray/BVH candidate pruning.",
+  "AI_relevance": "POSSIBLE",
+  "AI_backend": "AI_BACKEND_UNAVAILABLE",
+  "partition_strategy": "image cutouts",
+  "status": "IMPLEMENTATION_REQUIRES_LOCAL_BITEXACT_VALIDATION",
+  "MathSpec": "science_library/specs/SPACE_IMAGE_MOMENTS_U16_V1.json",
+  "scientific_scope": "Stated primitive only. Generated test vectors validate algorithms, not researcher-authorized live jobs.",
+  "reference_sources": [
+    {
+      "title": "Photutils center-of-mass centroid",
+      "url": "https://photutils.readthedocs.io/en/stable/api/photutils.centroids.centroid_com.html",
+      "accessed": "2026-10-03"
+    }
+  ],
+  "provenance": {
+    "implementation": "Original ASTRO implementation of published equations; no external code copied.",
+    "reference_license": "BSD-3-Clause"
+  },
+  "partition_limits": "At most1,000,000 output records; spatial pair tests <=16,000,000 per job; RDF pair-bin tests <=16,000,000. Submit smaller tiles otherwise."
+}
