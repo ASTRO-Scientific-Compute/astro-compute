@@ -1,0 +1,43 @@
+"""Precision amendments for seven historical SPACE contracts (originals retained)."""
+SOURCES={
+    'legacy_fft':('FFTW forward DFT definition','https://www.fftw.org/fftw3_doc/The-1d-Discrete-Fourier-Transform-_0028DFT_0029.html','Reference only; original implementation'),
+    'legacy_conv':('SciPy convolution; ASTRO historical edge-clamped9-tap contract','https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.convolve.html','BSD-3-Clause; reference only'),
+    'legacy_corr':('SciPy correlation; ASTRO historical H1[i]*L1[i+lag] convention','https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.correlate.html','BSD-3-Clause; reference only'),
+    'legacy_filter':('NASA Exoplanet Archive planetary systems composite parameters','https://exoplanetarchive.ipac.caltech.edu/docs/API_PS_columns.html','Public archive documentation; no external code copied'),
+    'legacy_welch':('Welch one-sided density and averaging','https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.welch.html','BSD-3-Clause; reference only'),
+}
+DEFINITIONS=[
+ ('SPACE_GWOSC_FFT256_V1',30,'legacy_fft','GWOSC real-input FFT256, zero-bit amendment','Non-overlapping spectra of supplied scaled binary32 strain.',
+  'Forward FFT256, real input, imag0, canonical radix2 DIT with frozen binary32 twiddles; RN32 per operation',
+  'encoding=binary32-hex, strain[256..131072], length multiple256; values already scaled by1e21; no re-normalization',
+  '512 binary32 words per256-sample window, interleaved real/imag, natural frequency order', 'whole non-overlapping256-sample windows', 'STRONG_CANDIDATE'),
+ ('SPACE_GWOSC_CONVOLUTION_V1',31,'legacy_conv','GWOSC edge-clamped FIR9, zero-bit amendment','Historical symmetric smoothing operator with identical boundary rule.',
+  'out[i]=left-fold RN32 sum of RN32(strain[clamp(i+j-4)]*RN32([1,2,3,4,5,4,3,2,1][j]/25)), j0..8; no FMA',
+  'encoding=binary32-hex, strain[1..131072] already scaled binary32; no implicit conversion',
+  'one binary32 sample per input, same length and edge clamp', 'output intervals with four-sample halo; clamp only at full-stream endpoints', 'STRONG_CANDIDATE'),
+ ('SPACE_GWOSC_XCORR_V1',32,'legacy_corr','GWOSC129-lag correlation, zero-bit amendment','Time-aligned detector-pair lag correlation retaining historical sign convention.',
+  'R[lag]=sum_i H1[i]*L1[i+lag], valid overlaps only, lag=-64..64; increasing i, separately RN32 product/add',
+  'encoding=binary32-hex; h1,l1 equal lengths65..131072; full32s=131072, center4s=16384,4096Hz; input already scaled',
+  '129 binary32 values, ascending lag; note generic SPACE_CROSS_CORRELATION uses opposite y-index convention', 'lag outputs sharing complete streams', 'STRONG_CANDIDATE'),
+ ('SPACE_GWOSC_NXCORR_V1',33,'legacy_corr','GWOSC129-lag normalized correlation, zero-bit amendment','Overlap-energy normalized detector-pair lag coefficients.',
+  'R/sqrt(XX*YY), R=sum H1[i]*L1[i+lag], XX=sum H1[i]^2, YY=sum L1[i+lag]^2; ascending i RN32; rounded zero denominator =>0',
+  'encoding=binary32-hex; h1,l1 equal lengths65..131072,already scaled; same lag convention as historical XCORR',
+  '129 binary32 coefficients, ascending lag, normalization now performed on GPU; no mean subtraction', 'lag outputs', 'STRONG_CANDIDATE'),
+ ('SPACE_EXOPLANET_EARTHSIZE_FILTER_V1',34,'legacy_filter','Stable Earth-size catalog compaction','Select the same packed rows as the original unordered multiset contract, preserving duplicates.',
+  'keep=(1<=row&65535<=1800); selected subsequence in original input order; count exact',
+  'packed_rows[0..131072] uint32; existing radius_milli_earth encoding is retained, no fresh rounding of catalog radii',
+  'N+1 uint32 words: selected_count, selected packed rows in input order, then zero padding; authoritative logical length=count+1', 'output slots; GPU count prepass sees complete input; no CPU-computed offsets', 'NONE'),
+ ('SPACE_GWOSC_WELCH_PSD_V1',35,'legacy_welch','GWOSC Hann Welch PSD, zero-bit amendment','One-sided density retaining256-sample,128-hop,4096Hz,window-power96 contract.',
+  'window=double-single periodic Hann256; X_s=RN32(double-single radix2 FFT256(x*w)); P_s[k]=RN32(q_k*RN32(Re^2+Im^2)/393216); PSD=ascending-segment RN32 sum(P_s)/segment_count; q=1 at0,128 else2',
+  'encoding=binary32-hex; strain length256..131072 and (N-256)%128=0, already scaled; canonical32s has1023segments',
+  '129 binary32 one-sided density bins,16Hz grid; no detrending; physical PSD=output*1e-42', 'bin outputs; mandatory GPU FFT/power prepass covers every segment', 'STRONG_CANDIDATE'),
+ ('SPACE_GWOSC_WHITENING_V1',36,'legacy_welch','GWOSC spectral whitening, zero-bit amendment','Frequency-domain segment whitening on the same Hann/Welch grid.',
+  'Z_s[k]=RN32(X_s[k]*RN32(sqrt(RN32(q_k/RN32(393216*S[k]))))); X_s=RN32(double-single Hann256 FFT),hop128; each component separately rounded',
+  'encoding=binary32-hex; strain as Welch; psd[129] positive finite binary32 on matching grid; no automatic fallback or floor',
+  '258 binary32 words persegment:129 interleaved complex coefficients; no inverse FFT or time-domain reconstruction', 'whole segments with128-sample overlap', 'STRONG_CANDIDATE'),
+]
+ORIGINALS={
+30:'space_domain/contracts/gwosc_strain_fft256_v1.json',31:'space_domain/contracts/gwosc_strain_convolution_v1_1.json',
+32:'space_domain/contracts/gwosc_h1_l1_xcorr_v1.json',33:'space_domain/contracts/gwosc_h1_l1_nxcorr_v1.json',
+34:'space_domain/contracts/exoplanet_earthsize_filter_v1.json',35:'space_domain/contracts/gwosc_welch_psd_v1.json',36:'space_domain/contracts/gwosc_whitening_v1.json',
+}
