@@ -1,0 +1,74 @@
+ASTRO DEMONSTRATION LICENSE V1
+Copyright (c) 2026 the ASTRO project owner (GitHub account: Hunbiro).
+All rights reserved except for the limited permissions expressly granted below.
+
+1. Purpose and ownership
+
+ASTRO is source-available demonstration software. It is not offered under an
+open-source or OSI-approved license. The copyright holder retains ownership and
+all rights not expressly granted by this license. Availability of source code
+does not grant permission to create a derivative product or production system.
+
+2. Limited evaluation permission
+
+Without requesting separate permission, you may view this repository, download
+the unmodified demo, build it, and run the included demo on your own machine
+solely to try and technically evaluate the system. You may try only the MathSpecs
+enabled by the included demo, with a maximum of four MathSpecs per demo run.
+Running the included build checks and correctness selftests for that evaluation
+is permitted; those checks do not authorize additional GPU workloads.
+
+You may technically analyze and publish the results of this permitted evaluation
+with attribution to ASTRO and a link to the source repository. Identify the demo
+version and relevant test conditions, distinguish your measurements from ASTRO
+claims, and do not imply endorsement by the copyright holder.
+
+Source repository: https://github.com/ASTRO-Scientific-Compute/astro-compute
+
+3. Uses requiring prior written permission
+
+All uses outside section 2 require explicit prior written permission from the
+copyright holder. In particular, this license does not permit:
+
+- modifying the code or distributing a modified version;
+- making a product or service from a fork;
+- commercial use or operation as a service;
+- removing, disabling, evading or bypassing demo restrictions, including the
+  maximum-four-MathSpec limit;
+- incorporating the code or ASTRO components into another project or product;
+- sublicensing or redistribution under another license;
+- selling ASTRO components as your own product; or
+- building a full MinerNode or production system from this source.
+
+No additional workload, unrestricted execution mode or restriction-bypass mode
+is authorized merely because source code is visible or technically modifiable.
+No patent, trademark or endorsement permission is granted by this license.
+
+4. Hosting-platform and third-party rights
+
+This license does not revoke rights already granted under GitHub's applicable
+Terms of Service for public repositories, including viewing and forking within
+the GitHub service. Such platform rights do not themselves authorize a separate
+product, service or use outside those terms and this evaluation permission.
+
+Third-party dependencies and any separately identified third-party materials
+retain their own licenses. This license applies only to rights controlled by
+the ASTRO copyright holder and does not override rights that applicable law
+does not allow the holder to restrict. Preserve applicable ownership and license
+notices in permitted copies.
+
+5. Experimental software; no warranty
+
+The demo is experimental and is not production-ready. It is provided "AS IS",
+without warranties of any kind, express or implied, including merchantability,
+fitness for a particular purpose, accuracy and noninfringement, to the extent
+permitted by applicable law. To that same extent, the copyright holder is not
+liable for claims, damages or other liability arising from the software or its
+use. You are responsible for evaluating results and suitability on your system.
+
+6. Permission requests
+
+Only the copyright holder may grant additional permission. Contact the project
+owner through the repository or the Hunbiro GitHub profile. Silence, a public
+repository, a fork, a reported test result or a code contribution is not such
+permission. Do not submit code contributions without first agreeing their terms.
