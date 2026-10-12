@@ -43,7 +43,24 @@ jobs:
           test -n "$icd"
           export VK_DRIVER_FILES="$icd"
           bash run_gpu_demo.sh --allow-software --profile "$RUNNER_TEMP/demo-profile.json"
+          bash run_gpu_demo.sh --allow-software --runtime reuse --profile "$RUNNER_TEMP/demo-reuse-profile.json"
           python -c 'import json,os; p=json.load(open(os.environ["RUNNER_TEMP"]+"/demo-profile.json")); assert p["status"]=="DEMO_COMPLETE" and p["completed_mathspecs"]==4; assert len(p["trials"])==8; assert all(r["CORRECTNESS"]=="PASS" and not r["hardware_device"] and not r["accepted_sustained_performance"] for r in p["trials"])'
+          python - <<'PYCODE'
+          import json, os
+          for name in ('demo-profile.json', 'demo-reuse-profile.json'):
+              p = json.load(open(os.environ['RUNNER_TEMP'] + '/' + name))
+              assert p['status'] == 'DEMO_COMPLETE' and p['completed_mathspecs'] == 4
+              assert len(p['memory_cleanup']) == 4 and len(p['trials']) == 8
+              for r in p['trials']:
+                  assert r['CORRECTNESS'] == 'PASS' and not r['hardware_device']
+                  assert not r['accepted_sustained_performance']
+                  assert r['dispatch_count'] == 8 * r['queue_submissions']
+                  assert r['inter_dispatch_gaps']['count'] == r['queue_submissions'] - 1
+                  assert r['native_trace_retention'] == 'NOT_RETAINED_ONLINE_AGGREGATES'
+                  reuse = name == 'demo-reuse-profile.json' and not r['workload_id'].startswith('SIGNAL_')
+                  assert r['command_buffer_reuse_enabled'] == reuse
+                  assert (r['command_buffer_reuses'] > 0) == reuse
+          PYCODE
       - name: Check transient artifacts were removed
         run: |
           python -c 'import pathlib,tempfile; assert not list(pathlib.Path(tempfile.gettempdir()).glob("astro-demo-*"))'
