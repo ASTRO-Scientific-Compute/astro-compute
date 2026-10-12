@@ -1,0 +1,57 @@
+name: Bounded demo hardware report
+description: Report an unmodified demo run, correctness failure or unsupported device.
+title: "[Hardware report] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Run the unmodified public demo on your own machine, within its four-MathSpec limit.
+        This is technical evaluation, not a performance leaderboard. QUICK results are not sustained evidence.
+        Report missing observations as UNAVAILABLE. Do not upload inputs, outputs, hash inventories,
+        secrets, private paths or unrelated machine information. A sanitized compact profile is enough.
+        See [the reporting guide](https://github.com/ASTRO-Scientific-Compute/astro-compute/blob/main/docs/EXTERNAL_REPRODUCTIONS.md).
+  - type: input
+    id: version
+    attributes:
+      label: ASTRO release and source commit
+      description: Provide the tag and exact source commit; this identifies the version, not benchmark artifact hashes.
+      placeholder: v0.1.1-demo, commit ...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Hardware and software
+      description: GPU/vendor, physical GPU or software Vulkan, driver/Vulkan implementation, OS/kernel, Python/NumPy and run date. No serial numbers or device UUIDs.
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Exact demo command and setup
+      description: Include runtime baseline/reuse, GPU index, seed/scale, and any failure before execution. Keep private paths out.
+      render: shell
+    validations:
+      required: true
+  - type: dropdown
+    id: correctness
+    attributes:
+      label: Correctness outcome
+      options:
+        - PASS for every completed trial
+        - FAIL in at least one trial
+        - UNVERIFIED or no completed trial
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Compact profile or failure evidence
+      description: Attach or paste a sanitized compact profile, or the error if none was produced. Include each MathSpec/family, correctness and validation scope. Throughput, GPU time, wall time, ratio and telemetry stay QUICK; a failing or unverified trial has no accepted rate. Missing fields are UNAVAILABLE.
+    validations:
+      required: true
+  - type: textarea
+    id: observations
+    attributes:
+      label: Observations and limitations
+      description: Include interruptions, concurrent GPU work, unavailable sensors or suspected driver issues. Do not infer unsupported capabilities or sustained performance.
