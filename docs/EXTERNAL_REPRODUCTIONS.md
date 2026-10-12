@@ -4,6 +4,10 @@
 
 Run the unmodified [bounded GPU demo](GPU_DEMO.md) from a named ASTRO release or exact commit. It stops after at most four fixed MathSpecs. Record each DIRECT/TILED trial separately, using the same task input and contract. A result applies only to that documented configuration.
 
+## Submit a report
+
+Use the [hardware reproduction issue form](https://github.com/ASTRO-Scientific-Compute/astro-compute/issues/new?template=hardware-reproduction.yml). It asks for release, setup, command and correctness evidence; unsupported or failed runs are welcome. Review the compact profile for private information before attaching it. The [v0.1.1 BC-250 comparison](BC250_UPDATE_V0_1_1.md) is the current maintainer reference, not an external reproduction.
+
 ## Record template
 
 Copy this block into a technical report or an issue. Replace every placeholder; use UNAVAILABLE for missing observations. Do not publish a rate as accepted performance when correctness is FAIL or unverified.

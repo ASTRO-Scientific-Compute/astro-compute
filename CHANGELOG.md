@@ -1,5 +1,11 @@
 # Changelog
 
+## Presentation update · 2026-10-12
+
+- Lead the README with scoped public evidence, a tagged quick start and an exact published profile excerpt.
+- Add a bounded-demo hardware reproduction issue form and refresh the social preview.
+- Preserve all runtime, mathematical, licensing and historical evidence bytes; technical status and acceptance gates are unchanged.
+
 ## v0.1.1-demo — Update / Bugfix · 2026-10-12
 
 - Bound native timing memory with online aggregates instead of per-batch trace retention.
