@@ -1,50 +1,97 @@
-<p align="center"><img src="assets/astro-hero.svg" alt="ASTRO: scientific questions connected to a heterogeneous compute network" width="100%"></p>
+# ASTRO — Scientific Compute
 
-# ASTRO · Scientific Compute
+**Scientific workloads. Heterogeneous hardware. Checked results.**
+
+Discover hardware. Optimize execution. Validate the science.
+
+ASTRO develops hardware-aware execution of mathematical workloads, with canonical reference checks. Start with the public four-MathSpec Vulkan demo.
+
+**[Run the GPU demo →](#try-it)** · **[See measured BC-250 results →](docs/BC250_UPDATE_V0_1_1.md)**
+
+### Current public evidence
+
+| Evidence | Public scope |
+|---|---|
+| **48/48 physical Vulkan kernel trials PASS / COLD ZERO** | [v0.1.1 bounded comparison](docs/BC250_UPDATE_V0_1_1.md): six runs, four MathSpecs, DIRECT + TILED; complete warmup/final outputs checked. |
+| **AMD BC-250 · 24 active CUs · RADV GFX1013** | Physical reference device; 2000 MHz target, measured clocks reported separately. |
+| **81 canonical CPU reference primitives** | [Reference corpus](docs/SCIENCE_MAP.md), including 66 SPACE primitives. |
+| **94-entry registry inventory** | [Complete inventory](registry_inventory.json); the other 13 entries are not extra executable CPU references. |
+| **4 fixed public GPU-demo MathSpecs** | FFT256, Convolution, XCORR and signed-integer FIR; at most four per run. |
+| **CPU tests + native/shader build + software Vulkan CI** | [Passing v0.1.1 release run](https://github.com/ASTRO-Scientific-Compute/astro-compute/actions/runs/38276734313); hosted software Vulkan is not physical GPU evidence. |
 
 [![Demo CI](https://github.com/ASTRO-Scientific-Compute/astro-compute/actions/workflows/demo-ci.yml/badge.svg?branch=main)](https://github.com/ASTRO-Scientific-Compute/astro-compute/actions/workflows/demo-ci.yml)
 
-**Discover hardware. Optimize execution. Validate the science.**
+> **EXPERIMENTAL · Active development · Not production-ready**
+>
+> Physical results are **QUICK_DIAGNOSTIC_ONLY**, not sustained benchmarks. Independent external hardware reproduction is pending. [Status](docs/STATUS.md) · [Validation and audit scope](docs/PUBLICATION.md)
 
-ASTRO is building a heterogeneous scientific compute fabric that discovers, optimizes, executes and validates mathematical workloads across CPUs, GPUs, ray-tracing hardware and AI accelerators.
+### Try it
 
-Independent distributed validation is a planned network capability; local execution already uses independent mathematical reference checks within its stated scope.
-
-**EXPERIMENTAL · Active development · Not production-ready**
-
-[Architecture](docs/ARCHITECTURE.md) · [Current status](docs/STATUS.md) · [Mathematical corpus](docs/SCIENCE_MAP.md) · [Search & runtime](docs/SEARCH_AND_RUNTIME.md) · [Roadmap](docs/ROADMAP.md)
-
-### ASTRO in 30 seconds
-
-- **What:** a heterogeneous scientific compute fabric in development.
-- **Why:** use different hardware for the mathematical work it performs well.
-- **How:** discover → optimize → execute → validate.
-- **Today:** an 81-primitive CPU reference corpus, a bounded four-MathSpec Vulkan GPU demo, native build sources and correctness CI.
-- **Future:** distributed MinerNodes, MainNode, Scientist, independent distributed validation and universal mathematical composition.
-
-### Try the GPU demo
-
-**v0.1.1-demo — Update / Bugfix:** [SSD/RAM lifetime fixes, runtime reuse and validation](docs/UPDATE_BUGFIX_V0_1_1.md). The default remains the bounded baseline; optional `--runtime reuse` evaluates command-buffer reuse on three supported tasks.
+Linux, Python 3.10–3.12, and a working physical Vulkan 1.1 compute driver with timestamps are required. On Ubuntu/Debian, install the build dependencies and run the tagged demo:
 
 ```bash
-bash run_gpu_demo.sh
-```
-
-[Install the dependencies and run the demo](docs/GPU_DEMO.md). Four fixed MathSpecs run through DIRECT and TILED kernels, compare their complete warmup/final outputs with the canonical CPU oracle, then stop. Results are **QUICK_DIAGNOSTIC_ONLY**. The included demo does not run unrestricted Census/Fusion search or a full MinerNode.
-
-[BC-250 Reference Demo Results](docs/REFERENCE_DEMO_RESULTS.md): all eight DIRECT/TILED observations from the public release on 24 active CUs, with a 2000 MHz target and separately reported measured clocks. **QUICK_DIAGNOSTIC_ONLY**, not sustained or independently externally reproduced.
-
-For the CPU references and software selftests (Python 3.10–3.12):
-
-```bash
+sudo apt-get install git python3-venv g++ libvulkan-dev glslang-tools spirv-tools
+git clone --branch v0.1.1-demo --depth 1 https://github.com/ASTRO-Scientific-Compute/astro-compute.git
+cd astro-compute
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -r requirements.txt
+bash run_gpu_demo.sh
+```
+
+The demo builds its native runner, executes DIRECT and TILED for the same four fixed tasks, checks the complete warmup/final outputs against canonical CPU oracles, then stops. It saves one compact diagnostic profile. [Device selection, dependencies and result interpretation](docs/GPU_DEMO.md).
+
+**Source-available demonstration software. Free to evaluate using the included demo. All other use requires explicit permission from the copyright holder.** [LICENSE](LICENSE) · [Evaluation scope](LICENSING.md). This is not an open-source or OSI-approved license.
+
+[v0.1.1 Update / Bugfix](docs/UPDATE_BUGFIX_V0_1_1.md) covers SSD/RAM lifetime fixes and opt-in `--runtime reuse`. The default remains baseline. The public demo is a fixed two-family evaluation; unrestricted Census/Fusion search and a full MinerNode are separate development work.
+
+For the CPU references and software selftests, in the same environment:
+
+```bash
 python -m unittest discover -s tests -v
 python reference_demo.py
 ```
 
-**Source-available demonstration software. Free to evaluate using the included demo. All other use requires explicit permission from the copyright holder.** See [LICENSE](LICENSE), [licensing scope](LICENSING.md) and [completed validation](docs/PUBLICATION.md). This is not an open-source or OSI-approved license.
+### Why ASTRO?
+
+- **Measure the execution path.** A GPU name or advertised capability is not proof of working hardware execution.
+- **Search the runtime and kernel path.** The experimental development system searches configurations; the public demo exposes fixed DIRECT/TILED paths and bounded runtime comparison.
+- **Check the mathematics first.** Each contract keeps its exact or bounded-FP requirements before performance can be accepted.
+- **Route by demonstrated strengths.** Heterogeneous distributed work routing is the planned direction, not a deployed network capability.
+
+### Real demo profile
+
+**2026-10-12 · v0.1.1 comparison · arm B, first baseline run · QUICK_DIAGNOSTIC_ONLY.** Exact fields from `runs[1].profile.trials[1]` in the [published compact profiles](docs/BC250_UPDATE_V0_1_1.json), not a simulated terminal transcript:
+
+```json
+{
+  "workload_id": "SPACE_GWOSC_FFT256_V1",
+  "config": {
+    "family": "TILED",
+    "local_size": 64,
+    "pack": 1
+  },
+  "CORRECTNESS": "PASS",
+  "PERFORMANCE_VALIDITY": "QUICK_DIAGNOSTIC_ONLY",
+  "diagnostic_work_units_per_s": 59606.96847135116,
+  "unit": "FFT256_window/s",
+  "SUSTAINED_PERFORMANCE": "NOT_TESTED"
+}
+```
+
+This is one short observation on repeated resident input. Full warmup/final output checks do not establish per-dispatch validation of unique research jobs. [All eight paths, both repeated runs per arm, and unfavorable comparisons](docs/BC250_UPDATE_V0_1_1.md) remain public; no general speedup is claimed.
+
+### Run ASTRO on another GPU
+
+Current physical public reference: **AMD BC-250 / RADV**. Run the unmodified bounded four-MathSpec demo on another AMD, NVIDIA or Intel system and [submit a hardware reproduction report](https://github.com/ASTRO-Scientific-Compute/astro-compute/issues/new?template=hardware-reproduction.yml) with its sanitized compact profile. Other devices are not yet hardware-verified here. Correctness evidence is required before performance comparison; failed or unsupported runs are useful reports too.
+
+Technical evaluation and attributed publication are within the [evaluation license](LICENSING.md). [Reporting guide and evidence requirements](docs/EXTERNAL_REPRODUCTIONS.md). Code changes, limit bypass and service operation are outside that permission.
+
+### Explore the system
+
+[Architecture](docs/ARCHITECTURE.md) · [Search & runtime](docs/SEARCH_AND_RUNTIME.md) · [Mathematical corpus](docs/SCIENCE_MAP.md) · [Validation](docs/VALIDATION.md) · [Data lifecycle](docs/DATA_LIFECYCLE.md) · [Roadmap](docs/ROADMAP.md)
+
+The detailed implementation boundaries and planned platform follow below.
 
 ## 1. What is ASTRO?
 
