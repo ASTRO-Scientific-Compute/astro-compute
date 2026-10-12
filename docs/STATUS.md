@@ -1,4 +1,4 @@
-# Status · public preview, 2026-10-11
+# Status · public preview, 2026-10-12
 
 **Overall: EXPERIMENTAL / IN DEVELOPMENT. Not production-ready.**
 
@@ -29,9 +29,9 @@ The public preview and the broader development tree are different scopes. This t
 | Distributed execution | PLANNED full deployment | Loopback transport tests do not prove independent physical nodes |
 | MainNode and Scientist end-to-end | PLANNED / IN DEVELOPMENT | No complete production researcher-to-result integration |
 | AI/tensor backend; mobile execution | PLANNED | Capability records are not backend execution proof |
-| Host Runtime Generator | PLANNED | No general CPU/host optimizer claimed |
+| CPU/HOST runtime tuning | Fixed optional command reuse; task-boundary memory cleanup | EXPERIMENTAL separate CPU_HOST search; general CPU kernel generator/SMT/NUMA reserved |
 | Realtime/game integration | PLANNED | Separate local optimizer prototype is EXPERIMENTAL |
-| Benchmark profile-only cleanup | Policy documented | IMPLEMENTED; abnormal termination may leave current transient files |
+| Benchmark profile-only cleanup | IMPLEMENTED; per-task compact checkpoint/cache/heap cleanup | IMPLEMENTED; abnormal termination may leave current transient files |
 | Public GPU demo | IMPLEMENTED; four fixed tasks, DIRECT/TILED | Broader search distribution remains state-bound and separate |
 | Independent release review | Separate agent review; see publication scope | No external human certification or production approval |
 
@@ -42,3 +42,5 @@ An intermittent image-moments runtime result mismatch remains open in developmen
 ## Evidence boundary
 
 The source audit consulted v1.17.52 status, Runtime Fusion, Layered Fast V2, capability-census, RT and retention reports, plus the separate game-optimizer source. Those local reports and raw state are not uploaded. Historical local measurements are not relabeled VERIFIED public benchmarks. Public software-check results and their reproduction command are recorded in [PUBLICATION.md](PUBLICATION.md).
+
+The [v0.1.1 Update / Bugfix report](UPDATE_BUGFIX_V0_1_1.md) distinguishes shipped fixes, wider miner changes and the new BC-250 diagnostic comparison. No production promotion is authorized.

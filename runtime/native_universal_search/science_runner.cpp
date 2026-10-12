@@ -111,8 +111,9 @@ int main(int argc,char**argv){try{
  uint64_t groups=workgroup_per_record?(uint64_t(count)+records_per_group-1)/records_per_group:(uint64_t(count)+a.local*pack-1)/(a.local*pack);if(groups>c.prop.limits.maxComputeWorkGroupCount[0])throw std::runtime_error("dispatch limit; split output range");
  SciencePC pc{first,count};
  uint64_t measurement_begin_ns=0,measurement_end_ns=0;
- struct BatchEvidence { uint64_t begin_ns,end_ns,dispatches; double gpu_ms,gap_ms,record_ms,submit_ms,retire_ms,query_ms; };
- std::vector<BatchEvidence> measurement_trace;
+ // Online totals: constant host memory even for very short GPU batches.
+ uint64_t total_dispatches=0,queue_submissions=0,gap_count=0;
+ double gap_sum=0,gap_max=0,record_total_ms=0,submit_total_ms=0,retire_total_ms=0,query_total_ms=0;
  uint64_t previous_gpu_end=0;bool have_previous_gpu_end=false;
  const uint64_t timestamp_mask=qf[c.qf].timestampValidBits>=64?UINT64_MAX:((uint64_t(1)<<qf[c.qf].timestampValidBits)-1);
  bool recorded=false;uint32_t recorded_reps=0;uint64_t recorded_dispatches=0,command_recordings=0,command_reuses=0;
@@ -162,7 +163,10 @@ int main(int argc,char**argv){try{
   double gpu=double((ts[1]-ts[0])&timestamp_mask)*c.prop.limits.timestampPeriod/1e6;
   if(!warm){
    double gap=have_previous_gpu_end?double((ts[0]-previous_gpu_end)&timestamp_mask)*c.prop.limits.timestampPeriod/1e6:-1.0;
-   measurement_trace.push_back({measurement_begin_ns,measurement_end_ns,dispatch_count,gpu,gap,ms_since(record_begin,t),ms_since(t,submitted),ms_since(submitted,retired),ms_since(retired,end)});
+   total_dispatches+=dispatch_count;queue_submissions++;
+   if(gap>=0){gap_count++;gap_sum+=gap;gap_max=std::max(gap_max,gap);}
+   record_total_ms+=ms_since(record_begin,t);submit_total_ms+=ms_since(t,submitted);
+   retire_total_ms+=ms_since(submitted,retired);query_total_ms+=ms_since(retired,end);
    previous_gpu_end=ts[1];have_previous_gpu_end=true;
   }
   return std::pair<double,double>(ms_since(record_begin,end),gpu);
@@ -184,20 +188,14 @@ int main(int argc,char**argv){try{
  }else timing=submit(repeats,false);
  dump(a.out);dump_geometry(a.out+".geometry");
  double elapsed=ms_since(process_start,Clock::now());
- uint64_t total_dispatches=0;double gap_sum=0,gap_max=0;
- for(const auto& b:measurement_trace){total_dispatches+=b.dispatches;if(b.gap_ms>=0){gap_sum+=b.gap_ms;gap_max=std::max(gap_max,b.gap_ms);}}
  std::cout<<std::setprecision(12)<<"{\"native_evidence_schema\":\"ASTRO_NATIVE_TIMING_V2\",\"device_type\":"<<c.prop.deviceType
   <<",\"gpu_time_source\":\"VULKAN_TIMESTAMP_QUERY\",\"gpu_time_scope\":\"batch-including-barriers-and-AS-maintenance\""
-  <<",\"dispatch_count\":"<<total_dispatches<<",\"queue_submit_count\":"<<measurement_trace.size()
+  <<",\"dispatch_count\":"<<total_dispatches<<",\"queue_submit_count\":"<<queue_submissions
   <<",\"gpu_wall_ratio\":"<<timing.second/timing.first<<",\"queue_duty_pct\":"<<100.0*timing.second/timing.first
   <<",\"compute_duty\":null,\"compute_duty_status\":\"UNAVAILABLE\""
-  <<",\"inter_dispatch_gaps\":{\"scope\":\"between-batches-GPU-timestamps\",\"intra_batch_status\":\"UNAVAILABLE\",\"count\":"<<(measurement_trace.size()-1)<<",\"sum_ms\":"<<gap_sum<<",\"max_ms\":"<<gap_max<<"}"
-  <<",\"measurement_trace\":[";
- for(size_t i=0;i<measurement_trace.size();i++){const auto& b=measurement_trace[i];if(i)std::cout<<",";
-  std::cout<<"{\"begin_ns\":"<<b.begin_ns<<",\"end_ns\":"<<b.end_ns<<",\"dispatches\":"<<b.dispatches<<",\"gpu_ms\":"<<b.gpu_ms
-   <<",\"gap_before_ms\":"<<b.gap_ms<<",\"record_ms\":"<<b.record_ms<<",\"submit_ms\":"<<b.submit_ms<<",\"retire_ms\":"<<b.retire_ms<<",\"query_ms\":"<<b.query_ms<<"}";
- }
- std::cout<<"],";
+  <<",\"inter_dispatch_gaps\":{\"scope\":\"between-batches-GPU-timestamps\",\"intra_batch_status\":\"UNAVAILABLE\",\"count\":"<<gap_count<<",\"sum_ms\":"<<gap_sum<<",\"max_ms\":"<<gap_max<<"}"
+  <<",\"measurement_trace_status\":\"NOT_RETAINED_ONLINE_AGGREGATES\","
+  <<"\"host_cost_ms\":{\"record\":"<<record_total_ms<<",\"submit\":"<<submit_total_ms<<",\"retire\":"<<retire_total_ms<<",\"query\":"<<query_total_ms<<"},";
  std::cout<<"\"command_buffer_recordings\":"<<command_recordings<<",\"command_buffer_reuses\":"<<command_reuses<<",\"command_buffer_reuse_enabled\":"<<(reuse_commands?"true":"false")<<",";
  std::cout<<std::setprecision(12)<<"\"device\":\""<<esc(c.prop.deviceName)<<"\",\"vendor_id\":"<<c.prop.vendorID<<",\"device_id\":"<<c.prop.deviceID<<",\"driver_version\":"<<c.prop.driverVersion<<",\"backend\":\""<<(rebuild?"RT_REBUILD":a.rt?"RT_COMPUTE":"GENERIC_COMPUTE")<<"\",\"records\":"<<count<<",\"repeats\":"<<repeats<<",\"wall_ms\":"<<timing.first<<",\"gpu_ms\":"<<timing.second<<",\"setup_and_execution_ms\":"<<elapsed<<",\"as_build_ms\":"<<(triangle?tri_scene.build_ms:scene.build_ms)<<",\"records_per_s\":"<<double(count)*repeats*measurement_batches*1000/timing.first<<",\"measurement_begin_ns\":"<<measurement_begin_ns<<",\"measurement_end_ns\":"<<measurement_end_ns<<",\"warmup_begin_ns\":"<<warmup_begin_ns<<",\"warmup_end_ns\":"<<warmup_end_ns<<",\"warmup_wall_ms\":"<<warmup_timing.first<<",\"warmup_gpu_ms\":"<<warmup_timing.second<<",\"device_uuid\":\""<<uuid_text.str()<<"\",\"pci_bus_id\":\""<<pci_text.str()<<"\",\"measurement_batches\":"<<measurement_batches<<",\"timing_protocol\":\""<<(sustained?"RESIDENT_BATCH_LOOP_V1":"RESIDENT_SINGLE_BATCH_V1")<<"\"}\n";
  vkDeviceWaitIdle(c.dev);if(a.rt){if(triangle)tri_scene.destroy(c);else scene.destroy(c);}vkDestroyQueryPool(c.dev,qp,nullptr);vkDestroyPipeline(c.dev,pipeline,nullptr);vkDestroyShaderModule(c.dev,module,nullptr);vkDestroyDescriptorPool(c.dev,dp,nullptr);vkDestroyPipelineLayout(c.dev,layout,nullptr);vkDestroyDescriptorSetLayout(c.dev,dsl,nullptr);freebuf(c,in);freebuf(c,out);freebuf(c,scratch);freebuf(c,staging);vkDestroyCommandPool(c.dev,pool,nullptr);vkDestroyDevice(c.dev,nullptr);vkDestroyInstance(c.inst,nullptr);return 0;

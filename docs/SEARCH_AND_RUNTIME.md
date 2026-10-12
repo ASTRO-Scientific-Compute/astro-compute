@@ -8,6 +8,7 @@
 |---|---|
 | BATCH | Feed size, jobs/dispatch and bounded in-flight/job-pool alternatives, evaluated separately |
 | RUNTIME | Legal runtime or memory/command policy alternative, one at a time |
+| CPU_HOST | Validation threads, chunk partition, immutable reference layout, async validation and legal affinity, one at a time |
 | WAVE_SUBGROUP | Supported wave/subgroup mode |
 | ILP | Independent operation streams, only if a real adapter exists |
 | LOCAL_SIZE | Workgroup size |
@@ -59,3 +60,11 @@ Historically, 81 canonical jobs reached the common graph while native independen
 ## Profiler gates
 
 **FUNCTIONAL → CORRECTNESS → PERFORMANCE_VALIDITY → RESOURCE_EVIDENCE** where resource claims are made. Native time, measurement wall time, GPU/wall ratio, dispatch count, submissions, queue/compute duty when available, inter-dispatch gaps, telemetry coverage and sustained confirmation must be explicit. Unmeasurable quantities are UNAVAILABLE/UNVERIFIED, never inferred as final allocations from SPIR-V. QUICK_SANITY is never publishable sustained performance.
+
+## CPU/HOST update — 2026-10-12
+
+The development miner now has a separate CPU_HOST layer between RUNTIME and WAVE_SUBGROUP. Actual process affinity and physical-core topology constrain candidates; no CPU-model speed estimate is substituted for measurement. Immutable oracle sharing never shares a correctness verdict: each output still requires its full check. `NO_FULL_CHECK_DOMINANCE_OBSERVED` is informational: full checking did not dominate the measured host window; it does not prove the absence of every host bottleneck.
+
+Development coverage is 79 runnable Fast V2 MathSpecs from the 94-entry inventory; 78 canonical adapters expose CPU_HOST, while Gaia uses a different executor. This is implementation coverage, not a 79-task hardware certification. Targeted Heat QUICK checks passed; targeted CHEM correctness passed but performance validity remained INVALID. SMT/NUMA policies and a general CPU mathematical kernel generator remain reserved.
+
+The public demo includes per-task memory reclamation and an optional fixed command-reuse policy, **not** this full CPU_HOST/Fusion candidate search. [Update / Bugfix scope](UPDATE_BUGFIX_V0_1_1.md).

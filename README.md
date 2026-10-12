@@ -24,6 +24,8 @@ Independent distributed validation is a planned network capability; local execut
 
 ### Try the GPU demo
 
+**v0.1.1-demo — Update / Bugfix:** [SSD/RAM lifetime fixes, runtime reuse and validation](docs/UPDATE_BUGFIX_V0_1_1.md). The default remains the bounded baseline; optional `--runtime reuse` evaluates command-buffer reuse on three supported tasks.
+
 ```bash
 bash run_gpu_demo.sh
 ```
@@ -74,7 +76,7 @@ The complete Researcher → Scientist → MainNode → worker → independent va
 
 **IMPLEMENTED / EXPERIMENTAL in the development tree.**
 
-`BATCH → RUNTIME → WAVE_SUBGROUP → ILP → LOCAL_SIZE → TILE → PACK → UNROLL → EXECUTION_FAMILY → SPECIAL_PATH → MINI_REFINE → QUICK_CONFIRM`
+`BATCH → RUNTIME → CPU_HOST → WAVE_SUBGROUP → ILP → LOCAL_SIZE → TILE → PACK → UNROLL → EXECUTION_FAMILY → SPECIAL_PATH → MINI_REFINE → QUICK_CONFIRM`
 
 Each layer builds on the previous correctness-PASS configuration and introduces one new search dimension. Legal unexplored axes get an exploration trial before policy pruning; unavailable axes are reported explicitly. ILP is currently unavailable as an independent axis in the audited Fast V2 adapter set. A QUICK winner remains a local candidate, not a production promotion. [Audit rules](docs/SEARCH_AND_RUNTIME.md).
 
