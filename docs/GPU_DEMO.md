@@ -37,9 +37,17 @@ Software Vulkan is rejected by default. `--allow-software` permits an explicitly
 
 The [BC-250 reference run](REFERENCE_DEMO_RESULTS.md) records all eight DIRECT/TILED results from the exact public release, with hardware/software identity, COLD ZERO checks, measured clock/power and GPU/wall evidence. These are short diagnostics, not sustained production benchmarks or independent external reproduction.
 
+## Optional host runtime comparison
+
+`bash run_gpu_demo.sh --runtime baseline` retains per-batch command recording (the default). `bash run_gpu_demo.sh --runtime reuse` reuses recorded command buffers for FFT256, Convolution and XCORR. FIR remains baseline in both modes because that native path is not admitted for reuse. Both still stop after the same four fixed tasks. The native receipt must confirm that reuse actually executed. This changes command recording, not local size, pack, shaders, submission count per batch or the mathematical contract; it is not submission coalescing or AI search.
+
+Compare identical tasks/families and consult [the measured update report](BC250_UPDATE_V0_1_1.md); reuse is not assumed faster everywhere.
+
 ## Resource lifetime
 
-Builds, shader binaries, inputs, outputs, compiler binding hashes and telemetry samples are transient. Each trial is removed after validation; the temporary build directory is removed on completion, ordinary failure, Ctrl+C or SIGTERM. The demo has a five-minute outer deadline and bounded child-process deadlines. Only one compact profile is saved (the default file is overwritten on subsequent runs).
+Builds, shader binaries, inputs, outputs, compiler binding hashes and telemetry samples are transient. Each trial is removed after validation; the temporary build directory is removed on completion, ordinary failure, Ctrl+C or SIGTERM. The demo has a five-minute outer deadline and bounded child-process deadlines. Only one compact profile is saved (the default file is overwritten on subsequent runs), atomically checkpointed after each task. Pure oracle caches, unreachable Python objects and reclaimable local allocator pages are released at task boundaries; current Python-process RSS/swap observations and cleanup outcomes are included. This is not a system cache flush, GPU-memory measurement or guarantee that RSS returns to zero.
+
+Native per-batch timing is accumulated online in constant-size counters instead of retaining a growing trace. Dispatch/submission totals, gaps and host-cost sums remain available; individual raw batch trace replay is unavailable. Compiler identity checks stream files and retain their binding only in memory; no compile/hash manifest is written to SSD. Native GPU workers exit per trial, releasing their own Vulkan allocations. The license and four-task cap are unchanged.
 
 The per-user lock prevents two copies of this public demo from running concurrently. It cannot coordinate unrelated GPU applications. Force-kill, host crash or power loss can leave an `astro-demo-*` temporary directory; it contains no permanent research results and can be removed after confirming no demo is running. No automatic sweep of unrelated directories occurs.
 

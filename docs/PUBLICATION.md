@@ -2,6 +2,10 @@
 
 **Release scope: canonical CPU reference export plus bounded four-task Vulkan demo.**
 
+## v0.1.1 Update / Bugfix
+
+[Resource/runtime fixes and exact validation scope](UPDATE_BUGFIX_V0_1_1.md): 100 Python tests, native/shader build and 48 BC-250 kernel trials passed. This update has a separate independent agent code review; external human review remains pending. The [new diagnostic comparison](BC250_UPDATE_V0_1_1.md) does not replace the historical reference.
+
 ## Current published scope
 
 The repository includes the CPU reference corpus, a maximum-four-MathSpec Vulkan demo, native C++/Vulkan build sources, DIRECT/TILED demo kernels, full-output correctness validation and CI. The workflow runs Python 3.10/3.12 software checks and native/shader builds; the Python 3.12 job also executes Mesa software Vulkan correctness and checks cleanup. Software Vulkan timing is never physical GPU evidence.
