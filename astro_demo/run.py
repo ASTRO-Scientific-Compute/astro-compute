@@ -20,6 +20,7 @@ from tools.real_mathspec_metrics_v1 import work_definition, operations
 from .limits import WORKLOADS, RunAdmission, select_workloads, require_workload
 from . import recovered_codegen as generator
 from .support import save
+from .memory import release_idle_memory
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -95,7 +96,20 @@ def check_native_rejections(runner, directory):
             raise AssertionError('Native admission rejection failed')
 
 
-def execute(job, artifact, runner, directory, gpu):
+def runtime_reuse(job, policy):
+    if policy not in ('baseline', 'reuse'):
+        raise ValueError('Unknown demo runtime policy')
+    return policy == 'reuse' and SPECS[job.workload_id]['opcode'] in (30, 31, 32)
+
+
+def check_runtime_receipt(native, expected):
+    if native.get('command_buffer_reuse_enabled') is not expected:
+        raise RuntimeError('Native runtime policy receipt mismatch')
+    if expected and native.get('command_buffer_reuses', 0) < 1:
+        raise RuntimeError('Requested command reuse did not execute')
+
+
+def execute(job, artifact, runner, directory, gpu, runtime='baseline'):
     generator.check_job_binding(job, artifact)
     inp, out = directory / 'input.bin', directory / 'output.bin'
     inp.write_bytes(job.input_bytes)
@@ -104,9 +118,13 @@ def execute(job, artifact, runner, directory, gpu):
             '--repeats', 8, '--warmup-ms', 2000, '--measurement-ms', 1000]
     if artifact['dispatch_mode'] == 'WORKGROUP_PER_RECORD':
         args.append('--workgroup-per-record')
+    reuse = runtime_reuse(job, runtime)
+    if reuse:
+        args.append('--reuse-command-buffer')
     begin = time.monotonic()
     with Telemetry() as telemetry:
         native = json.loads(command(args, timeout=30))
+    check_runtime_receipt(native, reuse)
     correct = acceptance(job, out.read_bytes(), Path(str(out) + '.warmup').read_bytes())
     generator.check_job_binding(job, artifact)
     elapsed = time.monotonic() - begin
@@ -147,6 +165,13 @@ def compact_trial(job, config, native, correct, telemetry, pipeline_seconds):
         power_scope=telemetry['power_scope'],
         resources='UNAVAILABLE', accepted_sustained_performance=False,
         compiler_binding='CHECKED_IN_MEMORY_AND_DISCARDED',
+        command_buffer_reuse_enabled=native.get('command_buffer_reuse_enabled'),
+        command_buffer_recordings=native.get('command_buffer_recordings'),
+        command_buffer_reuses=native.get('command_buffer_reuses'),
+        command_counter_scope='warmup and measurement combined',
+        host_cost_ms=native.get('host_cost_ms'),
+        host_cost_scope='measurement only; record, submit, wait/retire and query wall times',
+        native_trace_retention=native.get('measurement_trace_status', 'UNAVAILABLE'),
         full_output_validation='warmup and final output; repeated resident input, not unique research work')
 
 
@@ -165,6 +190,8 @@ def main(argv=None):
     parser.add_argument('--profile', type=Path, default=Path('demo-profile.json'))
     parser.add_argument('--build-only', action='store_true', help='Compile native code and all eight demo shaders; do not run GPU work')
     parser.add_argument('--allow-software', action='store_true', help='Allow software Vulkan for correctness; never physical GPU performance')
+    parser.add_argument('--runtime', choices=('baseline', 'reuse'), default='baseline',
+                        help='Fixed host policy; reuse is opt-in for FFT256/Convolution/XCORR, FIR stays baseline')
     args = parser.parse_args(argv)
     if args.gpu < 0:
         parser.error('--gpu must be nonnegative')
@@ -172,7 +199,8 @@ def main(argv=None):
                   production_ready=False, promotion_allowed=False, sustained_performance='NOT_TESTED',
                   search_policy='FIXED_TWO_FAMILY_EVALUATION', census_fusion_search='NOT_INCLUDED',
                   retention='COMPACT_PROFILE_ONLY; transient binaries, inputs, outputs and hashes removed',
-                  trials=[])
+                  demo_version='0.1.1-demo', runtime_policy=args.runtime,
+                  memory_cleanup=[], trials=[])
 
     def interrupted(signum, frame):
         raise TimeoutError('Demo stopped or five-minute limit reached')
@@ -195,7 +223,7 @@ def main(argv=None):
             if caps['device']['device_type'] not in (1, 2, 3) and not args.allow_software:
                 raise RuntimeError('Software Vulkan requires --allow-software; no physical performance claim')
 
-            def measure(wid):
+            def measure_body(wid):
                 print(f'DEMO {wid} START', flush=True)
                 start = time.monotonic()
                 job = prepare(wid, fixture(SPECS[wid]['opcode'], seed=271828, scale=1))
@@ -207,7 +235,7 @@ def main(argv=None):
                     with tempfile.TemporaryDirectory(prefix='trial-', dir=directory) as trial:
                         begin = time.monotonic()
                         artifact = generator.compile_candidate(job, config, Path(trial) / 'kernel', caps)
-                        native, correct, evidence, elapsed = execute(job, artifact, runner, Path(trial), args.gpu)
+                        native, correct, evidence, elapsed = execute(job, artifact, runner, Path(trial), args.gpu, args.runtime)
                         row = compact_trial(job, config, native, correct, evidence,
                                             prepare_seconds + time.monotonic() - begin)
                         report['trials'].append(row)
@@ -217,6 +245,19 @@ def main(argv=None):
                         if not correct:
                             raise RuntimeError('Canonical full-output correctness failed; campaign stopped')
                 report['completed_mathspecs'] += 1
+
+            def measure(wid):
+                try:
+                    measure_body(wid)
+                finally:
+                    # Trial contexts and native processes have retired. Drop pure
+                    # oracle memoization and unused local heap pages between tasks.
+                    cleanup = release_idle_memory()
+                    cleanup['workload_id'] = wid
+                    report['memory_cleanup'].append(cleanup)
+                    save(args.profile, report)
+                    print(f"MEMORY {wid} cleanup={cleanup['status']} "
+                          f"rss_released={cleanup['rss_released_bytes']} B", flush=True)
 
             run_tasks(args.tasks, measure)
             report['status'] = 'DEMO_COMPLETE'

@@ -5,7 +5,7 @@ from pathlib import Path
 
 from science_library.catalog import SPECS
 from science_library.shaders import shader
-from .support import sha, save
+from .support import sha
 from .limits import require_workload
 
 FAMILIES = ('DIRECT', 'COMPILER_VARIANT', 'TILED')
@@ -137,12 +137,9 @@ def compile_candidate(job, config, directory, caps):
     path = directory / 'kernel.comp'
     path.write_text(source(job, config))
     binary = directory / 'kernel.spv'
-    commands = []
     for args in [['glslangValidator', '-V', '--target-env', 'vulkan1.1', '-S', 'comp', str(path), '-o', str(binary)],
                  ['spirv-val', '--target-env', 'vulkan1.1', str(binary)]]:
         cp = subprocess.run(args, capture_output=True, text=True, timeout=90)
-        commands.append(dict(command=args, returncode=cp.returncode, stdout=cp.stdout, stderr=cp.stderr))
-        save(directory/'compile.json', commands)
         if cp.returncode:
             raise RuntimeError(cp.stdout + cp.stderr)
     artifact = dict(source=str(path.resolve()), spirv=str(binary.resolve()), source_sha256=sha(path),
@@ -152,7 +149,6 @@ def compile_candidate(job, config, directory, caps):
                     workload_id=job.workload_id, production_ready=False)
     artifact['dispatch_mode'] = ('WORKGROUP_PER_RECORD' if config['family']=='TILED' and
                                  SPECS[job.workload_id]['opcode'] in (30,32) else 'INVOCATION_PER_RECORD')
-    save(directory/'artifact.json', artifact)
     return artifact
 
 
