@@ -21,3 +21,10 @@ Dates and network capacities are intentionally not promised. Each milestone has 
 A possible ledger/accounting layer may track identity, receipts, provenance and payments. It is not the compute engine. Researcher jobs, worker compensation, validator rewards, reliability incentives, internal accounting/token concepts and fiat-denominated contracts remain design subjects. This repository announces no operational token, sale, reward rate or marketplace.
 
 A future operational dashboard must show actual live data (approximately five seconds or fresher) or OFFLINE/UNAVAILABLE. Mock data must never appear as live network activity.
+
+
+## New MinerNode acceptance prerequisite
+
+Automatically rediscover the applicable RTX 4060 Ti CPU_SORT_COPY and RX 470 memory/readback/QBC paths using sourced architecture records and native probes from a clean profile. Show candidate-to-worker receipts and FULL-validated E2E A/B on identical mathematical work, including preprocessing, transfers, verification and final drain. Manual path forcing, preloaded winners and kernel-only speedups do not close this milestone.
+
+**Current state: NOT DEMONSTRATED.** [Detailed architecture and acceptance gates](ARCHITECTURE_ROADMAP.md#clean-profile-rediscovery-acceptance-gate) · [Research status and limitations](RESEARCH_STATUS.md).

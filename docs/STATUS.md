@@ -44,3 +44,12 @@ An intermittent image-moments runtime result mismatch remains open in developmen
 The source audit consulted v1.17.52 status, Runtime Fusion, Layered Fast V2, capability-census, RT and retention reports, plus the separate game-optimizer source. Those local reports and raw state are not uploaded. Historical local measurements are not relabeled VERIFIED public benchmarks. Public software-check results and their reproduction command are recorded in [PUBLICATION.md](PUBLICATION.md).
 
 The [v0.1.1 Update / Bugfix report](UPDATE_BUGFIX_V0_1_1.md) distinguishes shipped fixes, wider miner changes and the new BC-250 diagnostic comparison. No production promotion is authorized.
+
+
+## Execution-map disclosure — 2026-10-23
+
+**INCOMPLETE / AUTOMATIC REDISCOVERY NOT DEMONSTRATED.** RTX 4060 Ti `CPU_SORT_COPY` and RX 470 memory/readback/QBC routes required manual private-lab investigation. Existing capability catalogs and bounded search integration do not establish a universal optimizer.
+
+New MinerNode acceptance requires architecture-database and native-probe-driven candidate discovery from a clean device profile, followed by actual route execution, unchanged FULL correctness and comparable E2E measurements with final drain. No inherited or manually forced winner qualifies. See [research boundaries](RESEARCH_STATUS.md#current-gpu-execution-map-limitation--acceptance-still-open) and the [acceptance protocol](ARCHITECTURE_ROADMAP.md#clean-profile-rediscovery-acceptance-gate).
+
+This documentation update does not ship the private research implementations, certify a new GPU, alter the four-task demo or authorize production/profile activation.
