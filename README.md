@@ -8,6 +8,14 @@ ASTRO develops hardware-aware execution of mathematical workloads, with canonica
 
 **[Run the GPU demo →](#try-it)** · **[See measured BC-250 results →](docs/BC250_UPDATE_V0_1_1.md)**
 
+### GPU Execution Map: current limitation
+
+**Not a completed universal optimizer.** Private RTX 4060 Ti `CPU_SORT_COPY` and RX 470 memory/readback/QBC improvements still required manual investigation. Automatic rediscovery from a clean device profile has **not been demonstrated**.
+
+The new MinerNode must derive legal candidates from sourced architecture data and native measurements, execute them and pass **FULL-validated end-to-end comparisons**, including host work, transfers and final drain. Preloaded winners and manually forced routes do not satisfy this gate. [Required acceptance protocol](docs/ARCHITECTURE_ROADMAP.md#clean-profile-rediscovery-acceptance-gate).
+
+[Private research status, including negative results](docs/RESEARCH_STATUS.md) · [Architecture roadmap](docs/ARCHITECTURE_ROADMAP.md). These are research disclosures and requirements; the shipped software remains the bounded four-MathSpec demo.
+
 ### Current public evidence
 
 | Evidence | Public scope |
@@ -109,6 +117,8 @@ The complete Researcher → Scientist → MainNode → worker → independent va
 
 ## 4. MinerNode
 
+**Automatic clean-profile rediscovery remains an open acceptance gate.** The manually investigated NVIDIA CPU_SORT_COPY and AMD memory/QBC paths reveal missing search coverage; the execution map is not a completed universal optimizer.
+
 **IMPLEMENTED / EXPERIMENTAL in the development tree:** local capability inspection, candidate generation, kernel execution, correctness checks and local profile selection. There is no universal hardcoded GPU winner. The reference development device is AMD BC-250 / RADV GFX1013; its active CU count is a runtime capability, not a cross-device constant. Full cross-vendor execution coverage is **UNAVAILABLE** as a verified claim.
 
 ## 5. Runtime Fusion
@@ -148,7 +158,7 @@ Two additional canonical RT commissioning contracts are categorized separately. 
 
 ## 10. Validation
 
-**Correctness before performance.** Exact/COLD ZERO contracts require zero differing bits; bounded-FP contracts retain their own explicit bounds. An optimization cannot silently change the mathematical problem, rounding graph or input representation.
+**Correctness before performance.** Exact contracts require zero differing bits; bounded-FP contracts retain their own explicit bounds. An optimization cannot silently change the mathematical problem, rounding graph or input representation.
 
 Two separate gates matter: **implementation agreement** checks the entire GPU output against the independent CPU implementation (zero differing bits for exact contracts); **scientific validity** checks the numerical result against the required scientific reference, higher internal precision or original error budget where the MathSpec requires it. Two implementations agreeing bit-for-bit does not prove that both implement the intended science correctly. The documented [Hann FFT / whitening amendment](docs/VALIDATION.md#historical-example-hann-fft-and-whitening) illustrates why.
 
@@ -206,3 +216,4 @@ Start with [CONTRIBUTING.md](CONTRIBUTING.md). Small reproducible correctness ca
 ## 21. Security
 
 Read [SECURITY.md](SECURITY.md). Never submit credentials, private researcher data or raw local state in a public issue. Security reporting must use a confirmed private channel. This preview starts no network service and does not expose a production compute network.
+
