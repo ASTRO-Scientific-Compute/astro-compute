@@ -10,7 +10,7 @@ ASTRO develops hardware-aware execution of mathematical workloads, with canonica
 
 ## 2026-11-08 — independent miner development snapshot
 
-[**Download the miner + benchmark foundation**](astro-miner-20261108.zip) · [Build and usage](ASTRO_MINER_20261108.md) · [Measured results and reference accuracy / HU](ASTRO_MERESI_NAPLO_20261108.md)
+[**Download the miner + benchmark foundation**](astro-miner-20261108.zip) · [Build and usage](ASTRO_MINER_20261108.md) · [Measured results and reference accuracy](ASTRO_MEASUREMENTS_20261108.md) · [Detailed development roadmap](ASTRO_DEVELOPMENT_ROADMAP_20261108.md)
 
 The independent CUDA/Vulkan graph engine, persistent sessions, concurrent lanes,
 QGC1 transport and generic optimizer components are now published as a separate

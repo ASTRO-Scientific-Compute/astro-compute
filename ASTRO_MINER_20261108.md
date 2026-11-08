@@ -1,6 +1,6 @@
 # ASTRO miner — independent development snapshot
 
-[Download miner + benchmark source](astro-miner-20261108.zip) · [Measured results and reference accuracy (HU)](ASTRO_MERESI_NAPLO_20261108.md)
+[Download miner + benchmark source](astro-miner-20261108.zip) · [Measured results and reference accuracy](ASTRO_MEASUREMENTS_20261108.md) · [Detailed development roadmap](ASTRO_DEVELOPMENT_ROADMAP_20261108.md)
 
 2026-11-08. General graph execution, CUDA/Vulkan backends, persistent sessions,
 independent concurrent graph lanes, bounded buffers, asynchronous host checking,
