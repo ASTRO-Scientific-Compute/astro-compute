@@ -8,13 +8,27 @@ ASTRO develops hardware-aware execution of mathematical workloads, with canonica
 
 **[Run the GPU demo →](#try-it)** · **[See measured BC-250 results →](docs/BC250_UPDATE_V0_1_1.md)**
 
+## 2026-11-08 — independent miner development snapshot
+
+[**Download the miner + benchmark foundation**](astro-miner-20261108.zip) · [Build and usage](ASTRO_MINER_20261108.md) · [Measured results and reference accuracy / HU](ASTRO_MERESI_NAPLO_20261108.md)
+
+The independent CUDA/Vulkan graph engine, persistent sessions, concurrent lanes,
+QGC1 transport and generic optimizer components are now published as a separate
+source package. It includes a small synthetic INT32 benchmark foundation;
+research datasets, workload collections, outputs and hash inventories are excluded.
+The extracted launcher/build wrapper and new benchmark have not yet been tested
+as a separate distribution. The measurement log describes prior full research
+worksets on RTX 4060 Ti and two RX 470 cards, not results from this new benchmark.
+The existing evaluation license is unchanged. The bounded demo below remains a
+separate package and its historical results retain their original scope.
+
 ### GPU Execution Map: current limitation
 
 **Not a completed universal optimizer.** Private RTX 4060 Ti `CPU_SORT_COPY` and RX 470 memory/readback/QBC improvements still required manual investigation. Automatic rediscovery from a clean device profile has **not been demonstrated**.
 
 The new MinerNode must derive legal candidates from sourced architecture data and native measurements, execute them and pass **FULL-validated end-to-end comparisons**, including host work, transfers and final drain. Preloaded winners and manually forced routes do not satisfy this gate. [Required acceptance protocol](docs/ARCHITECTURE_ROADMAP.md#clean-profile-rediscovery-acceptance-gate).
 
-[Private research status, including negative results](docs/RESEARCH_STATUS.md) · [Architecture roadmap](docs/ARCHITECTURE_ROADMAP.md). These are research disclosures and requirements; the shipped software remains the bounded four-MathSpec demo.
+[Private research status, including negative results](docs/RESEARCH_STATUS.md) · [Architecture roadmap](docs/ARCHITECTURE_ROADMAP.md). These are research disclosures and requirements; the bounded four-MathSpec demo retains that scope. The separate 2026-11-08 miner source snapshot is linked above.
 
 ### Current public evidence
 
@@ -91,7 +105,7 @@ This is one short observation on repeated resident input. Full warmup/final outp
 
 ### Run ASTRO on another GPU
 
-Current physical public reference: **AMD BC-250 / RADV**. Run the unmodified bounded four-MathSpec demo on another AMD, NVIDIA or Intel system and [submit a hardware reproduction report](https://github.com/ASTRO-Scientific-Compute/astro-compute/issues/new?template=hardware-reproduction.yml) with its sanitized compact profile. Other devices are not yet hardware-verified here. Correctness evidence is required before performance comparison; failed or unsupported runs are useful reports too.
+Current physical public reference for the bounded demo: **AMD BC-250 / RADV**. Run the unmodified bounded four-MathSpec demo on another AMD, NVIDIA or Intel system and [submit a hardware reproduction report](https://github.com/ASTRO-Scientific-Compute/astro-compute/issues/new?template=hardware-reproduction.yml) with its sanitized compact profile. Other devices are not yet hardware-verified for this bounded demo; the separate miner research measurements are linked above. Correctness evidence is required before performance comparison; failed or unsupported runs are useful reports too.
 
 Technical evaluation and attributed publication are within the [evaluation license](LICENSING.md). [Reporting guide and evidence requirements](docs/EXTERNAL_REPRODUCTIONS.md). Code changes, limit bypass and service operation are outside that permission.
 
