@@ -19,7 +19,10 @@
 | Canonical references and fixed GPU demo | Public; IMPLEMENTED / VERIFIED | Historical analytic tests and fixed-task demo evidence; [publication scope](PUBLICATION.md) and [v0.1.1](UPDATE_BUGFIX_V0_1_1.md) |
 | November 8 miner archive | Historical public source snapshot; EXPERIMENTAL | Extracted launcher/bench NOT TESTED on GPU as a standalone package; existing source exposure does not imply a current private runtime release |
 | Typed mathematical graph engine | Private; IMPLEMENTED / VERIFIED on tested graphs | CUDA/Vulkan, resource limits and independent numerical contracts; arbitrary unsupported mathematics is not claimed |
-| GPU-side QGP1 output | Private; IMPLEMENTED / VERIFIED on tested paths | Lossless output packaging required on current supported paths; raw fallback may occur inside the format; compression integrity is not scientific correctness |
+| Full MobileNetV2 image inference | Private; VERIFIED within stated samples / EXPERIMENTAL | 100,000 images per GPU; [dated results](measurements/IMAGE_INFERENCE_2026-11-19.md). Full output identity and 217-image oracle coverage are separate; no full-corpus labeled accuracy |
+| Historical FP16 Tensor inference | REJECTED under the expanded numerical contract | Actual HMMA execution verified; three of 214 diagnostic images / six logits violated tolerance. Faster timing is not an accepted speedup |
+| Offline CPU compression research | VERIFIED lossless archive / not production GPU code | 3,284,860,953-byte archive; [separate cost and limits](measurements/OFFLINE_COMPRESSION_RESEARCH.md); 10% target not met |
+| GPU-side QGP1 output | Private; IMPLEMENTED / VERIFIED on tested paths | Lossless output packaging required on current supported paths; raw fallback may occur inside the format; compression integrity is not scientific correctness; [full workset and negative timing findings](measurements/GPU_QGP1_2026-11-19.md) |
 | Dependency-driven packet queue | Private; IMPLEMENTED / VERIFIED | Two hosts, four workers, 12 synthetic complete DAGs; [measurements](measurements/MAIN_NODE_2026-11-19.md) |
 | Main Node Core/API and private WebAI integration | Private; IMPLEMENTED / VERIFIED in finite tests / EXPERIMENTAL | Later service qualification includes lifecycle tests and short GPU generation on a separate 426,688-parameter model; no public endpoint or always-on GPU fleet claim |
 | Generic memory reduction | Private; VERIFIED on the 124M training replay | Approximately 0.924 GiB fewer backend allocations; same-device replay identity; [memory report](measurements/MEMORY_2026-11-19.md) |
@@ -31,6 +34,8 @@
 | Cross-node failover / stateful migration / adversarial validation | PLANNED / NOT TESTED | Service restart checks do not qualify machine loss, Node A/B failover or untrusted miners |
 
 The first network campaign closed its qualification workers and server. A **separate later** private Core/API campaign deployed a continuing service and closed its finite GPU workers. These are different snapshots, not contradictory lifetime claims. A two-minute availability probe is not a multi-hour or multi-day serving qualification.
+
+[Measurement index](measurements/MEASUREMENT_INDEX.md) lists campaign dates, full-work sizes, repetition counts and evidence boundaries.
 
 ## Measurement rules
 
