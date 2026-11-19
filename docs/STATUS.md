@@ -1,55 +1,49 @@
-# Status · public preview, 2026-10-12
+# ASTRO status — 2026-11-19
 
-**Overall: EXPERIMENTAL / IN DEVELOPMENT. Not production-ready.**
+**Overall: EXPERIMENTAL.** This page distinguishes the public demo from later private development. A passed check covers only the named work, hardware, numerical contract and lifetime.
 
-The public preview and the broader development tree are different scopes. This table is a source audit, not a certification of every runtime path.
+## Labels
 
 | Label | Meaning |
 |---|---|
-| IMPLEMENTED | Concrete code exists in the stated scope; not proof of hardware behavior |
-| EXPERIMENTAL | Research implementation with open correctness, portability or review gates |
-| VERIFIED | A named check passed; only its exact scope is covered |
-| IN DEVELOPMENT | Work is incomplete or integration remains open |
-| PLANNED | Design intent; no working integration claimed |
-| UNAVAILABLE | Required path, data or trustworthy evidence is absent |
+| IMPLEMENTED | Concrete implementation exists in the stated public or private scope |
+| VERIFIED | A named physical or software check passed within its stated bounds |
+| EXPERIMENTAL | Research implementation with open qualification or integration limits |
+| PLANNED | Intended capability, not a working service claim |
+| UNAVAILABLE / NOT TESTED | Evidence is absent or the described check was not performed |
 
-`CODE_PRESENT != WORKING != MEASURED != TRUSTED`
+## Current evidence
 
-| Component | Public preview | Development-tree assessment |
+| Component | Scope and status | Qualification boundary |
 |---|---|---|
-| 81 canonical CPU references / 66 SPACE | IMPLEMENTED; analytic tests in this repo | Existing canonical corpus, not all 94 registry entries |
-| Full 94-entry inventory | IMPLEMENTED, sanitized metadata | Includes 13 historical/runtime-only entries |
-| Layered Fast Search V2 | Documentation; separate fixed four-task GPU demo | IMPLEMENTED / EXPERIMENTAL; bounded adapter support |
-| Census and Search-Path Registry | Design and evidence boundaries documented | IMPLEMENTED catalog; EXPERIMENTAL candidate integration |
-| Runtime Fusion | Documentation | EXPERIMENTAL; native independent-job subset is narrower than corpus |
-| RT scientific compute | Canonical CPU references for commissioning | EXPERIMENTAL, bounded ray-query paths |
-| Native VGPR/SGPR/scratch/spill/occupancy | UNAVAILABLE | Reliable final-allocation receipts unavailable in audited path |
-| Independent ILP Fast V2 axis | UNAVAILABLE | Not wired as an independent legal axis in audited adapter set |
-| Transfer/compute overlap | UNAVAILABLE | Copy execution alone did not establish overlap |
-| Distributed execution | PLANNED full deployment | Loopback transport tests do not prove independent physical nodes |
-| MainNode and Scientist end-to-end | PLANNED / IN DEVELOPMENT | No complete production researcher-to-result integration |
-| AI/tensor backend; mobile execution | PLANNED | Capability records are not backend execution proof |
-| CPU/HOST runtime tuning | Fixed optional command reuse; task-boundary memory cleanup | EXPERIMENTAL separate CPU_HOST search; general CPU kernel generator/SMT/NUMA reserved |
-| Realtime/game integration | PLANNED | Separate local optimizer prototype is EXPERIMENTAL |
-| Benchmark profile-only cleanup | IMPLEMENTED; per-task compact checkpoint/cache/heap cleanup | IMPLEMENTED; abnormal termination may leave current transient files |
-| Public GPU demo | IMPLEMENTED; four fixed tasks, DIRECT/TILED | Broader search distribution remains state-bound and separate |
-| Independent release review | Separate agent review; see publication scope | No external human certification or production approval |
+| Canonical references and fixed GPU demo | Public; IMPLEMENTED / VERIFIED | Historical analytic tests and fixed-task demo evidence; [publication scope](PUBLICATION.md) and [v0.1.1](UPDATE_BUGFIX_V0_1_1.md) |
+| November 8 miner archive | Historical public source snapshot; EXPERIMENTAL | Extracted launcher/bench NOT TESTED on GPU as a standalone package; existing source exposure does not imply a current private runtime release |
+| Typed mathematical graph engine | Private; IMPLEMENTED / VERIFIED on tested graphs | CUDA/Vulkan, resource limits and independent numerical contracts; arbitrary unsupported mathematics is not claimed |
+| GPU-side QGP1 output | Private; IMPLEMENTED / VERIFIED on tested paths | Lossless output packaging required on current supported paths; raw fallback may occur inside the format; compression integrity is not scientific correctness |
+| Dependency-driven packet queue | Private; IMPLEMENTED / VERIFIED | Two hosts, four workers, 12 synthetic complete DAGs; [measurements](measurements/MAIN_NODE_2026-11-19.md) |
+| Main Node Core/API and private WebAI integration | Private; IMPLEMENTED / VERIFIED in finite tests / EXPERIMENTAL | Later service qualification includes lifecycle tests and short GPU generation on a separate 426,688-parameter model; no public endpoint or always-on GPU fleet claim |
+| Generic memory reduction | Private; VERIFIED on the 124M training replay | Approximately 0.924 GiB fewer backend allocations; same-device replay identity; [memory report](measurements/MEMORY_2026-11-19.md) |
+| 124M FP32 model training | Private; IMPLEMENTED / VERIFIED within the training audit | 512-token windows, three separate replicas, held-out validation; [training report](measurements/AI_TRAINING_2026-11-19.md) |
+| Continuous training controller V2 | Private; IMPLEMENTED / VERIFIED by 77 CPU checks | Simulated lifecycle and real process-lock checks; multi-day physical GPU operation NOT TESTED |
+| Public Web / WebAI and researcher onboarding | PLANNED | No verified public service, authentication lifecycle or external-miner trust qualification |
+| Scientific AI planning and useful conversation | EXPERIMENTAL / NOT ESTABLISHED | Training loss improvements do not establish reasoning, research competence or chatbot quality |
+| General graph partitioning / universal local optimization | EXPERIMENTAL; broader coverage PLANNED | All-Transformer network decomposition and universal automatic optimal-route discovery are not established |
+| Cross-node failover / stateful migration / adversarial validation | PLANNED / NOT TESTED | Service restart checks do not qualify machine loss, Node A/B failover or untrusted miners |
 
-## Known correctness issue
+The first network campaign closed its qualification workers and server. A **separate later** private Core/API campaign deployed a continuing service and closed its finite GPU workers. These are different snapshots, not contradictory lifetime claims. A two-minute availability probe is not a multi-hour or multi-day serving qualification.
 
-An intermittent image-moments runtime result mismatch remains open in development evidence. A later successful replay is not a fix. A CPU oracle passing the public analytic case does not certify that GPU runtime. Any failing configuration is excluded from accepted performance results.
+## Measurement rules
 
-## Evidence boundary
+- Worker E2E is wall time inside its named worker boundary; it is not automatically full researcher-to-result latency.
+- Process-tree CPU time and GPU event intervals measure different work. Neither their difference nor E2E minus GPU time is automatically CPU waste.
+- Backend buffer allocation is distinct from host RAM and total driver-reported VRAM.
+- Numeric PASS against a Float64 oracle does not imply bit identity across devices.
+- Same-device checkpoint replay identity does not imply all intermediate gradients were independently recomputed.
+- QGP1 ZERO BIT concerns restoration of encoded bytes. It does not certify an untrusted miner's mathematics.
+- QGC1 remains the format named in the November 8 historical report. Its results are not relabeled QGP1.
 
-The source audit consulted v1.17.52 status, Runtime Fusion, Layered Fast V2, capability-census, RT and retention reports, plus the separate game-optimizer source. Those local reports and raw state are not uploaded. Historical local measurements are not relabeled VERIFIED public benchmarks. Public software-check results and their reproduction command are recorded in [PUBLICATION.md](PUBLICATION.md).
+## Historical limitations remain visible
 
-The [v0.1.1 Update / Bugfix report](UPDATE_BUGFIX_V0_1_1.md) distinguishes shipped fixes, wider miner changes and the new BC-250 diagnostic comparison. No production promotion is authorized.
+The [October status at its original commit](https://github.com/ASTRO-Scientific-Compute/astro-compute/blob/ad6dff7c263c1a2845f604267092c68725f0c39f/docs/STATUS.md) records an intermittent image-moments runtime mismatch and missing execution-map evidence. This documentation update does not close that issue or qualify those historical paths. The [clean-profile rediscovery gate](ARCHITECTURE_ROADMAP.md#clean-profile-rediscovery-acceptance-gate) remains open without new route-specific proof.
 
-
-## Execution-map disclosure — 2026-10-23
-
-**INCOMPLETE / AUTOMATIC REDISCOVERY NOT DEMONSTRATED.** RTX 4060 Ti `CPU_SORT_COPY` and RX 470 memory/readback/QBC routes required manual private-lab investigation. Existing capability catalogs and bounded search integration do not establish a universal optimizer.
-
-New MinerNode acceptance requires architecture-database and native-probe-driven candidate discovery from a clean device profile, followed by actual route execution, unchanged FULL correctness and comparable E2E measurements with final drain. No inherited or manually forced winner qualifies. See [research boundaries](RESEARCH_STATUS.md#current-gpu-execution-map-limitation--acceptance-still-open) and the [acceptance protocol](ARCHITECTURE_ROADMAP.md#clean-profile-rediscovery-acceptance-gate).
-
-This documentation update does not ship the private research implementations, certify a new GPU, alter the four-task demo or authorize production/profile activation.
+GitHub Actions tests the **public demo**. Its green status does not certify the nested miner archive or the private Main Node, AI and training implementations. New measurements below were checked against local reports and structured summaries; private raw evidence and implementations are not included, so public independent reproduction of those later runs is unavailable from this repository alone.

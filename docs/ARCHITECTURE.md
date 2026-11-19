@@ -1,33 +1,52 @@
-# Architecture · a research problem to a checked result
+# Shared ASTRO architecture — 2026-11-19
 
-![Architecture](../assets/architecture.svg)
+ASTRO's Scientific Research Lab and direct Scientific Compute Network use the same execution foundation. WebAI is a service interface to this foundation. Researcher jobs can also enter without an AI planner.
 
-## End-to-end design — PLANNED / IN DEVELOPMENT
+```mermaid
+flowchart TD
+    R[Researcher-submitted supported graphs] --> M[Main Node Core and API]
+    L[Scientific Research Lab / WebAI] --> M
+    M --> Q[Dependency-aware work queue]
+    Q --> G[Compatible miner GPU workers]
+    G --> C[Lossless compressed results and receipts]
+    C --> V[Contract-specific validation and result assembly]
+    V --> R
+    V --> L
+```
 
-1. **Researcher** defines the problem, data rights, expected outputs and scientific constraints.
-2. **Scientist AI** proposes a decomposition and scientific workflow. Reasoning is not a substitute for an executable mathematical contract.
-3. **MainNode / control plane** manages dependencies, routing, data distribution, validation assignments, receipts and collection.
-4. **Math / workflow DAG** binds precise inputs, operations, precision, partitioning and output contracts.
-5. **Capability router** matches a legal workload to measured device capabilities and validated local profiles.
-6. **MinerNodes** commission hardware, generate and check candidates, execute work and retain results until verified receipt.
-7. **Execution resources** may include CPUs, GPUs, APUs, RT hardware, AI accelerators and eventually mobile/edge devices. Support is established per backend and path.
-8. **Independent validation** checks the assigned mathematical contract, result completeness and provenance. Shared ownership/network domains do not automatically establish independence.
-9. **Result merge** reconstructs the requested output, validates partition boundaries and presents it to the researcher.
+The diagram is the intended end-to-end service relationship. It is not a deployment or general scientific capability certificate.
 
-No step in this diagram implies that the complete network is deployed. Identity, accounting, payment and ledger mechanisms are planned supporting services, not a replacement for useful compute.
+## Implemented local foundation
 
-## Local implementation boundary — EXPERIMENTAL
+The private system has a typed mathematical graph representation, CUDA/Vulkan execution, bounded memory windows and a durable dependency-aware packet queue. Workers claim eligible work when capacity is available; independent ready packets need not wait for another GPU's unrelated work. Dependencies, ownership and revisions still constrain valid execution.
 
-The development MinerNode contains hardware inspection, capability-conditioned candidate generation, source generation/compilation, GPU execution, oracle checks and local profile selection. Bounded Runtime Fusion paths share job data and scheduling mechanisms. The composition objective is correctly completed useful work per second.
+A BC-250 Main Node and a second host completed a bounded four-worker test with 12 three-matrix synthetic DAGs. This qualifies that particular packetized route. It does not establish automatic partitioning of every Transformer or arbitrary scientific workflow. [Network evidence](measurements/MAIN_NODE_2026-11-19.md).
 
-The public source preview exports the CPU reference/contract layer. It intentionally excludes state-bound runtime installers, local winner seeds, raw measurements, research data and credentials. Public portable GPU execution is a separate release gate, not silently implied by an architecture diagram.
+A later private Core/API integrates a resident model worker through the same queue. Its finite test used a complete 426,688-parameter model; the separately trained 124M model was not served by that campaign. Multiple scientific owners, cancellation and controlled service restart were checked. Broader deployment, concurrent WebAI service and state migration remain separate gates.
 
-## Trust boundaries
+## Service responsibilities
 
-- A documented numeric format does not establish a working backend.
-- A compiler accepting a shader does not establish use of the intended hardware unit.
-- A correctness pass does not prove sustained utilization.
-- A local winner does not become a global science winner.
-- A loopback transport test does not establish multi-owner validation.
-- A simulated upload does not authorize deletion of research results.
-- A future dashboard must show actual live data refreshed within approximately five seconds, or **OFFLINE / UNAVAILABLE**. No simulated number may impersonate network telemetry.
+| Component | Responsibility | Current boundary |
+|---|---|---|
+| Web / researcher API | Submission, ownership and result presentation | Public service PLANNED; private API checks exist |
+| Scientific Research Lab / WebAI | Interpret requests, propose workflows, consume checked results | Useful autonomous research and conversation not established |
+| Main Node Core | Admission, quotas, dependencies, leases, receipts and service state | Private finite qualifications; not a public trust or failover qualification |
+| Graph Planner | Validate supported operations and produce legal bounded work | Partial graph-family coverage; all-operation partitioning PLANNED |
+| Miner | Execute assigned supported work using actual capabilities and local resource bounds | Current private CUDA/Vulkan paths; does not require the full WebAI application |
+| Validator / result assembly | Check the mathematical contract and reconstruct complete outputs | Independent local oracles exist; adversarial multi-owner validation PLANNED |
+
+Different service classes require distinct owners, quotas and priorities. A submission queue may exceed the number of concurrently resident jobs; admission and scheduling must bound RAM, VRAM, compilation and retained data. One researcher must not starve another. General long-duration fairness under skewed workloads remains a qualification target.
+
+## Data and correctness
+
+Current supported GPU result paths use mandatory lossless QGP1 packaging before full result readback. In the first network test the gateway forwarded compressed dependency objects without decoding their arrays; downstream workers decoded inputs on the CPU before upload. This does not prove a completely GPU-only input path or net CPU savings from compression.
+
+Independent reference calculations belong to qualification and validation, not to every production workload's input requirements. Researchers need not supply a precomputed answer. The mathematical contract must define how outputs can be checked; transport integrity alone cannot establish scientific correctness.
+
+Hardware acceleration is a capability- and contract-dependent route. Tensor/RT support, successful compilation and high power consumption are not interchangeable evidence of useful throughput. Automatic selection must satisfy correctness and be judged on the measured execution boundary, with explicit resource budgets.
+
+## Public/private boundary
+
+The repository contains the licensed public demo, historical documentation and the already published November 8 miner archive. This update adds no current private engine, planner, scheduler, model, compiler, kernel generator or optimization implementation. It makes no new code-release commitment.
+
+The [previous architecture](https://github.com/ASTRO-Scientific-Compute/astro-compute/blob/ad6dff7c263c1a2845f604267092c68725f0c39f/docs/ARCHITECTURE.md) and [detailed historical acceptance gates](ARCHITECTURE_ROADMAP.md) remain available at their original scope. No operational marketplace, token economics or general network capacity is announced.
