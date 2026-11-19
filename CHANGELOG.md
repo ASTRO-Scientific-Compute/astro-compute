@@ -1,5 +1,14 @@
 # Changelog
 
+## Performance evidence V2 · 2026-11-19
+
+- Add complete MobileNetV2 / 100,000-image inference measurements for V13, V16 and the later QGP1 application, with CPU, GPU, memory and sampled-reference boundaries.
+- Retain the V17 negative result: real FP16 Tensor execution was faster but failed the expanded numerical contract; it is not an accepted speedup.
+- Add full scientific GPU QGP1 size, serial/overlap timing and automatic-selection evidence; distinguish packet, D2H API and stored-container bytes.
+- Report storage backpressure and the absence of an automatic-application E2E gain without attributing a proven SSD fault.
+- Document the smaller CPU-only archive separately, including encoding/audit cost and the unmet 10% target.
+- Add a measurement index. Preserve all runtime, CI, license, release and historical measurement files; no new private source or raw evidence is published.
+
 ## Documentation preparation · 2026-11-19
 
 - Present the Scientific Research Lab and direct Scientific Compute Network as two services on one Main Node / graph / miner foundation.
