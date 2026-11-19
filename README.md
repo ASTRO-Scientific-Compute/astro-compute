@@ -15,9 +15,14 @@ ASTRO is developing two services on one mathematical graph and GPU execution fou
 | Private two-host execution | BC-250, RTX 4060 Ti and two RX 470 workers; 12 complete synthetic DAGs, 36 packets | [Network measurements](docs/measurements/MAIN_NODE_2026-11-19.md) |
 | Private 124M-model memory replay | RTX backend peak 2.984 → 2.060 GiB; RX 470 3.031 → 2.107 GiB | [Memory measurements](docs/measurements/MEMORY_2026-11-19.md); no general E2E speedup |
 | Private model training | 124,013,568 FP32 parameters; 512-token windows; three independent GPU replicas | [Training evidence](docs/measurements/AI_TRAINING_2026-11-19.md); language competence not established |
+| Full image inference | MobileNetV2, 100,000 images/card on RTX and two RX 470s | [Inference measurements](docs/measurements/IMAGE_INFERENCE_2026-11-19.md); sampled CPU oracle, historical FP16 Tensor rejection retained |
+| GPU QGP1 scientific output | 16.73 GB logical output → 5.35 GB packets; complete lossless reconstruction | [GPU compression measurements](docs/measurements/GPU_QGP1_2026-11-19.md); automatic application did not establish E2E gain |
+| Offline CPU archival research | 16.73 GB → 3.285 GB complete archive | [Separate CPU research](docs/measurements/OFFLINE_COMPRESSION_RESEARCH.md); not the production GPU path, 10% size target not met |
 | Private Core/API integration | Bounded service, lifecycle and GPU checks | [Status](docs/STATUS.md); not a public WebAI deployment |
 
 These are owner-retained laboratory results summarized for publication, not independently reproduced public runtime releases. Numerical tolerance, same-device replay identity and lossless QGP1 restoration are separate claims.
+
+[Measurement index](docs/measurements/MEASUREMENT_INDEX.md) groups the dated campaigns and defines timing, memory, byte accounting and correctness limits. Image inference is distinct from image generation and language-model training; its QGP1 packets were slightly larger than the raw logits.
 
 ## Public demo
 
