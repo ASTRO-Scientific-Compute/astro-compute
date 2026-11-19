@@ -1,30 +1,30 @@
-# Roadmap · gated progress
+# ASTRO roadmap — 2026-11-19
 
-Dates and network capacities are intentionally not promised. Each milestone has an observable exit criterion.
+Milestones have acceptance gates rather than promised dates or unbounded capacity. Current status and historical results are in [STATUS.md](STATUS.md).
 
-| Milestone | State | Exit criterion |
+| Milestone | Starting state | Evidence required to advance |
 |---|---|---|
-| Public mathematical reference foundation | IMPLEMENTED | All exported analytic contracts reproducible by public CPU checks |
-| Portable GPU source release | IN DEVELOPMENT | Clean executor/build dependency closure; no local state/secret dependencies; independent review |
-| Reliable local optimization | EXPERIMENTAL | Resolve intermittent image-moments failure; validate every selected runtime/configuration |
-| Capability and resource evidence | IN DEVELOPMENT | Native execution tests per backend/vendor; trustworthy allocation/occupancy data or explicit UNAVAILABLE |
-| Runtime Fusion expansion | IN DEVELOPMENT | Per-adapter graph/batch coverage and sustained confirmation; copy overlap proved separately |
-| Universal math composition | PLANNED | Generated DAG preserves contracts, partition semantics and independent validation |
-| Host Runtime Generator | PLANNED | Discover CPU/SMT/cache/SIMD/RAM/storage/network; validate thread count, affinity, task grain, cache blocking, memory placement, queues, work stealing, async I/O and validation/serialization choices |
-| MainNode result protocol | IN DEVELOPMENT | Authenticated verified ACK, idempotent retry, complete result reconstruction and safe deletion |
-| Independent validation network | PLANNED | Separate ownership/network domains, challenge protocol and adversarial tests on physical nodes |
-| Scientist integration | PLANNED | Research task decomposition through verified end-to-end output; scientific limitations explicit |
-| Heterogeneous deployment | PLANNED | Commission each CPU/GPU/APU/RT/AI/mobile backend independently |
-| Engineering/realtime integration | PLANNED | Measured frame-time/latency benefits with visual correctness and rollback |
-| Marketplace/accounting | PLANNED | Defined governance, job/payment contracts and validated service delivery before economic promises |
+| Main Node Core | Private service IMPLEMENTED; finite checks VERIFIED | Sustained mixed load; resource and retention bounds; restart, machine reboot and failure recovery without lost or duplicate accepted work |
+| Generic Graph Planner | Supported typed graphs and bounded packetized matrix route IMPLEMENTED | More operation families, legal partition boundaries and complete result reconstruction; malformed graphs rejected before execution; no per-dataset backend edits |
+| Hardware routing and optimization | CUDA/Vulkan paths IMPLEMENTED; broader search EXPERIMENTAL | Clean-profile candidate discovery from actual capabilities; correctness-qualified local choice; transfer, CPU, GPU, memory and complete E2E accounting |
+| Public Web / API | PLANNED; private status/API foundation exists | Separate researcher/miner/admin authorization, safe submission, quotas, real status within five seconds or explicit offline state, and deployment security review |
+| WebAI serving | Private finite integration EXPERIMENTAL | Qualified trained model, isolated persistent sessions, bounded KV ownership, grouped decode, cancellation and sustained latency/throughput measurements |
+| Model training and scientific quality | Private 124M training IMPLEMENTED; useful competence NOT ESTABLISHED | Broader authorized data, reproducible curriculum, untouched test set, generation and task-quality evaluation; independent numeric checks and safe checkpoint promotion |
+| Low-memory execution | Specific 0.924 GiB reduction VERIFIED | Larger layers and contexts under hard resource bounds; compare complete costs; treat quantization as a separate numerical contract; no blanket 24 GB → 8 GB claim |
+| Miner authentication | Trusted local operators only | External identity and credential lifecycle, revocation, replay rejection, capability checks and adversarial tests |
+| P2P data plane | General deployment PLANNED | Authorized direct compressed-object exchange, integrity, resumable transport, retention and failure tests; no unsupported bandwidth-saving claims |
+| Node A/B failover and state migration | PLANNED / NOT TESTED | Fenced ownership, durable receipts, state recovery and no double accounting across physical failures or network partitions |
+| Fair shared service | Bounded local queues IMPLEMENTED; general fairness not qualified | Many owners with unequal job counts and long/short mixed jobs; bounded waiting and memory; research and WebAI priorities without starvation |
+| Public release qualification | Existing licensed demo remains available | Explicit source allowlist, privacy/license review, clean-machine dependency closure, physical tests of the exact package and owner approval |
 
-A possible ledger/accounting layer may track identity, receipts, provenance and payments. It is not the compute engine. Researcher jobs, worker compensation, validator rewards, reliability incentives, internal accounting/token concepts and fiat-denominated contracts remain design subjects. This repository announces no operational token, sale, reward rate or marketplace.
+## Acceptance principles
 
-A future operational dashboard must show actual live data (approximately five seconds or fresher) or OFFLINE/UNAVAILABLE. Mock data must never appear as live network activity.
+1. New work expressible with supported primitives should arrive as a graph description. New compiler abilities should generalize across datasets.
+2. A successful upload or accepted lease is not a completed scientific result. Count unique full workloads, internal packets and repeats separately.
+3. Preserve dependencies and session isolation while keeping prepared programs, weights and state resident where safe. Optimize measured repeated work, not power draw alone.
+4. Lossless compression remains required on supported production output paths. Compare eligible compressed routes and include metadata and fallback bytes.
+5. Qualification budgets separately bound sessions, evaluations, worker time, GPU time and memory. Failures and untested cases remain visible.
+6. A reference-tolerance PASS, same-device replay identity and byte-perfect codec restoration must retain separate labels.
+7. New public releases require approval; internal progress does not automatically open the source or qualify public operations.
 
-
-## New MinerNode acceptance prerequisite
-
-Automatically rediscover the applicable RTX 4060 Ti CPU_SORT_COPY and RX 470 memory/readback/QBC paths using sourced architecture records and native probes from a clean profile. Show candidate-to-worker receipts and FULL-validated E2E A/B on identical mathematical work, including preprocessing, transfers, verification and final drain. Manual path forcing, preloaded winners and kernel-only speedups do not close this milestone.
-
-**Current state: NOT DEMONSTRATED.** [Detailed architecture and acceptance gates](ARCHITECTURE_ROADMAP.md#clean-profile-rediscovery-acceptance-gate) · [Research status and limitations](RESEARCH_STATUS.md).
+The [historical roadmap](https://github.com/ASTRO-Scientific-Compute/astro-compute/blob/ad6dff7c263c1a2845f604267092c68725f0c39f/docs/ROADMAP.md), [November 8 development direction](../ASTRO_DEVELOPMENT_ROADMAP_20261108.md) and [execution-map rediscovery gate](ARCHITECTURE_ROADMAP.md#clean-profile-rediscovery-acceptance-gate) remain historical references. This update does not silently close older correctness issues or promise an operational marketplace.

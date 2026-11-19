@@ -1,5 +1,14 @@
 # Changelog
 
+## Documentation preparation · 2026-11-19
+
+- Present the Scientific Research Lab and direct Scientific Compute Network as two services on one Main Node / graph / miner foundation.
+- Add scoped private-laboratory summaries for two-host execution, the later private Core/API qualification, 124M memory replay and model training.
+- Distinguish implementation, finite verification, experimental work, planned services and missing evidence.
+- Preserve numeric tolerances, same-device replay identity and QGP1 restoration as separate claims; retain historical QGC1 reports unchanged.
+- Keep the licensed public demo, old releases, tests, source archive and license files unchanged. No current private implementation, weights or data are added.
+- This is a documentation update, not a new GPU-qualified release, public WebAI launch or general performance claim.
+
 ## Presentation update · 2026-10-12
 
 - Lead the README with scoped public evidence, a tagged quick start and an exact published profile excerpt.
